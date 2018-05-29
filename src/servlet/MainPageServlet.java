@@ -28,7 +28,7 @@ public class MainPageServlet extends HttpServlet {
 
 		// パラメータチェック
 		HttpSession session = req.getSession();
-		SessionBean sesBean = (SessionBean)session.getAttribute("session");
+		SessionBean sesBean = (SessionBean) session.getAttribute("session");
 		String sesUserNo = sesBean.getUserNo();
 		// 2）他会員一覧取得処理
 		StringBuilder sb = new StringBuilder();
@@ -68,16 +68,16 @@ public class MainPageServlet extends HttpServlet {
 			ArrayList<String> userName = new ArrayList<>();
 			while (rs.next()) {
 				// ログインしている自分自身は除く
-				/*				int check = rs.getInt("USER_NO");
-								int check2 =Integer.parseInt(sesUserNo);
-								if(check == check2) {
+				int check = rs.getInt("USER_NO");
+				int check2 = Integer.parseInt(sesUserNo);
+				if (check == check2) {
 
-								}else {
-				*/
-				userNo.add(rs.getInt("USER_NO"));
-				userID.add(rs.getString("USER_ID"));
-				userName.add(rs.getString("USER_NAME"));
-				/*				}*/
+				} else {
+
+					userNo.add(rs.getInt("USER_NO"));
+					userID.add(rs.getString("USER_ID"));
+					userName.add(rs.getString("USER_NAME"));
+				}
 
 			}
 			// リクエストに送る

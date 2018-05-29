@@ -23,7 +23,7 @@
 	</p>
 	<br>
 	</c:forEach>
-	<a href="/chat/directMessage">他会員名（メッセージへ）</a>
+
 	<br>■グループ一覧
 	<br>
 	<a href="/chat/groupMessage">グループ名（グループメッセージへ）</a>
