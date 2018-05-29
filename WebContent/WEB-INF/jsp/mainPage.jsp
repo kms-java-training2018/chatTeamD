@@ -15,6 +15,7 @@
 	<c:forEach var="obj" items="${userlist}" varStatus="status">
 	${obj}
 	${directMessage.get(status.index)}
+	<br>
 	</c:forEach>
 	<a href="/chat/directMessage">他会員名（メッセージへ）</a>
 	<br>■グループ一覧

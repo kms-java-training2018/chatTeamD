@@ -35,12 +35,11 @@ public class MainPageServlet extends HttpServlet {
 		 * DBログイン
 		 */
 		Connection conn = null;
-		String url = "192.168.51.67";
+		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
 		String user = "DEV_TEAM_D";
 		String dbPassword = "D_DEV_TEAM";
 		// JDBCドライバーのロード
 		try {
-
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -54,8 +53,12 @@ public class MainPageServlet extends HttpServlet {
 			/*
 			 * ユーザ一覧取得
 			 */
-			sb.append("SELECT USER_NO,USER_ID,USER_NAME");
-			sb.append("from DEV_TEAM_D.M_USER;");
+			sb.append("SELECT ");
+			sb.append(" user_no ");
+			sb.append(", user_id ");
+			sb.append(", user_name ");
+			sb.append("FROM ");
+			sb.append(" m_user ");
 			// SQL実行
 			ResultSet rs = stmt.executeQuery(sb.toString());
 			// それぞれArrayListに入れる
@@ -63,9 +66,18 @@ public class MainPageServlet extends HttpServlet {
 			ArrayList<String> userID = new ArrayList<>();
 			ArrayList<String> userName = new ArrayList<>();
 			while (rs.next()) {
+				// ログインしている自分自身は除く
+				/*				int check = rs.getInt("USER_NO");
+								int check2 =Integer.parseInt(sesUserNo);
+								if(check == check2) {
+
+								}else {
+				*/
 				userNo.add(rs.getInt("USER_NO"));
 				userID.add(rs.getString("USER_ID"));
 				userName.add(rs.getString("USER_NAME"));
+				/*				}*/
+
 			}
 			// リクエストに送る
 			req.setAttribute("userlist", userName);
@@ -74,18 +86,32 @@ public class MainPageServlet extends HttpServlet {
 			/*
 			 * ユーザ一覧取得
 			 */
-			ArrayList<Integer> directMessage = new ArrayList<>();
+			ArrayList<String> directMessage = new ArrayList<>();
 			for (int i = 0; i < userNo.size(); i++) {
-				sb.append("select MESSAGE");
-				sb.append("from DEV_TEAM_D.T_MESSAGE_INFO");
-				sb.append("where SEND_USER_NO='" + sesUserNo + "'and");
-				sb.append("TO_SEND_USER_NO='" + userNo.get(i) + "'and");
-				sb.append("REGIST_DATE=( select MAX(REGIST_DATE)");
-				sb.append("from DEV_TEAM_D.T_MESSAGE_INFO);");
+				int uN = userNo.get(i);
+				sb.append("SELECT ");
+				sb.append(" message ");
+				sb.append("FROM ");
+				sb.append(" t_message_info ");
+				sb.append("WHERE ");
+				sb.append(" send_user_no = '" + sesUserNo + "' ");
+				sb.append(" AND to_send_user_no = '" + uN + "'");
+				sb.append(" AND regist_date = ( ");
+				sb.append(" SELECT ");
+				sb.append(" MAX(regist_date) ");
+				sb.append("FROM ");
+				sb.append(" t_message_info ) ");
 				// SQL実行
 				ResultSet rs2 = stmt.executeQuery(sb.toString());
-				// それぞれArrayListに入れる
-				directMessage.add(rs2.getInt("Message"));
+				if (rs2.next()) {
+					// データあり
+					// そのままArrayListに入れる
+					directMessage.add(rs2.getString("Message"));
+				} else {
+					// データなし
+					// 会話を始めましょう！
+					directMessage.add("会話を始めましょう");
+				}
 			}
 			// リクエストに送る
 			req.setAttribute("directMessage", directMessage);
