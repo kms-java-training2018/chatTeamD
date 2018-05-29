@@ -20,6 +20,7 @@ public class LoginModel {
 		String password = bean.getPassword();
 
 		Connection conn = null;
+		// URL
 		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
 		String user = "DEV_TEAM_D";
 		String dbPassword = "D_DEV_TEAM";
