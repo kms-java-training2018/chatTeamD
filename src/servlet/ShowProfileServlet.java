@@ -102,7 +102,7 @@ public class ShowProfileServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
 
-		req.getRequestDispatcher("/WEB-INF/jsp/mainPage.jsp").forward(req, res);
+		req.getRequestDispatcher("/main").forward(req, res);
 
 	}
 }
