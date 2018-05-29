@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bean.SessionBean;
 
@@ -26,9 +27,9 @@ public class MainPageServlet extends HttpServlet {
 		// loginからはpostで送られてくる
 
 		// パラメータチェック
-		SessionBean sessionBean = new SessionBean();
-		String sesUserNo = sessionBean.getUserNo();
-
+		HttpSession session = req.getSession();
+		SessionBean sesBean = (SessionBean)session.getAttribute("session");
+		String sesUserNo = sesBean.getUserNo();
 		// 2）他会員一覧取得処理
 		StringBuilder sb = new StringBuilder();
 		/*
@@ -83,26 +84,27 @@ public class MainPageServlet extends HttpServlet {
 			req.setAttribute("userlist", userName);
 
 			// 3）最新メッセージ取得処理
+			StringBuilder sb2 = new StringBuilder();
 			/*
 			 * ユーザ一覧取得
 			 */
 			ArrayList<String> directMessage = new ArrayList<>();
 			for (int i = 0; i < userNo.size(); i++) {
 				int uN = userNo.get(i);
-				sb.append("SELECT ");
-				sb.append(" message ");
-				sb.append("FROM ");
-				sb.append(" t_message_info ");
-				sb.append("WHERE ");
-				sb.append(" send_user_no = '" + sesUserNo + "' ");
-				sb.append(" AND to_send_user_no = '" + uN + "'");
-				sb.append(" AND regist_date = ( ");
-				sb.append(" SELECT ");
-				sb.append(" MAX(regist_date) ");
-				sb.append("FROM ");
-				sb.append(" t_message_info ) ");
+				sb2.append("SELECT ");
+				sb2.append(" message ");
+				sb2.append("FROM ");
+				sb2.append(" t_message_info ");
+				sb2.append("WHERE ");
+				sb2.append(" send_user_no = '" + sesUserNo + "' ");
+				sb2.append(" AND to_send_user_no = '" + uN + "'");
+				sb2.append(" AND regist_date = ( ");
+				sb2.append(" SELECT ");
+				sb2.append(" MAX(regist_date) ");
+				sb2.append("FROM ");
+				sb2.append(" t_message_info ) ");
 				// SQL実行
-				ResultSet rs2 = stmt.executeQuery(sb.toString());
+				ResultSet rs2 = stmt.executeQuery(sb2.toString());
 				if (rs2.next()) {
 					// データあり
 					// そのままArrayListに入れる
