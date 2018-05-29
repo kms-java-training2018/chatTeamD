@@ -39,7 +39,6 @@ public class MainPageServlet extends HttpServlet {
 		String user = "DEV_TEAM_D";
 		String dbPassword = "D_DEV_TEAM";
 		// JDBCドライバーのロード
-		// JDBCドライバーのロード
 		try {
 
 			Class.forName("oracle.jdbc.driver.OracleDriver");
