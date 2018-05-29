@@ -20,7 +20,14 @@ public class LoginModel {
 		String password = bean.getPassword();
 
 		Connection conn = null;
-		String url = "192.168.51.67";
+/*		// Oracle JDBC Driverのロード
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e1) {
+			// TODO 自動生成された catch ブロック
+			e1.printStackTrace();
+		}*/
+		String url = "jdbc:oracle:thin:@localhost:192.168.51.67:1521:ORCL";
 		String user = "DEV_TEAM_D";
 		String dbPassword = "D_DEV_TEAM";
 		// JDBCドライバーのロード
@@ -35,7 +42,6 @@ public class LoginModel {
 		try {
 
 			conn = DriverManager.getConnection(url, user, dbPassword);
-
 
 			Statement stmt = conn.createStatement();
 
