@@ -13,8 +13,15 @@
 	<br>■会員一覧
 	<br>
 	<c:forEach var="obj" items="${userlist}" varStatus="status">
-	${obj}
+
+	<form method="post" action="/chat/directMessage">
+    	<input type="hidden" name="userNo" value="${userNo.get(status.index)}">
+    	<input type="submit" value="${obj}">
+	</form>
+	<p>>
 	${directMessage.get(status.index)}
+	</p>
+	<br>
 	</c:forEach>
 	<a href="/chat/directMessage">他会員名（メッセージへ）</a>
 	<br>■グループ一覧
