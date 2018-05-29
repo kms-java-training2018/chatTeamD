@@ -14,9 +14,14 @@ public class DirectMessageServlet extends HttpServlet {
 		req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
 	}
 
+
+
+
+
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
 		req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
 
 	}
 }
+
