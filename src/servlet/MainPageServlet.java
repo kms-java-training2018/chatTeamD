@@ -82,29 +82,31 @@ public class MainPageServlet extends HttpServlet {
 			}
 			// リクエストに送る
 			req.setAttribute("userlist", userName);
+			req.setAttribute("userNo", userNo);
+			// 初期化
+			sb.delete(0, sb.length());
 
 			// 3）最新メッセージ取得処理
-			StringBuilder sb2 = new StringBuilder();
 			/*
 			 * ユーザ一覧取得
 			 */
 			ArrayList<String> directMessage = new ArrayList<>();
 			for (int i = 0; i < userNo.size(); i++) {
 				int uN = userNo.get(i);
-				sb2.append("SELECT ");
-				sb2.append(" message ");
-				sb2.append("FROM ");
-				sb2.append(" t_message_info ");
-				sb2.append("WHERE ");
-				sb2.append(" send_user_no = '" + sesUserNo + "' ");
-				sb2.append(" AND to_send_user_no = '" + uN + "'");
-				sb2.append(" AND regist_date = ( ");
-				sb2.append(" SELECT ");
-				sb2.append(" MAX(regist_date) ");
-				sb2.append("FROM ");
-				sb2.append(" t_message_info ) ");
+				sb.append("SELECT ");
+				sb.append(" message ");
+				sb.append("FROM ");
+				sb.append(" t_message_info ");
+				sb.append("WHERE ");
+				sb.append(" send_user_no = '" + sesUserNo + "' ");
+				sb.append(" AND to_send_user_no = '" + uN + "'");
+				sb.append(" AND regist_date = ( ");
+				sb.append(" SELECT ");
+				sb.append(" MAX(regist_date) ");
+				sb.append("FROM ");
+				sb.append(" t_message_info ) ");
 				// SQL実行
-				ResultSet rs2 = stmt.executeQuery(sb2.toString());
+				ResultSet rs2 = stmt.executeQuery(sb.toString());
 				if (rs2.next()) {
 					// データあり
 					// そのままArrayListに入れる
@@ -114,6 +116,8 @@ public class MainPageServlet extends HttpServlet {
 					// 会話を始めましょう！
 					directMessage.add("会話を始めましょう");
 				}
+				// sb初期化
+				sb.delete(0, sb.length());
 			}
 			// リクエストに送る
 			req.setAttribute("directMessage", directMessage);
