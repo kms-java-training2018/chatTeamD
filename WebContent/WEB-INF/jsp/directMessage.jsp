@@ -17,7 +17,7 @@
 	<br>
 
 	<form action="/chat/directMessage" method="POST">
-		<input type="submit" value="メッセージの送信">
+		<input type="submit" value="メッセージの送信" name= "sendMessage">
 	</form>
 	<form action="/chat/main" method="POST">
 		<input type="submit" value="メインメニューへ戻る">
