@@ -20,7 +20,7 @@ public class LoginModel {
 		String password = bean.getPassword();
 
 		Connection conn = null;
-		String url = "192.168.51.67";
+		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
 		String user = "DEV_TEAM_D";
 		String dbPassword = "D_DEV_TEAM";
 		// JDBCドライバーのロード
@@ -42,7 +42,7 @@ public class LoginModel {
 			// SQL作成
 			sb.append("SELECT ");
 			sb.append(" user_no ");
-			sb.append(" ,user_name ");
+			sb.append(", user_name ");
 			sb.append("FROM ");
 			sb.append(" m_user ");
 			sb.append("WHERE ");
