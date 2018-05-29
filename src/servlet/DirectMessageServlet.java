@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 
 public class DirectMessageServlet extends HttpServlet {
 
-	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
 		//データベースと接続
 		Connection conn = null;
@@ -30,7 +30,7 @@ public class DirectMessageServlet extends HttpServlet {
 			//データベースへの接続作成
 			conn = DriverManager.getConnection("192.168.51.67","DEV_TEAM_D" ,"D_DEV_TEAM");
 
-			//パラメータチェック(セッションの存在チェック)
+			//セッションの存在チェック
 			//sessionスコープを使う下準備
 			HttpSession session = req.getSession();
 
@@ -41,9 +41,9 @@ public class DirectMessageServlet extends HttpServlet {
 
 	     	//sessionスコープに正しい値が入っていない場合はログインページに戻す
 
-	        	//まず、ID、Passwordの照合のために、正しいID、PasswordをDBから取得する
+	        	//1.まず、ID、Passwordの照合のために、正しいID、PasswordをDBから取得する
 	        	//SQLのSELECT文を準備
-	        	String sql = "SELECT USER_ID,PASSWORD";
+	        	String sql = "SELECT USER_ID,PASSWORD,USER_NO FROM M_USER";
 	        	//SQLをDBに届けるPreparedStatementのインスタンスを取得
 	        	PreparedStatement pStmt = conn.prepareStatement(sql);
 	        	//ResultSetインスタンスにSELECT文の結果を格納する
@@ -51,12 +51,55 @@ public class DirectMessageServlet extends HttpServlet {
 	        	//DBから出してきたID、Passwordを格納する変数を設定
 	        	String db_userID = result.getString("USER_ID");
 	        	String db_password = result.getString("PASSWORD");
+	        	String db_userNo = result.getString("USER_NO");
 
+	        	//2.Sessionスコープの中身とDBのID、Passwordが合っているか確認
+	        	if(!db_userID.equals(userId) || !db_password.equals(password)) {
+	                System.out.println("セッションがありません。");
+	                /*
+	                 * 下記はエラー画面への遷移ですが、エラー画面未作成のため、仮にforwardの先を/error.jspとしています。
+	                 */
+	                req.getRequestDispatcher("/error.jsp").forward(req, res);
+	            }
 
+	        	//パラメータのチェック
+	        	//mainPage.jspで指定されたuserNoというパラメータを受け取り、変数に格納(データの降り口)
+	            String userNo = req.getParameter("userNo");
 
+	          //2.mainPage.jspから送られてきたuserNoとDBのuserNOを照合
+	        	if(!db_userNo.equals(userNo)) {
+	                System.out.println("パラメーターが不正");
+	                /*
+	                 * 下記はエラー画面への遷移ですが、エラー画面未作成のため、仮にforwardの先を/error.jspとしています。
+	                 */
+	                req.getRequestDispatcher("/error.jsp").forward(req, res);
+	            }
 
+	        	//会話情報取得処理
+	        	//SQLのSELECT文を準備
+	        	String sqlMes = "SELECT MESSAGE FROM T_MESSAGE_INFO WHERE USER_NO = userNo";
+	        	//SQLをDBに届けるPreparedStatementのインスタンスを取得
+	        	PreparedStatement pStmtMes = conn.prepareStatement(sqlMes);
+	        	//ResultSetインスタンスにSELECT文の結果を格納する
+	        	ResultSet resultMes = pStmtMes.executeQuery();
+	        	String message = resultMes.getString("MESSAGE");
 
+	        	//会話情報のレコードが取得できなかった場合
+	        	if(message != null) {
 
+	        		//変数に格納したデータをsessionスコープで保存
+		            //messageという名前をそれぞれつける
+		            session.setAttribute("message",resultMes);
+
+		            req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
+
+	            }else {
+	            System.out.println("会話情報のレコードが取得できません");
+                /*
+                 * 下記はエラー画面への遷移ですが、エラー画面未作成のため、仮にforwardの先を/error.jspとしています。
+                 */
+                req.getRequestDispatcher("/error.jsp").forward(req, res);
+	            }
 
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -73,15 +116,13 @@ public class DirectMessageServlet extends HttpServlet {
 
 
 
-		req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
-
 
 
 	}
 
-	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-
-		req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
-
-	}
+//	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+//
+//		req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
+//
+//	}
 }
