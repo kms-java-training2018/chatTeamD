@@ -8,16 +8,23 @@
 </head>
 <body>
 	<form action="/chat/login" method="POST">
-	<center>
-		<p>会員ID
-		<input type="text" name="userId" value="${been.userId}"></p>
-		<p>パスワード
-		<input type="password" name="password" value="${been.password}"></p>
+		<center>
+			<table>
+				<tr>
+					<td>会員ID</td>
+					<td><input type="text" name="userId" value="${been.userId}" size="24"></td>
+				</tr>
+				<tr>
+					<td>パスワード</td>
+					<td><input type="password" name="password"
+						value="${been.password}" size="25"></td>
+			</table>
+			<br>
+			<font color="red"><strong>${ errorMessage }</strong></font>
+			<br><br>
 
-		<br>
-		<P>${errorMessage}</P>
-		<input type="submit" value="ログイン">
-</center>
+			<input type="submit" value="ログイン">
+		</center>
 	</form>
 </body>
 </html>

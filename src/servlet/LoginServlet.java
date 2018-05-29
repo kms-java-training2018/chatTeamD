@@ -61,6 +61,7 @@ public class LoginServlet extends HttpServlet {
 			// 行き先を次の画面に
 			direction = "/WEB-INF/jsp/mainPage.jsp";
 		}
+		// エラーメッセージの表示
 		req.setAttribute("errorMessage", bean.getErrorMessage());
 		req.getRequestDispatcher(direction).forward(req, res);
 	}
