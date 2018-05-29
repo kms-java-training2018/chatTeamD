@@ -20,9 +20,9 @@ public class LoginModel {
 		String password = bean.getPassword();
 
 		Connection conn = null;
-		String url = "";
-		String user = "";
-		String dbPassword = "";
+		String url = "192.168.51.67";
+		String user = "DEV_TEAM_D";
+		String dbPassword = "D_DEV_TEAM";
 		// JDBCドライバーのロード
 		try {
 
@@ -36,6 +36,9 @@ public class LoginModel {
 
 			conn = DriverManager.getConnection(url, user, dbPassword);
 
+
+			Statement stmt = conn.createStatement();
+
 			// SQL作成
 			sb.append("SELECT ");
 			sb.append(" user_no ");
@@ -47,7 +50,7 @@ public class LoginModel {
 			sb.append(" AND password = '" + password + "'");
 
 			// SQL実行
-			Statement stmt = conn.createStatement();
+
 			ResultSet rs = stmt.executeQuery(sb.toString());
 
 			if (!rs.next()) {
