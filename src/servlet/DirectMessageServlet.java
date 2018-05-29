@@ -116,6 +116,7 @@ public class DirectMessageServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+
 /*
 * メッセージ送信処理
 */
@@ -128,11 +129,15 @@ public class DirectMessageServlet extends HttpServlet {
 
 
 
+
 	}
+
 
 //	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 //
 //		req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
 //
 //	}
+ //branch 'feature-chat-teamD' of https://github.com/kms-java-training2018/chatteamD
 }
+
