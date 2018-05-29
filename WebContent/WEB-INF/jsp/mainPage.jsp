@@ -12,6 +12,10 @@
 	<h2>メインメニュー</h2>
 	<br>■会員一覧
 	<br>
+	<c:forEach var="obj" items="${userlist}" varStatus="status">
+	${obj}
+	${directMessage.get(status.index)}
+	</c:forEach>
 	<a href="/chat/directMessage">他会員名（メッセージへ）</a>
 	<br>■グループ一覧
 	<br>
