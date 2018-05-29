@@ -17,7 +17,9 @@ import javax.servlet.http.HttpSession;
 public class DirectMessageServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-
+/*
+* 画面表示処理
+*/
 		//データベースと接続
 		Connection conn = null;
 		try {
@@ -59,6 +61,7 @@ public class DirectMessageServlet extends HttpServlet {
 	                /*
 	                 * 下記はエラー画面への遷移ですが、エラー画面未作成のため、仮にforwardの先を/error.jspとしています。
 	                 */
+	                session.invalidate();
 	                req.getRequestDispatcher("/error.jsp").forward(req, res);
 	            }
 
@@ -72,12 +75,13 @@ public class DirectMessageServlet extends HttpServlet {
 	                /*
 	                 * 下記はエラー画面への遷移ですが、エラー画面未作成のため、仮にforwardの先を/error.jspとしています。
 	                 */
+	                session.invalidate();
 	                req.getRequestDispatcher("/error.jsp").forward(req, res);
 	            }
 
 	        	//会話情報取得処理
 	        	//SQLのSELECT文を準備
-	        	String sqlMes = "SELECT MESSAGE FROM T_MESSAGE_INFO WHERE USER_NO = userNo";
+	        	String sqlMes = "SELECT MESSAGE FROM T_MESSAGE_INFO WHERE USER_NO = " + userNo + "";
 	        	//SQLをDBに届けるPreparedStatementのインスタンスを取得
 	        	PreparedStatement pStmtMes = conn.prepareStatement(sqlMes);
 	        	//ResultSetインスタンスにSELECT文の結果を格納する
@@ -98,6 +102,7 @@ public class DirectMessageServlet extends HttpServlet {
                 /*
                  * 下記はエラー画面への遷移ですが、エラー画面未作成のため、仮にforwardの先を/error.jspとしています。
                  */
+	            session.invalidate();
                 req.getRequestDispatcher("/error.jsp").forward(req, res);
 	            }
 
@@ -112,6 +117,13 @@ public class DirectMessageServlet extends HttpServlet {
 			}
 		}
 
+/*
+* メッセージ送信処理
+*/
+		//パラメータチェック
+		//directMessage.jspで指定されたsendMessageというパラメータを受け取り、変数に格納(データの降り口)
+        String sendMessage = req.getParameter("sendMessage");
+        //入力値のチェック
 
 
 
@@ -120,9 +132,12 @@ public class DirectMessageServlet extends HttpServlet {
 
 	}
 
+
 //	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 //
 //		req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
 //
 //	}
+ //branch 'feature-chat-teamD' of https://github.com/kms-java-training2018/chatteamD
 }
+
