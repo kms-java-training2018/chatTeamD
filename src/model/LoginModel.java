@@ -36,7 +36,6 @@ public class LoginModel {
 
 			conn = DriverManager.getConnection(url, user, dbPassword);
 
-
 			Statement stmt = conn.createStatement();
 
 			// SQL作成
