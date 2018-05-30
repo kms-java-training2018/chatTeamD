@@ -15,6 +15,7 @@ import model.LoginModel;
 /**
  * ログイン画面用サーブレット
  */
+
 public class LoginServlet extends HttpServlet {
 
 	/**
@@ -57,7 +58,7 @@ public class LoginServlet extends HttpServlet {
 			sessionBean.setUserNo(bean.getUserNo());
 			HttpSession session = req.getSession();
 			session.setAttribute("session", sessionBean);
-
+			session.setAttribute("userId", userId);
 			// 行き先を次の画面に
 			direction = "/main";
 		}

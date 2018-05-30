@@ -93,17 +93,19 @@ public class ShowProfileServlet extends HttpServlet {
 			String showMyName = "";
 			String showMyPageText = "";
 			String errorMsg1 = "";
-			if(!rs.next()) {
-				errorMsg1 ="レコードが取得できませんでした";
-				req.setAttribute("errorMsg", errorMsg1);
-				req.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(req, res);
-				return;
-			}else {
 			while(rs.next()) {
 			showMyPageText = rs.getString("my_page_text");
 			showMyName = rs.getString("user_name");
 			}
+
+			// showMyPageTextに何も入っていない場合、エラーページへ遷移する
+			if(showMyPageText == "") {
+				errorMsg1 ="レコードが取得できませんでした";
+				req.setAttribute("errorMsg", errorMsg1);
+				req.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(req, res);
+				return;
 			}
+
 			req.setAttribute("showMyPageText", showMyPageText);
 			req.setAttribute("showName", showMyName);
 		} catch (SQLException e) {
