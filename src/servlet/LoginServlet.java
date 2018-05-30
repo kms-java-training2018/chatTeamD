@@ -15,6 +15,7 @@ import model.LoginModel;
 /**
  * ログイン画面用サーブレット
  */
+
 public class LoginServlet extends HttpServlet {
 
 	/**
