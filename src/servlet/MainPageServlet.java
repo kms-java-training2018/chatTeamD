@@ -88,7 +88,7 @@ public class MainPageServlet extends HttpServlet {
 
 			// 3）最新メッセージ取得処理
 			/*
-			 * ユーザ一覧取得
+			 * メッセージ一覧取得
 			 */
 			ArrayList<String> directMessage = new ArrayList<>();
 			for (int i = 0; i < userNo.size(); i++) {
@@ -98,13 +98,14 @@ public class MainPageServlet extends HttpServlet {
 				sb.append("FROM ");
 				sb.append(" t_message_info ");
 				sb.append("WHERE ");
-				sb.append(" send_user_no = '" + sesUserNo + "' ");
-				sb.append(" AND to_send_user_no = '" + uN + "'");
-				sb.append(" AND regist_date = ( ");
+				sb.append(" regist_date = ( ");
 				sb.append(" SELECT ");
 				sb.append(" MAX(regist_date) ");
 				sb.append("FROM ");
-				sb.append(" t_message_info ) ");
+				sb.append(" t_message_info ");
+				sb.append("WHERE ");
+				sb.append(" send_user_no = '" + sesUserNo + "' ");
+				sb.append(" AND to_send_user_no = '" + uN + "' )");
 				// SQL実行
 				ResultSet rs2 = stmt.executeQuery(sb.toString());
 				if (rs2.next()) {
@@ -122,6 +123,65 @@ public class MainPageServlet extends HttpServlet {
 			// リクエストに送る
 			req.setAttribute("directMessage", directMessage);
 
+			// 4) 参加グループ一覧取得処理
+			/*
+			 * 自分が参加しているグループ一覧取得
+			 */
+			ArrayList<Integer> groupNo = new ArrayList<>();
+			ArrayList<String> groupName = new ArrayList<>();
+			sb.append("SELECT ");
+			sb.append(" A.group_no , B.group_name ");
+			sb.append("FROM ");
+			sb.append(" t_group_info A full outer join m_group B on A.group_no = B.group_no ");
+			sb.append("WHERE ");
+			sb.append(" A.user_no = '" + sesUserNo + "' ");
+			// SQL実行
+			ResultSet rs3 = stmt.executeQuery(sb.toString());
+			// それぞれArrayListに入れる
+			while (rs3.next()) {
+				groupNo.add(rs3.getInt("GROUP_NO"));
+				groupName.add(rs3.getString("GROUP_NAME"));
+			}
+			// sb初期化
+			sb.delete(0, sb.length());
+			// リクエストに送る
+			req.setAttribute("grouplist", groupName);
+			req.setAttribute("groupNO", groupNo);
+			/*
+			 * メッセージ一覧取得
+			 */
+			ArrayList<String> groupMessage = new ArrayList<>();
+			for (int i = 0; i < groupNo.size(); i++) {
+				int gN = groupNo.get(i);
+				sb.append("SELECT ");
+				sb.append(" message ");
+				sb.append("FROM ");
+				sb.append(" t_message_info ");
+				sb.append("WHERE ");
+				sb.append(" regist_date = ( ");
+				sb.append(" SELECT ");
+				sb.append(" MAX(regist_date) ");
+				sb.append("FROM ");
+				sb.append(" t_message_info ");
+				sb.append("WHERE ");
+				sb.append(" to_send_group_no = '" + gN + "' )");
+				// SQL実行
+				ResultSet rs4 = stmt.executeQuery(sb.toString());
+				if (rs4.next()) {
+					// データあり
+					// そのままArrayListに入れる
+					groupMessage.add(rs4.getString("MESSAGE"));
+				} else {
+					// データなし
+					// 会話を始めましょう！
+					groupMessage.add("会話を始めましょう");
+				}
+				// sb初期化
+				sb.delete(0, sb.length());
+			}
+			// リクエストに送る
+			req.setAttribute("groupMessage", groupMessage);
+
 		} catch (SQLException e) {
 			// アクセスできるかで出るエラー
 			e.printStackTrace();
@@ -135,7 +195,6 @@ public class MainPageServlet extends HttpServlet {
 
 		}
 
-		// 4) 参加グループ一覧取得処理
 		// 出力
 		req.getRequestDispatcher("/WEB-INF/jsp/mainPage.jsp").forward(req, res);
 
