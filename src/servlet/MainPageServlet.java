@@ -26,6 +26,8 @@ public class MainPageServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		// loginからはpostで送られてくる
 
+
+		int errorFlag=0;
 		/**
 		 *  1）パラメータチェック
 		 */
@@ -210,6 +212,7 @@ public class MainPageServlet extends HttpServlet {
 		} catch (SQLException e) {
 			// エラーはすべてここにくる
 			e.printStackTrace();
+			errorFlag=1;
 			// SQLの接続は絶対に切断
 		} finally {
 			try {
@@ -221,7 +224,12 @@ public class MainPageServlet extends HttpServlet {
 		}
 
 		// 出力
-		req.getRequestDispatcher("/WEB-INF/jsp/mainPage.jsp").forward(req, res);
+		if(errorFlag==1) {
+			req.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp").forward(req, res);
+		}else {
+			req.getRequestDispatcher("/WEB-INF/jsp/mainPage.jsp").forward(req, res);
+		}
+
 
 	}
 
