@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +23,9 @@ public class DirectMessageServlet extends HttpServlet {
 */
 		//データベースと接続
 		Connection conn = null;
+		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
+		String user = "DEV_TEAM_D";
+		String dbPassword = "D_DEV_TEAM";
 		try {
 			//JDBCドライバーのロード
 			try {
@@ -30,8 +34,8 @@ public class DirectMessageServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			//データベースへの接続作成
-			conn = DriverManager.getConnection("192.168.51.67","DEV_TEAM_D" ,"D_DEV_TEAM");
-
+			conn = DriverManager.getConnection(url, user, dbPassword);
+			Statement stmt = conn.createStatement();
 			//セッションの存在チェック
 			//sessionスコープを使う下準備
 			HttpSession session = req.getSession();
