@@ -55,12 +55,28 @@ public class DirectMessageServlet extends HttpServlet {
 	        	String db_password = result.getString("PASSWORD");
 	        	String db_userNo = result.getString("USER_NO");
 
+
+
+
+
+
+	        	//ログインしているユーザー自身の会員番号がのちに送信機能で必要となるので、
+	        	//あらかじめIDとPasswordを元に会員番号を取得しておく
+	        	String sqlGetUserNo = "SELECT USER_NO FROM M_USER WHERE USER_ID = "+ userId +"";
+	        	//SQLをDBに届けるPreparedStatementのインスタンスを取得
+	        	PreparedStatement pStmtGetMyNo = conn.prepareStatement(sqlGetUserNo);
+	        	//ResultSetインスタンスにSELECT文の結果を格納する
+	        	ResultSet resultGetMyNo = pStmtGetMyNo.executeQuery();
+	        	//取得したログインしているユーザー自身の会員番号を入れる変数を宣言
+	        	String myNo = resultGetMyNo.getString("USER_NO");
+
+
+
+
+
 	        	//2.Sessionスコープの中身とDBのID、Passwordが合っているか確認
 	        	if(!db_userID.equals(userId) || !db_password.equals(password)) {
 	                System.out.println("セッションがありません。");
-	                /*
-	                 * 下記はエラー画面への遷移ですが、エラー画面未作成のため、仮にforwardの先を/error.jspとしています。
-	                 */
 	                session.invalidate();
 	                req.getRequestDispatcher("/error.jsp").forward(req, res);
 	            }
@@ -72,9 +88,6 @@ public class DirectMessageServlet extends HttpServlet {
 	          //2.mainPage.jspから送られてきたuserNoとDBのuserNOを照合
 	        	if(!db_userNo.equals(userNo)) {
 	                System.out.println("パラメーターが不正");
-	                /*
-	                 * 下記はエラー画面への遷移ですが、エラー画面未作成のため、仮にforwardの先を/error.jspとしています。
-	                 */
 	                session.invalidate();
 	                req.getRequestDispatcher("/error.jsp").forward(req, res);
 	            }
@@ -99,9 +112,6 @@ public class DirectMessageServlet extends HttpServlet {
 
 	            }else {
 	            System.out.println("会話情報のレコードが取得できません");
-                /*
-                 * 下記はエラー画面への遷移ですが、エラー画面未作成のため、仮にforwardの先を/error.jspとしています。
-                 */
 	            session.invalidate();
                 req.getRequestDispatcher("/error.jsp").forward(req, res);
 	            }
@@ -115,12 +125,39 @@ public class DirectMessageServlet extends HttpServlet {
 	        	//入力値のチェック
 	        	if(sendMessage == null || sendMessage.length()>100) {
 	        		System.out.println("パラメーターが不正");
-	        		/*
-	        		 * 下記はエラー画面への遷移ですが、エラー画面未作成のため、仮にforwardの先を/error.jspとしています。
-	        		 */
-	        		session.invalidate();
-	        		req.getRequestDispatcher("/error.jsp").forward(req, res);
+	        	//エラーメッセージを表示し、メッセージ画面に遷移
+	        		System.out.println("100字以内のメッセージを入力してください。");
+	        		req.getRequestDispatcher("/directMessage.jsp").forward(req, res);
 	        	}
+
+	        	//会話情報登録処理
+
+
+	        	try {
+	        	//SQLのSELECT文を準備
+	        	String sqlSendMes = "INSERT INTO T_MESSAGE_INFO(MESSAGE_NO, SEND_USER_NO, MESSAGE, TO_SEND_USER_NO,DELETE_FLAG, REGIST_DATE)VALUES("+myNo+","+ sendMessage+ ","+ userNo+", 0, SYSDATE)";
+	        	//SQLをDBに届けるPreparedStatementのインスタンスを取得
+	        	PreparedStatement pStmtSendMes = conn.prepareStatement(sqlSendMes);
+
+	        	//内容を登録できなかった場合、エラー画面に遷移する
+	            }catch(SQLException e) {
+	            	System.out.println("会話内容が登録できません。");
+	                session.invalidate();
+	                req.getRequestDispatcher("/error.jsp").forward(req, res);
+	            }
+
+
+
+/*
+* メッセージ削除処理
+*/
+	        	//確認ダイアログ表示処理
+
+
+	        	//会話情報論理削除処理
+	        	//SQLのSELECT文を準備
+
+	        	//SQLをDBに届けるPreparedStatementのインスタンスを取得
 
 		}catch(SQLException e) {
 			e.printStackTrace();
