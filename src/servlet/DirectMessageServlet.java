@@ -36,6 +36,7 @@ public class DirectMessageServlet extends HttpServlet {
 			//データベースへの接続作成
 			conn = DriverManager.getConnection(url, user, dbPassword);
 			Statement stmt = conn.createStatement();
+
 			//セッションの存在チェック
 			//sessionスコープを使う下準備
 			HttpSession session = req.getSession();
@@ -43,20 +44,18 @@ public class DirectMessageServlet extends HttpServlet {
 			//LoginServletでsessionスコープに入れた値が正しいか(入っているか)判断
 	        //まずはsessionスコープに入っている値を取得
 	        String userId = (String)session.getAttribute("userId");
-	        String password = (String)session.getAttribute("password");
 
 	     	//sessionスコープに正しい値が入っていない場合はログインページに戻す
 
-	        	//1.まず、ID、Passwordの照合のために、正しいID、PasswordをDBから取得する
+	        	//1.まず、照合のために、正しいIDをDBから取得する
 	        	//SQLのSELECT文を準備
-	        	String sql = "SELECT USER_ID,PASSWORD,USER_NO FROM M_USER";
+	        	String sql = "SELECT USER_ID,USER_NO FROM M_USER";
 	        	//SQLをDBに届けるPreparedStatementのインスタンスを取得
 	        	PreparedStatement pStmt = conn.prepareStatement(sql);
 	        	//ResultSetインスタンスにSELECT文の結果を格納する
 	        	ResultSet result = pStmt.executeQuery();
 	        	//DBから出してきたID、Passwordを格納する変数を設定
 	        	String db_userID = result.getString("USER_ID");
-	        	String db_password = result.getString("PASSWORD");
 	        	String db_userNo = result.getString("USER_NO");
 
 
@@ -65,7 +64,7 @@ public class DirectMessageServlet extends HttpServlet {
 
 
 	        	//ログインしているユーザー自身の会員番号がのちに送信機能で必要となるので、
-	        	//あらかじめIDとPasswordを元に会員番号を取得しておく
+	        	//あらかじめIDを元に会員番号を取得しておく
 	        	String sqlGetUserNo = "SELECT USER_NO FROM M_USER WHERE USER_ID = "+ userId +"";
 	        	//SQLをDBに届けるPreparedStatementのインスタンスを取得
 	        	PreparedStatement pStmtGetMyNo = conn.prepareStatement(sqlGetUserNo);
@@ -79,7 +78,7 @@ public class DirectMessageServlet extends HttpServlet {
 
 
 	        	//2.Sessionスコープの中身とDBのID、Passwordが合っているか確認
-	        	if(!db_userID.equals(userId) || !db_password.equals(password)) {
+	        	if(!db_userID.equals(userId) ) {
 	                System.out.println("セッションがありません。");
 	                session.invalidate();
 	                req.getRequestDispatcher("/error.jsp").forward(req, res);
