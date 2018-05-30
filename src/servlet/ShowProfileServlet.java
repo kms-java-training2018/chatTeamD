@@ -33,7 +33,7 @@ public class ShowProfileServlet extends HttpServlet {
 		if(sesUserNo == null) {
 			errorMsg = "セッションが切れました";
 			req.setAttribute("errorMsg", errorMsg);
-			req.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(req, res);
+			req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, res);
 			return;
 			}
 
