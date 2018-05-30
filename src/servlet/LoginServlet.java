@@ -59,7 +59,7 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("session", sessionBean);
 
 			// 行き先を次の画面に
-			direction = "/WEB-INF/jsp/mainPage.jsp";
+			direction = "/main";
 		}
 		// エラーメッセージの表示
 		req.setAttribute("errorMessage", bean.getErrorMessage());
