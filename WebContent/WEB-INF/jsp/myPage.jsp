@@ -8,27 +8,36 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>チャット研修プログラム</h1>
-	<h2>マイページ</h2>
-	<center>
-		<table>
-			<tr>
-				<td>名前</td>
-				<td>${ myName }</td>
-			</tr>
-			<tr>
-				<td>自己紹介</td>
-				<td>${ myPageText }</td>
-			</tr>
-		</table>
-	</center>
-	${ errorMsg }
+	<br>
+	<br>
 	<form action="/chat/myPage" method="POST">
-		<input type="submit" value="プロフィールを更新">
+		<center>
+			<table width=>
+				<tr>
+					<td width="20%">名前</td>
+					<td width="20%"><textarea cols="30" name="dispName">${ myName }</textarea>
+				</tr>
+				<tr>
+					<td width="20%">自己紹介</td>
+					<td width="20%"><textarea cols="30" rows="20"
+							name="myPageText">${ myPageText }</textarea>
+				</tr>
+				<tr>
+					<td><input type="submit" value="プロフィールを更新"></td>
+					<td>
+						<form action="/chat/main" method="POST">
+							<input type="submit" value="メインメニューに戻る">
+						</form>
+					</td>
+				</tr>
+			</table>
+		</center>
+		<br> ${ errorMsg }<br> <input type="submit"
+			value="プロフィールを更新">
 	</form>
-	<form action="/chat/main" method="POST">
-		<input type="submit" value="メインメニューに戻る">
-	</form>
+
+	${ errorMsg }
+	<br>
 
 </body>
 </html>
