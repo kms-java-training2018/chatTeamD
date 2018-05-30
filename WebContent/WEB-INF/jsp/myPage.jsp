@@ -10,7 +10,21 @@
 <body>
 	<h1>チャット研修プログラム</h1>
 	<h2>マイページ</h2>
-	<form action="/chat/main" method="POST">
+
+
+	<form action="/chat/myPage" method="POST">
+		<center>
+		<table>
+			<tr>
+				<td>名前</td>
+				<td>${ myName }</td>
+			</tr>
+			<tr>
+				<td>自己紹介</td>
+				<td>${ myPageText }</td>
+			</tr>
+		</table>
+		</center>
 		<input type="submit" value="プロフィールを更新">
 	</form>
 	<form action="/chat/main" method="POST">
