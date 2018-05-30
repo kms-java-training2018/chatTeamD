@@ -132,19 +132,30 @@ public class DirectMessageServlet extends HttpServlet {
 
 	        	//会話情報登録処理
 
+	        		//会話番号の自動採番処理
+	        			//会話番号の最大値を持ってくるSQL文を送信する
+	        			String sqlGetMax = "SELECT MAX(MESSAGE_NO) FROM  T_MESSAGE_INFO";
+	        			//SQLをDBに届けるPreparedStatementのインスタンスを取得
+	        			PreparedStatement pStmtGetMax = conn.prepareStatement(sqlGetMax);
+	        			//ResultSetインスタンスにSELECT文の結果を格納する
+	    	        	ResultSet resultMax = pStmtGetMax.executeQuery();
+	    	        	int n = resultMax.getInt("MESSAGE_NO");
 
-	        	try {
-	        	//SQLのSELECT文を準備
-	        	String sqlSendMes = "INSERT INTO T_MESSAGE_INFO(MESSAGE_NO, SEND_USER_NO, MESSAGE, TO_SEND_USER_NO,DELETE_FLAG, REGIST_DATE)VALUES("+myNo+","+ sendMessage+ ","+ userNo+", 0, SYSDATE)";
-	        	//SQLをDBに届けるPreparedStatementのインスタンスを取得
-	        	PreparedStatement pStmtSendMes = conn.prepareStatement(sqlSendMes);
+	    	        	//会話番号の最大値+1を入れる変数を宣言
+	    	        	int newMesNo = n++;
 
-	        	//内容を登録できなかった場合、エラー画面に遷移する
-	            }catch(SQLException e) {
-	            	System.out.println("会話内容が登録できません。");
-	                session.invalidate();
-	                req.getRequestDispatcher("/error.jsp").forward(req, res);
-	            }
+	        		try {
+	        			//SQLのSELECT文を準備
+	        			String sqlSendMes = "INSERT INTO T_MESSAGE_INFO(MESSAGE_NO, SEND_USER_NO, MESSAGE, TO_SEND_USER_NO,DELETE_FLAG, REGIST_DATE)VALUES("+newMesNo+","+myNo+","+ sendMessage+ ","+ userNo+", 0, SYSDATE)";
+	        			//SQLをDBに届けるPreparedStatementのインスタンスを取得
+	        			PreparedStatement pStmtSendMes = conn.prepareStatement(sqlSendMes);
+
+	        			//内容を登録できなかった場合、エラー画面に遷移する
+	        		}catch(SQLException e) {
+	        			System.out.println("会話内容が登録できません。");
+	        			session.invalidate();
+	        			req.getRequestDispatcher("/error.jsp").forward(req, res);
+	        		}
 
 
 
