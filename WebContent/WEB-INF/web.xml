@@ -77,4 +77,12 @@
 		<servlet-name>ErrorPageServlet</servlet-name>
 		<url-pattern>/errorPage</url-pattern>
 	</servlet-mapping>
+			<servlet>
+		<servlet-name>MyPageUpdateServlet</servlet-name>
+		<servlet-class>servlet.MyPageUpdateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MyPageUpdateServlet</servlet-name>
+		<url-pattern>/updateMyPage</url-pattern>
+	</servlet-mapping>
 </web-app>
