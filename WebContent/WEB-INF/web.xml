@@ -69,4 +69,12 @@
 		<servlet-name>ShowProfileServlet</servlet-name>
 		<url-pattern>/showProfile</url-pattern>
 	</servlet-mapping>
+		<servlet>
+		<servlet-name>ErrorPageServlet</servlet-name>
+		<servlet-class>servlet.ErrorPageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ErrorPageServlet</servlet-name>
+		<url-pattern>/errorPage</url-pattern>
+	</servlet-mapping>
 </web-app>

@@ -11,21 +11,37 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bean.LoginBean;
+import bean.SessionBean;
 
 public class ShowProfileServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-
+		String errorMsg = "aiueo";
 		// beanの初期化
 		LoginBean bean = new LoginBean();
 		String direction = "/WEB-INF/jsp/showProfile.jsp";
 
+		// Sessionの取得
+		HttpSession session = req.getSession();
+		SessionBean sesBean = (SessionBean)session.getAttribute("session");
+		String sesUserNo = sesBean.getUserNo();
+
+		// Sessionにユーザ情報がなければ、エラーページへ遷移
+		if(sesUserNo == null) {
+			errorMsg = "セッションが切れました";
+			req.setAttribute("errorMsg", errorMsg);
+			req.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(req, res);
+			return;
+			}
+
 		// パラメータの取得
 		String userNo = (String) req.getParameter("userId");
+
 		// デバッグ用userNo設定
-		userNo = "13";
+		userNo = "1";
 
 		// 取得したユーザーナンバーをセット
 		bean.setUserNo(userNo);
@@ -76,15 +92,26 @@ public class ShowProfileServlet extends HttpServlet {
 			ResultSet rs = stmt.executeQuery(sb.toString());
 			String showMyName = "";
 			String showMyPageText = "";
-
+			String errorMsg1 = "";
+			if(!rs.next()) {
+				errorMsg1 ="レコードが取得できませんでした";
+				req.setAttribute("errorMsg", errorMsg1);
+				req.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(req, res);
+				return;
+			}else {
 			while(rs.next()) {
 			showMyPageText = rs.getString("my_page_text");
 			showMyName = rs.getString("user_name");
+			}
 			}
 			req.setAttribute("showMyPageText", showMyPageText);
 			req.setAttribute("showName", showMyName);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			// レコードが取得できない場合はエラー画面へ。
+			errorMsg = "レコードが取得できませんでした";
+			req.setAttribute("errorMsg", errorMsg);
+			req.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(req, res);
 			// SQLの接続は絶対に切断
 		} finally {
 			try {
