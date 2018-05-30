@@ -34,7 +34,6 @@ public class MyPageUpdateServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		String msg ="";
-
 		String sendDispName = req.getParameter("dispName");
 		String sendMyPageText = req.getParameter("myPageText");
 
@@ -88,32 +87,22 @@ public class MyPageUpdateServlet extends HttpServlet {
 					Statement stmt = conn.createStatement();
 
 					// SQL作成
-					if(sendDispName != null) {
+					if(sendDispName != "" && sendMyPageText != "") {
 
 					sb.append("UPDATE ");
 					sb.append("M_USER ");
 					sb.append("SET ");
 					sb.append("USER_NAME = '" + sendDispName + "' ");
+					sb.append(", MY_PAGE_TEXT = '" + sendMyPageText + "' ");
 					sb.append("WHERE ");
 					sb.append(" user_id = '" + userId + "' ");
 					ResultSet rs = stmt.executeQuery(sb.toString());
-					sb.delete(0, sb.length());
-					}
-
-					if(sendMyPageText != null) {
-					sb.append("UPDATE ");
-					sb.append("M_USER ");
-					sb.append("SET ");
-					sb.append("MY_PAGE_TEXT = '" + sendMyPageText + "' ");
-					sb.append("WHERE ");
-					sb.append(" user_id = '" + userId + "' ");
-					ResultSet rs = stmt.executeQuery(sb.toString());
-					}
-					// SQL実行
-
-					ResultSet rs = stmt.executeQuery(sb.toString());
-					if(sendMyPageText != null && sendDispName != null) {
-						msg = "更新しました";
+					msg = "更新しました";
+					}else {
+						msg = "入力に不備があります";
+						req.setAttribute("msg", msg);
+						req.getRequestDispatcher("/myPage").forward(req, res);
+						return;
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();

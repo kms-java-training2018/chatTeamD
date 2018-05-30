@@ -22,6 +22,7 @@
 			</tr>
 		</table>
 	</center>
+	${ errorMsg }
 	<form action="/chat/myPage" method="POST">
 		<input type="submit" value="プロフィールを更新">
 	</form>
