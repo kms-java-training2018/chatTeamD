@@ -27,7 +27,7 @@
 	<br>
 	${groupNullMes}
 	<c:forEach var="obj" items="${grouplist}" varStatus="status">
-		<form method="post" action="/chat/groupMessage">
+		<form method="post" action="/chat/groupMessage" method="POST">
 			<input type="hidden" name="groupNo"
 				value="${groupNo.get(status.index)}"> <input type="submit"
 				value="${obj}">
@@ -35,9 +35,10 @@
 		<p>> ${groupMessage.get(status.index)}</p>
 		<br>
 	</c:forEach>
+
 	<br>
 	<br>
-	<form action="/chat/makeGroup" method="POST">
+	<form action="/chat/makeGroup" method="GET">
 		<input type="submit" value="グループの作成">
 	</form>
 	<form action="/chat/myPage" method="GET">
