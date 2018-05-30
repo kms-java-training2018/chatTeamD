@@ -106,6 +106,22 @@ public class DirectMessageServlet extends HttpServlet {
                 req.getRequestDispatcher("/error.jsp").forward(req, res);
 	            }
 
+/*
+* メッセージ送信処理
+*/
+	        	//パラメータチェック
+	        	//directMessage.jspで指定されたsendMessageというパラメータを受け取り、変数に格納(データの降り口)
+	        	String sendMessage = req.getParameter("sendMessage");
+	        	//入力値のチェック
+	        	if(sendMessage == null || sendMessage.length()>100) {
+	        		System.out.println("パラメーターが不正");
+	        		/*
+	        		 * 下記はエラー画面への遷移ですが、エラー画面未作成のため、仮にforwardの先を/error.jspとしています。
+	        		 */
+	        		session.invalidate();
+	        		req.getRequestDispatcher("/error.jsp").forward(req, res);
+	        	}
+
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -116,14 +132,6 @@ public class DirectMessageServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-
-/*
-* メッセージ送信処理
-*/
-		//パラメータチェック
-		//directMessage.jspで指定されたsendMessageというパラメータを受け取り、変数に格納(データの降り口)
-        String sendMessage = req.getParameter("sendMessage");
-        //入力値のチェック
 
 
 
