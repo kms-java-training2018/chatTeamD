@@ -25,6 +25,7 @@
 
 	<br>■グループ一覧
 	<br>
+	${groupNullMes}
 	<c:forEach var="obj" items="${grouplist}" varStatus="status">
 		<form method="post" action="/chat/groupMessage">
 			<input type="hidden" name="groupNo"
@@ -34,7 +35,6 @@
 		<p>> ${groupMessage.get(status.index)}</p>
 		<br>
 	</c:forEach>
-	<a href="/chat/groupMessage">グループ名（グループメッセージへ）</a>
 	<br>
 	<br>
 	<form action="/chat/makeGroup" method="POST">

@@ -26,11 +26,21 @@ public class MainPageServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		// loginからはpostで送られてくる
 
-		// パラメータチェック
+		/**
+		 *  1）パラメータチェック
+		 */
 		HttpSession session = req.getSession();
 		SessionBean sesBean = (SessionBean) session.getAttribute("session");
 		String sesUserNo = sesBean.getUserNo();
-		// 2）他会員一覧取得処理
+		if(sesUserNo.equals(null)) {
+			// セッション情報なし
+			// エラーページへ
+			req.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(req, res);
+		}
+
+		/**
+		 *  2）他会員一覧取得処理
+		 */
 		StringBuilder sb = new StringBuilder();
 		/*
 		 * DBログイン
@@ -60,6 +70,8 @@ public class MainPageServlet extends HttpServlet {
 			sb.append(", user_name ");
 			sb.append("FROM ");
 			sb.append(" m_user ");
+			sb.append(" ORDER BY ");
+			sb.append(" user_no ");
 			// SQL実行
 			ResultSet rs = stmt.executeQuery(sb.toString());
 			// それぞれArrayListに入れる
@@ -71,14 +83,13 @@ public class MainPageServlet extends HttpServlet {
 				int check = rs.getInt("USER_NO");
 				int check2 = Integer.parseInt(sesUserNo);
 				if (check == check2) {
-
+					// 自分なので追加しない
 				} else {
-
+					// 自分以外なのでリストに追加
 					userNo.add(rs.getInt("USER_NO"));
 					userID.add(rs.getString("USER_ID"));
 					userName.add(rs.getString("USER_NAME"));
 				}
-
 			}
 			// リクエストに送る
 			req.setAttribute("userlist", userName);
@@ -86,7 +97,9 @@ public class MainPageServlet extends HttpServlet {
 			// 初期化
 			sb.delete(0, sb.length());
 
-			// 3）最新メッセージ取得処理
+			/**
+			 *  3）最新メッセージ取得処理
+			 */
 			/*
 			 * メッセージ一覧取得
 			 */
@@ -104,18 +117,21 @@ public class MainPageServlet extends HttpServlet {
 				sb.append("FROM ");
 				sb.append(" t_message_info ");
 				sb.append("WHERE ");
-				sb.append(" send_user_no = '" + sesUserNo + "' ");
-				sb.append(" AND to_send_user_no = '" + uN + "' )");
+				sb.append(" ( send_user_no = '" + sesUserNo + "' ");
+				sb.append(" or send_user_no = '" + uN + "' ) ");
+				sb.append(" AND ( to_send_user_no = '" + sesUserNo + "' ");
+				sb.append(" or to_send_user_no = '" + uN + "' )");
+				sb.append(" AND delete_flag = '0' )");
 				// SQL実行
 				ResultSet rs2 = stmt.executeQuery(sb.toString());
 				if (rs2.next()) {
-					// データあり
+					// メッセージあり
 					// そのままArrayListに入れる
 					directMessage.add(rs2.getString("Message"));
 				} else {
-					// データなし
+					// メッセージなし
 					// 会話を始めましょう！
-					directMessage.add("会話を始めましょう");
+					directMessage.add("会話を始めましょう!");
 				}
 				// sb初期化
 				sb.delete(0, sb.length());
@@ -123,7 +139,9 @@ public class MainPageServlet extends HttpServlet {
 			// リクエストに送る
 			req.setAttribute("directMessage", directMessage);
 
-			// 4) 参加グループ一覧取得処理
+			/**
+			 *  4) 参加グループ一覧取得処理
+			 */
 			/*
 			 * 自分が参加しているグループ一覧取得
 			 */
@@ -144,9 +162,15 @@ public class MainPageServlet extends HttpServlet {
 			}
 			// sb初期化
 			sb.delete(0, sb.length());
+			// グループ0の場合メッセージ出す
+			String groupNullMes="";
+			if(groupNo.isEmpty()) {
+				groupNullMes="グループに参加していません";
+			}
 			// リクエストに送る
 			req.setAttribute("grouplist", groupName);
 			req.setAttribute("groupNO", groupNo);
+			req.setAttribute("groupNullMes", groupNullMes);
 			/*
 			 * メッセージ一覧取得
 			 */
@@ -164,7 +188,8 @@ public class MainPageServlet extends HttpServlet {
 				sb.append("FROM ");
 				sb.append(" t_message_info ");
 				sb.append("WHERE ");
-				sb.append(" to_send_group_no = '" + gN + "' )");
+				sb.append(" to_send_group_no = '" + gN + "' ");
+				sb.append(" AND delete_flag =  '0' )");
 				// SQL実行
 				ResultSet rs4 = stmt.executeQuery(sb.toString());
 				if (rs4.next()) {
@@ -174,7 +199,7 @@ public class MainPageServlet extends HttpServlet {
 				} else {
 					// データなし
 					// 会話を始めましょう！
-					groupMessage.add("会話を始めましょう");
+					groupMessage.add("会話を始めましょう!");
 				}
 				// sb初期化
 				sb.delete(0, sb.length());
@@ -183,7 +208,7 @@ public class MainPageServlet extends HttpServlet {
 			req.setAttribute("groupMessage", groupMessage);
 
 		} catch (SQLException e) {
-			// アクセスできるかで出るエラー
+			// エラーはすべてここにくる
 			e.printStackTrace();
 			// SQLの接続は絶対に切断
 		} finally {
