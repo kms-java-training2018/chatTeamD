@@ -8,5 +8,10 @@
 </head>
 <body>
 
+${ erroMsg }
+<form action="/chat/errorPage" method="POST">
+<input type="submit" value="ログインページへ">
+</form>
+
 </body>
 </html>

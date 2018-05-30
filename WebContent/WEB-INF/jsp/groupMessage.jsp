@@ -10,8 +10,11 @@
 <body>
 	<h1>チャット研修プログラム</h1>
 	<h2>グループメッセージ</h2>
-	<a href="/chat/showProfile">あいて</a>：グループメッセージのサンプルだよー（´・ω・｀）
-	<br> あなた：がっくし（´・ω・｀）
+	<a href="/chat/showProfile">たかつか</a>：グループメッセージのサンプルだよー４（´・ω・｀）
+		<br><a href="/chat/showProfile">いしかわ</a>：グループメッセージのサンプルだよー３（´・ω・｀）
+		<br><a href="/chat/showProfile">ますだ</a>：グループメッセージのサンプルだよー２（´・ω・｀）
+		<br><a href="/chat/showProfile">たかつか</a>：グループメッセージのサンプルだよー１（´・ω・｀）
+		<br>あなた：わーい！たーのしー！
 	<br>
 	<br>
 	<form action="/chat/groupMessage" method="POST">
