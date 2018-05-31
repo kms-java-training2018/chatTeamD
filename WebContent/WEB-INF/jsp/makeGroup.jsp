@@ -13,9 +13,9 @@
 	<p>誰にもチェックを入れなかった場合、あなたひとりのグループはできません</p>
 	<form action="/chat/makeGroup" method="POST">
 		グループ名<input type="text" name="groupName" value="" size="30"> <br>
-		<c:forEach var="obj" items="${userlist}" varStatus="status">
+		<c:forEach var="obj" items="${bean.getUserName()}" varStatus="status">
 			<input type="checkbox" name="userNo"
-				value="${userNo.get(status.index)}">${obj}
+				value="${bean.getUserNo()[status.index]}">${obj}
 		</c:forEach>
 		<br>
 		<input type="submit" value="グループを作成する">
