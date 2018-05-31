@@ -27,10 +27,10 @@ public class DirectMessageServlet extends HttpServlet {
 		String dbPassword = "D_DEV_TEAM";
 
 		//相手の会員番号を格納する変数を宣言
-		String userNo;
+		String userNo = null;
 
 		//ログインユーザーの会員番号を格納する変数を宣言
-		int myNo;
+		int myNo = 0;
 
 		try {
 			//JDBCドライバーのロード
@@ -43,7 +43,7 @@ public class DirectMessageServlet extends HttpServlet {
 			conn = DriverManager.getConnection(url, user, dbPassword);
 			Statement stmt = conn.createStatement();
 
-			//セッションの存在チェック
+			//(1)-1セッション確認
 			//sessionスコープを使う下準備
 			HttpSession session = req.getSession();
 
@@ -51,8 +51,6 @@ public class DirectMessageServlet extends HttpServlet {
 			//まずはsessionスコープに入っている値を取得
 			String userId = (String) session.getAttribute("userId");
 			try {
-				//sessionスコープに正しい値が入っていない場合はログインページに戻す
-				//1.まず、照合のために、正しいIDをDBから取得する
 				//SQLのSELECT文を準備
 				String sql = "SELECT USER_NO FROM M_USER WHERE USER_ID=" + userId + "";
 				//SQLをDBに届けるPreparedStatementのインスタンスを取得
@@ -61,28 +59,30 @@ public class DirectMessageServlet extends HttpServlet {
 				ResultSet result = pStmt.executeQuery();
 
 				//DBから出してきたID、Passwordを格納する変数を設定
-				//String db_userID = result.getString("USER_ID");
-				myNo = result.getInt("USER_NO");
 
+				myNo = result.getInt("USER_NO");
+				//sessionスコープに正しい値が入っていない場合はログインページに戻す
 			} catch (SQLException e) {
 				System.out.println("セッションがありません。");
 				session.invalidate();
 				req.getRequestDispatcher("/error.jsp").forward(req, res);
 			}
-
+			//(1)-2パラメータチェック
 			try {
 				//パラメータのチェック
 				//mainPage.jspで指定されたuserNoというパラメータを受け取り、変数に格納(データの降り口)
 				userNo = req.getParameter("userNo");
 				String sqlGetuserNo = "SELECT USER_NO FROM M_USER WHERE USER_NO = " + userNo + "";
 				PreparedStatement pStmtGetuserNo = conn.prepareStatement(sqlGetuserNo);
+				//(1)-3		チェックでエラーが発生した場合の処理
 			} catch (SQLException e) {
 				System.out.println("セッションがありません。");
 				session.invalidate();
 				req.getRequestDispatcher("/error.jsp").forward(req, res);
 			}
 
-			//会話情報取得処理
+			//(2)会話情報取得処理
+			//(2)-1会話情報取得
 			//SQLのSELECT文を準備
 			String sqlMes = "SELECT MESSAGE FROM T_MESSAGE_INFO WHERE USER_NO = " + userNo + "";
 			//SQLをDBに届けるPreparedStatementのインスタンスを取得
@@ -99,7 +99,7 @@ public class DirectMessageServlet extends HttpServlet {
 				session.setAttribute("message", resultMes);
 
 				req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
-
+				//(2)-2エラーが発生した場合エラー画面に飛ばす
 			} else {
 				System.out.println("会話情報のレコードが取得できません");
 				session.invalidate();
@@ -109,10 +109,10 @@ public class DirectMessageServlet extends HttpServlet {
 			/*
 			* メッセージ送信処理
 			*/
-			//パラメータチェック
+			//(1)パラメータチェック
 			//directMessage.jspで指定されたsendMessageというパラメータを受け取り、変数に格納(データの降り口)
 			String sendMessage = req.getParameter("sendMessage");
-			//入力値のチェック
+			//(1)-1入力値のチェック
 			if (sendMessage == null || sendMessage.length() > 100) {
 				System.out.println("パラメーターが不正");
 				//エラーメッセージを表示し、メッセージ画面に遷移
