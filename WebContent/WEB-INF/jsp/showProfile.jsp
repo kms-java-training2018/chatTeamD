@@ -8,22 +8,21 @@
 <title>show profile</title>
 </head>
 <body>
-	<h1>チャット研修プログラム</h1>
-	<h2>プロフィール確認</h2>
+<br><br><br><br>
 	<form action="/chat/showProfile" method="POST">
-	<center>
-		<table>
-			<tr>
-				<td>名前</td>
-				<td>${ showName }</td>
-			</tr>
-			<tr>
-				<td>自己紹介</td>
-				<td>${ showMyPageText }</td>
-			</tr>
-		</table>
-		<input type="submit" value="閉じる">
-	</center>
+		<center>
+			<table>
+				<tr>
+					<td>名前</td>
+					<td>${ showName }</td>
+				</tr>
+				<tr>
+					<td>自己紹介</td>
+					<td>${ showMyPageText }</td>
+				</tr>
+			</table>
+			<input type="submit" value="閉じる">
+		</center>
 	</form>
 </body>
 </html>

@@ -26,16 +26,17 @@ public class ShowProfileServlet extends HttpServlet {
 
 		// Sessionの取得
 		HttpSession session = req.getSession();
-		SessionBean sesBean = (SessionBean)session.getAttribute("session");
+		SessionBean sesBean = (SessionBean) session.getAttribute("session");
 		String sesUserNo = sesBean.getUserNo();
+		String userId = (String) session.getAttribute("userId");
 
 		// Sessionにユーザ情報がなければ、エラーページへ遷移
-		if(sesUserNo == null) {
+		if (sesUserNo == null) {
 			errorMsg = "セッションが切れました";
 			req.setAttribute("errorMsg", errorMsg);
 			req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, res);
 			return;
-			}
+		}
 
 		// パラメータの取得
 		String userNo = (String) req.getParameter("userId");
@@ -66,9 +67,7 @@ public class ShowProfileServlet extends HttpServlet {
 		// 接続作成
 		try {
 
-
 			conn = DriverManager.getConnection(url, user, dbPassword);
-
 
 			Statement stmt = conn.createStatement();
 
@@ -93,14 +92,14 @@ public class ShowProfileServlet extends HttpServlet {
 			String showMyName = "";
 			String showMyPageText = "";
 			String errorMsg1 = "";
-			while(rs.next()) {
-			showMyPageText = rs.getString("my_page_text");
-			showMyName = rs.getString("user_name");
+			while (rs.next()) {
+				showMyPageText = rs.getString("my_page_text");
+				showMyName = rs.getString("user_name");
 			}
 
 			// showMyPageTextに何も入っていない場合、エラーページへ遷移する
-			if(showMyPageText == "") {
-				errorMsg1 ="レコードが取得できませんでした";
+			if (showMyPageText == "") {
+				errorMsg1 = "レコードが取得できませんでした";
 				req.setAttribute("errorMsg", errorMsg1);
 				req.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(req, res);
 				return;
@@ -124,12 +123,10 @@ public class ShowProfileServlet extends HttpServlet {
 
 		}
 
-
 		req.getRequestDispatcher(direction).forward(req, res);
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-
 
 		req.getRequestDispatcher("/main").forward(req, res);
 
