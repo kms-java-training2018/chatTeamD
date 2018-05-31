@@ -93,7 +93,7 @@ public class DirectMessageServlet extends HttpServlet {
 			//(2)-1会話情報取得
 			//SQLのSELECT文を準備
 			try {
-				String sqlMes = "SELECT MESSAGE FROM T_MESSAGE_INFO WHERE SEND_USER_NO = '" + userNo + "', AND TO_SEND_USER_NO = '" + myNo + "'";
+				String sqlMes = "SELECT MESSAGE FROM T_MESSAGE_INFO WHERE SEND_USER_NO = '" + userNo + "' AND TO_SEND_USER_NO = '" + myNo + "'";
 
 				//SQLをDBに届けるPreparedStatementのインスタンスを取得
 				PreparedStatement pStmtMes = conn.prepareStatement(sqlMes);
@@ -103,9 +103,6 @@ public class DirectMessageServlet extends HttpServlet {
 					message = resultMes.getString("MESSAGE");
 
 				}
-				session.setAttribute("message", message);
-
-				req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
 
 			} catch (SQLException e) {
 				System.out.println("会話情報取得できません。");
@@ -113,6 +110,9 @@ public class DirectMessageServlet extends HttpServlet {
 				req.getRequestDispatcher("/error.jsp").forward(req, res);
 			}
 
+			session.setAttribute("message", message);
+
+			req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
 
 			/*
 			* メッセージ送信処理
@@ -121,7 +121,7 @@ public class DirectMessageServlet extends HttpServlet {
 			//directMessage.jspで指定されたsendMessageというパラメータを受け取り、変数に格納(データの降り口)
 			String sendMessage = req.getParameter("sendMessage");
 			//(1)-1入力値のチェック
-			if (sendMessage == null || sendMessage.length() > 100) {
+			if (sendMessage == null || sendMessage.length() < 100) {
 				System.out.println("パラメーターが不正");
 				//エラーメッセージを表示し、メッセージ画面に遷移
 				System.out.println("100字以内のメッセージを入力してください。");

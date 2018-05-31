@@ -14,8 +14,11 @@
 	<br>
 	<a href="/chat/showProfile">あいて</a>：いえーい（｀・ω・´）
 	<br>
-	<br>
+	<br>${message}
 
+
+
+	<input type="text" name="sendMessage" size="30">
 	<form action="/chat/directMessage" method="POST">
 		<input type="submit" value="メッセージの送信" name= "sendMessage">
 	</form>
