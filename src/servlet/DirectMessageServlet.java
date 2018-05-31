@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.DirectMessageBean;
+
 public class DirectMessageServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
@@ -26,22 +28,7 @@ public class DirectMessageServlet extends HttpServlet {
 		String user = "DEV_TEAM_D";
 		String dbPassword = "D_DEV_TEAM";
 
-		//相手の会員番号を格納する変数を宣言
-		String userNo = null;
-
-		//ログインユーザーの会員番号を格納する変数を宣言
-		int myNo = 0;
-
-		//ログインユーザーあての会話情報を格納する変数を宣言
-		String message = null;
-
-		//相手ユーザーの名前を格納する変数を宣言
-		String username = null;
-
-		//会話番号の最大値を格納する変数を宣言
-		int n = 0;
-		//エラーページ用の変数を宣言
-		String errorMsg = "";
+		DirectMessageBean bean = new DirectMessageBean();
 
 		try {
 			//JDBCドライバーのロード
@@ -70,28 +57,28 @@ public class DirectMessageServlet extends HttpServlet {
 				ResultSet result = pStmt.executeQuery();
 
 				while (result.next()) {
-					myNo = result.getInt("USER_NO");
+					bean.setMyNo(result.getInt("USER_NO"));
 				}
 
 				//sessionスコープに正しい値が入っていない場合はログインページに戻す
 			} catch (SQLException e) {
-				errorMsg = "セッションがありません";
+				bean.setErrorMsg("セッションがありません");
 				session.invalidate();
-				req.setAttribute("errorMsg", errorMsg);
+				req.setAttribute("errorMsg", bean.getErrorMsg());
 				req.getRequestDispatcher("/errorPage").forward(req, res);
 			}
 			//(1)-2パラメータチェック
 			try {
 				//パラメータのチェック
 				//mainPage.jspで指定されたuserNoというパラメータを受け取り、変数に格納(データの降り口)
-				userNo = req.getParameter("userNo");
-				String sqlGetuserNo = "SELECT USER_NO FROM M_USER WHERE USER_NO = '" + userNo + "'";
+				bean.setUserNo(req.getParameter("userNo"));
+				String sqlGetuserNo = "SELECT USER_NO FROM M_USER WHERE USER_NO = '" + bean.getUserNo() + "'";
 				PreparedStatement pStmtGetuserNo = conn.prepareStatement(sqlGetuserNo);
 				//(1)-3		チェックでエラーが発生した場合の処理
 			} catch (SQLException e) {
-				errorMsg = "セッションがありません。";
+				bean.setErrorMsg("セッションがありません。");
 				session.invalidate();
-				req.setAttribute("errorMsg", errorMsg);
+				req.setAttribute("errorMsg", bean.getErrorMsg());
 				req.getRequestDispatcher("/errorPage").forward(req, res);
 			}
 
@@ -99,27 +86,27 @@ public class DirectMessageServlet extends HttpServlet {
 			//(2)-1会話情報取得
 			//SQLのSELECT文を準備
 			try {
-				String sqlMes = "SELECT MESSAGE, USER_NAME FROM T_MESSAGE_INFO INNER JOIN M_USER ON T_MESSAGE_INFO.SEND_USER_NO = M_USER.USER_NO WHERE SEND_USER_NO = '" + userNo + "' AND TO_SEND_USER_NO = '" + myNo + "'";
+				String sqlMes = "SELECT MESSAGE, USER_NAME FROM T_MESSAGE_INFO INNER JOIN M_USER ON T_MESSAGE_INFO.SEND_USER_NO = M_USER.USER_NO WHERE SEND_USER_NO = '" + bean.getUserNo() + "' AND TO_SEND_USER_NO = '" + bean.getMyNo() + "'";
 
 				//SQLをDBに届けるPreparedStatementのインスタンスを取得
 				PreparedStatement pStmtMes = conn.prepareStatement(sqlMes);
 				//ResultSetインスタンスにSELECT文の結果を格納する
 				ResultSet resultMes = pStmtMes.executeQuery();
 				while (resultMes.next()) {
-					message = resultMes.getString("MESSAGE");
-					username = resultMes.getString("USER_NAME");
+					bean.setMessage(resultMes.getString("MESSAGE"));
+					bean.setUsername(resultMes.getString("USER_NAME"));
 
 				}
 
 			} catch (SQLException e) {
 				System.out.println("会話情報取得できません。");
 				session.invalidate();
-				req.setAttribute("errorMsg", errorMsg);
+				req.setAttribute("errorMsg", bean.getErrorMsg());
 				req.getRequestDispatcher("/errorPage").forward(req, res);
 			}
 
-			session.setAttribute("message", message);
-			session.setAttribute("username", username);
+			session.setAttribute("message", bean.getMessage());
+			session.setAttribute("username", bean.getUsername());
 
 
 			req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
@@ -157,31 +144,31 @@ public class DirectMessageServlet extends HttpServlet {
 			//ResultSetインスタンスにSELECT文の結果を格納する
 			ResultSet resultMax = pStmtGetMax.executeQuery();
 			while (resultMax.next()) {
-				n = resultMax.getInt("MESSAGE_NO");
+				bean.setN(resultMax.getInt("MESSAGE_NO"));
 			}
 			}catch (SQLException e) {
-				errorMsg = "会話情報の自動採番できません。";
+				bean.setErrorMsg("会話情報の自動採番できません。");
 				session.invalidate();
-				req.setAttribute("errorMsg", errorMsg);
+				req.setAttribute("errorMsg", bean.getErrorMsg());
 				req.getRequestDispatcher("/errorPage").forward(req, res);
 			}
 
 			//会話番号の最大値+1を入れる変数を宣言
-			int newMesNo = n++;
+			int newMesNo = bean.getMyNo() + 1;
 
 			try {
 				//SQLのSELECT文を準備
 				String sqlSendMes = "INSERT INTO T_MESSAGE_INFO(MESSAGE_NO, SEND_USER_NO, MESSAGE, TO_SEND_USER_NO,DELETE_FLAG, REGIST_DATE)VALUES('"
-						+ newMesNo + "','" + myNo + "','" + sendMessage + "','" + userNo + "', 0, SYSDATE)";
+						+ newMesNo + "','" + bean.getMyNo() + "','" + sendMessage + "','" + bean.getUserNo() + "', 0, SYSDATE)";
 				//SQLをDBに届けるPreparedStatementのインスタンスを取得
 				PreparedStatement pStmtSendMes = conn.prepareStatement(sqlSendMes);
 
 				//内容を登録できなかった場合、エラー画面に遷移する
 			} catch (SQLException e) {
-				errorMsg = "会話内容が登録できません。";
+				bean.setErrorMsg("会話内容が登録できません。");
 				e.printStackTrace();
 				session.invalidate();
-				req.setAttribute("errorMsg", errorMsg);
+				req.setAttribute("errorMsg", bean.getErrorMsg());
 				req.getRequestDispatcher("/errorPage").forward(req, res);
 			}
 
