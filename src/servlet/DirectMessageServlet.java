@@ -93,18 +93,17 @@ public class DirectMessageServlet extends HttpServlet {
 			//(2)-1会話情報取得
 			//SQLのSELECT文を準備
 			try {
-				String sqlMes = "SELECT MESSAGE FROM T_MESSAGE_INFO WHERE USER_NO = '" + userNo + "'";
+				String sqlMes = "SELECT MESSAGE FROM T_MESSAGE_INFO WHERE SEND_USER_NO = '" + userNo + "', AND TO_SEND_USER_NO = '" + myNo + "'";
 
 				//SQLをDBに届けるPreparedStatementのインスタンスを取得
 				PreparedStatement pStmtMes = conn.prepareStatement(sqlMes);
 				//ResultSetインスタンスにSELECT文の結果を格納する
 				ResultSet resultMes = pStmtMes.executeQuery();
 				while (resultMes.next()) {
-
 					message = resultMes.getString("MESSAGE");
 
 				}
-				session.setAttribute("message", resultMes);
+				session.setAttribute("message", message);
 
 				req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
 
