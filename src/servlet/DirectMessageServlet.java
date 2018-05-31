@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +23,9 @@ public class DirectMessageServlet extends HttpServlet {
 */
 		//データベースと接続
 		Connection conn = null;
+		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
+		String user = "DEV_TEAM_D";
+		String dbPassword = "D_DEV_TEAM";
 		try {
 			//JDBCドライバーのロード
 			try {
@@ -30,7 +34,8 @@ public class DirectMessageServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			//データベースへの接続作成
-			conn = DriverManager.getConnection("192.168.51.67","DEV_TEAM_D" ,"D_DEV_TEAM");
+			conn = DriverManager.getConnection(url, user, dbPassword);
+			Statement stmt = conn.createStatement();
 
 			//セッションの存在チェック
 			//sessionスコープを使う下準備
@@ -39,21 +44,19 @@ public class DirectMessageServlet extends HttpServlet {
 			//LoginServletでsessionスコープに入れた値が正しいか(入っているか)判断
 	        //まずはsessionスコープに入っている値を取得
 	        String userId = (String)session.getAttribute("userId");
-	        String password = (String)session.getAttribute("password");
 
 	     	//sessionスコープに正しい値が入っていない場合はログインページに戻す
 
-	        	//1.まず、ID、Passwordの照合のために、正しいID、PasswordをDBから取得する
+	        	//1.まず、照合のために、正しいIDをDBから取得する
 	        	//SQLのSELECT文を準備
-	        	String sql = "SELECT USER_ID,PASSWORD,USER_NO FROM M_USER";
+	        	String sql = "SELECT USER_ID,USER_NO FROM M_USER WHERE USER_ID="+userId+"";
 	        	//SQLをDBに届けるPreparedStatementのインスタンスを取得
 	        	PreparedStatement pStmt = conn.prepareStatement(sql);
 	        	//ResultSetインスタンスにSELECT文の結果を格納する
 	        	ResultSet result = pStmt.executeQuery();
 	        	//DBから出してきたID、Passwordを格納する変数を設定
 	        	String db_userID = result.getString("USER_ID");
-	        	String db_password = result.getString("PASSWORD");
-	        	String db_userNo = result.getString("USER_NO");
+	        	int db_userNo = result.getInt("USER_NO");
 
 
 
@@ -61,7 +64,7 @@ public class DirectMessageServlet extends HttpServlet {
 
 
 	        	//ログインしているユーザー自身の会員番号がのちに送信機能で必要となるので、
-	        	//あらかじめIDとPasswordを元に会員番号を取得しておく
+	        	//あらかじめIDを元に会員番号を取得しておく
 	        	String sqlGetUserNo = "SELECT USER_NO FROM M_USER WHERE USER_ID = "+ userId +"";
 	        	//SQLをDBに届けるPreparedStatementのインスタンスを取得
 	        	PreparedStatement pStmtGetMyNo = conn.prepareStatement(sqlGetUserNo);
@@ -75,7 +78,7 @@ public class DirectMessageServlet extends HttpServlet {
 
 
 	        	//2.Sessionスコープの中身とDBのID、Passwordが合っているか確認
-	        	if(!db_userID.equals(userId) || !db_password.equals(password)) {
+	        	if(!db_userID.equals(userId) ) {
 	                System.out.println("セッションがありません。");
 	                session.invalidate();
 	                req.getRequestDispatcher("/error.jsp").forward(req, res);
@@ -86,7 +89,7 @@ public class DirectMessageServlet extends HttpServlet {
 	            String userNo = req.getParameter("userNo");
 
 	          //2.mainPage.jspから送られてきたuserNoとDBのuserNOを照合
-	        	if(!db_userNo.equals(userNo)) {
+	        	if(userNo.equals(db_userNo)) {
 	                System.out.println("パラメーターが不正");
 	                session.invalidate();
 	                req.getRequestDispatcher("/error.jsp").forward(req, res);
@@ -132,19 +135,30 @@ public class DirectMessageServlet extends HttpServlet {
 
 	        	//会話情報登録処理
 
+	        		//会話番号の自動採番処理
+	        			//会話番号の最大値を持ってくるSQL文を送信する
+	        			String sqlGetMax = "SELECT MAX(MESSAGE_NO) FROM  T_MESSAGE_INFO";
+	        			//SQLをDBに届けるPreparedStatementのインスタンスを取得
+	        			PreparedStatement pStmtGetMax = conn.prepareStatement(sqlGetMax);
+	        			//ResultSetインスタンスにSELECT文の結果を格納する
+	    	        	ResultSet resultMax = pStmtGetMax.executeQuery();
+	    	        	int n = resultMax.getInt("MESSAGE_NO");
 
-	        	try {
-	        	//SQLのSELECT文を準備
-	        	String sqlSendMes = "INSERT INTO T_MESSAGE_INFO(MESSAGE_NO, SEND_USER_NO, MESSAGE, TO_SEND_USER_NO,DELETE_FLAG, REGIST_DATE)VALUES("+myNo+","+ sendMessage+ ","+ userNo+", 0, SYSDATE)";
-	        	//SQLをDBに届けるPreparedStatementのインスタンスを取得
-	        	PreparedStatement pStmtSendMes = conn.prepareStatement(sqlSendMes);
+	    	        	//会話番号の最大値+1を入れる変数を宣言
+	    	        	int newMesNo = n++;
 
-	        	//内容を登録できなかった場合、エラー画面に遷移する
-	            }catch(SQLException e) {
-	            	System.out.println("会話内容が登録できません。");
-	                session.invalidate();
-	                req.getRequestDispatcher("/error.jsp").forward(req, res);
-	            }
+	        		try {
+	        			//SQLのSELECT文を準備
+	        			String sqlSendMes = "INSERT INTO T_MESSAGE_INFO(MESSAGE_NO, SEND_USER_NO, MESSAGE, TO_SEND_USER_NO,DELETE_FLAG, REGIST_DATE)VALUES("+newMesNo+","+myNo+","+ sendMessage+ ","+ userNo+", 0, SYSDATE)";
+	        			//SQLをDBに届けるPreparedStatementのインスタンスを取得
+	        			PreparedStatement pStmtSendMes = conn.prepareStatement(sqlSendMes);
+
+	        			//内容を登録できなかった場合、エラー画面に遷移する
+	        		}catch(SQLException e) {
+	        			System.out.println("会話内容が登録できません。");
+	        			session.invalidate();
+	        			req.getRequestDispatcher("/error.jsp").forward(req, res);
+	        		}
 
 
 
