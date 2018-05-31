@@ -12,27 +12,27 @@
 	<h2>メインメニュー</h2>
 	<br>■会員一覧
 	<br>
-	<c:forEach var="obj" items="${userlist}" varStatus="status">
+	<c:forEach var="obj" items="${bean.getUserName()}" varStatus="status">
 
 		<form method="post" action="/chat/directMessage">
 			<input type="hidden" name="userNo"
-				value="${userNo.get(status.index)}"> <input type="submit"
+				value="${bean.getUserNo()[status.index]}"> <input type="submit"
 				value="${obj}">
 		</form>
-		<p>> ${directMessage.get(status.index)}</p>
+		<p>> ${bean.getDirectMessage()[status.index]}</p>
 		<br>
 	</c:forEach>
 
 	<br>■グループ一覧
 	<br>
-	${groupNullMes}
-	<c:forEach var="obj" items="${grouplist}" varStatus="status">
+	${bean.getGroupNullMes()[status.index]}
+	<c:forEach var="obj" items="${bean.getGroupName()}" varStatus="status">
 		<form method="post" action="/chat/groupMessage" method="POST">
 			<input type="hidden" name="groupNo"
-				value="${groupNo.get(status.index)}"> <input type="submit"
+				value="${bean.getGroupNo()[status.index]}"> <input type="submit"
 				value="${obj}">
 		</form>
-		<p>> ${groupMessage.get(status.index)}</p>
+		<p>> ${bean.getGroupMessage()[status.index]}</p>
 		<br>
 	</c:forEach>
 
