@@ -52,15 +52,17 @@ public class DirectMessageServlet extends HttpServlet {
 			String userId = (String) session.getAttribute("userId");
 			try {
 				//SQLのSELECT文を準備
-				String sql = "SELECT USER_NO FROM M_USER WHERE USER_ID=" + userId + "";
+				String sql = "SELECT USER_NO FROM M_USER WHERE USER_ID='" + userId + "'";
 				//SQLをDBに届けるPreparedStatementのインスタンスを取得
 				PreparedStatement pStmt = conn.prepareStatement(sql);
 				//ResultSetインスタンスにSELECT文の結果を格納する
 				ResultSet result = pStmt.executeQuery();
 
 				//DBから出してきたID、Passwordを格納する変数を設定
+				while (result.next()) {
+					myNo = result.getInt("USER_NO");
+				}
 
-				myNo = result.getInt("USER_NO");
 				//sessionスコープに正しい値が入っていない場合はログインページに戻す
 			} catch (SQLException e) {
 				System.out.println("セッションがありません。");
@@ -144,6 +146,7 @@ public class DirectMessageServlet extends HttpServlet {
 				//内容を登録できなかった場合、エラー画面に遷移する
 			} catch (SQLException e) {
 				System.out.println("会話内容が登録できません。");
+				e.printStackTrace();
 				session.invalidate();
 				req.getRequestDispatcher("/error.jsp").forward(req, res);
 			}
