@@ -32,6 +32,12 @@ public class DirectMessageServlet extends HttpServlet {
 		//ログインユーザーの会員番号を格納する変数を宣言
 		int myNo = 0;
 
+		//ログインユーザーあての会話情報を格納する変数を宣言
+		String message = null;
+
+		//会話番号の最大値を格納する変数を宣言
+		int n = 0;
+
 		try {
 			//JDBCドライバーのロード
 			try {
@@ -58,7 +64,6 @@ public class DirectMessageServlet extends HttpServlet {
 				//ResultSetインスタンスにSELECT文の結果を格納する
 				ResultSet result = pStmt.executeQuery();
 
-				//DBから出してきたID、Passwordを格納する変数を設定
 				while (result.next()) {
 					myNo = result.getInt("USER_NO");
 				}
@@ -91,7 +96,9 @@ public class DirectMessageServlet extends HttpServlet {
 			PreparedStatement pStmtMes = conn.prepareStatement(sqlMes);
 			//ResultSetインスタンスにSELECT文の結果を格納する
 			ResultSet resultMes = pStmtMes.executeQuery();
-			String message = resultMes.getString("MESSAGE");
+			while (resultMes.next()) {
+				message = resultMes.getString("MESSAGE");
+			}
 
 			//会話情報のレコードが取得できなかった場合
 			if (message != null) {
@@ -131,7 +138,9 @@ public class DirectMessageServlet extends HttpServlet {
 			PreparedStatement pStmtGetMax = conn.prepareStatement(sqlGetMax);
 			//ResultSetインスタンスにSELECT文の結果を格納する
 			ResultSet resultMax = pStmtGetMax.executeQuery();
-			int n = resultMax.getInt("MESSAGE_NO");
+			while (resultMax.next()) {
+				n = resultMax.getInt("MESSAGE_NO");
+			}
 
 			//会話番号の最大値+1を入れる変数を宣言
 			int newMesNo = n++;
