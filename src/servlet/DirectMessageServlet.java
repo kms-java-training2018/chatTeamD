@@ -37,6 +37,7 @@ public class DirectMessageServlet extends HttpServlet {
 
 		//会話番号の最大値を格納する変数を宣言
 		int n = 0;
+		//
 
 		try {
 			//JDBCドライバーのロード
@@ -91,29 +92,28 @@ public class DirectMessageServlet extends HttpServlet {
 			//(2)会話情報取得処理
 			//(2)-1会話情報取得
 			//SQLのSELECT文を準備
-			String sqlMes = "SELECT MESSAGE FROM T_MESSAGE_INFO WHERE USER_NO = '" + userNo + "'";
-			//SQLをDBに届けるPreparedStatementのインスタンスを取得
-			PreparedStatement pStmtMes = conn.prepareStatement(sqlMes);
-			//ResultSetインスタンスにSELECT文の結果を格納する
-			ResultSet resultMes = pStmtMes.executeQuery();
-			while (resultMes.next()) {
-				message = resultMes.getString("MESSAGE");
-			}
+			try {
+				String sqlMes = "SELECT MESSAGE FROM T_MESSAGE_INFO WHERE USER_NO = '" + userNo + "'";
 
-			//会話情報のレコードが取得できなかった場合
-			if (message != null) {
+				//SQLをDBに届けるPreparedStatementのインスタンスを取得
+				PreparedStatement pStmtMes = conn.prepareStatement(sqlMes);
+				//ResultSetインスタンスにSELECT文の結果を格納する
+				ResultSet resultMes = pStmtMes.executeQuery();
+				while (resultMes.next()) {
 
-				//変数に格納したデータをsessionスコープで保存
-				//messageという名前をそれぞれつける
+					message = resultMes.getString("MESSAGE");
+
+				}
 				session.setAttribute("message", resultMes);
 
 				req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
-				//(2)-2エラーが発生した場合エラー画面に飛ばす
-			} else {
-				System.out.println("会話情報のレコードが取得できません");
+
+			} catch (SQLException e) {
+				System.out.println("会話情報取得できません。");
 				session.invalidate();
 				req.getRequestDispatcher("/error.jsp").forward(req, res);
 			}
+
 
 			/*
 			* メッセージ送信処理
@@ -133,6 +133,7 @@ public class DirectMessageServlet extends HttpServlet {
 
 			//会話番号の自動採番処理
 			//会話番号の最大値を持ってくるSQL文を送信する
+			try {
 			String sqlGetMax = "SELECT MAX(MESSAGE_NO) FROM  T_MESSAGE_INFO";
 			//SQLをDBに届けるPreparedStatementのインスタンスを取得
 			PreparedStatement pStmtGetMax = conn.prepareStatement(sqlGetMax);
@@ -140,6 +141,11 @@ public class DirectMessageServlet extends HttpServlet {
 			ResultSet resultMax = pStmtGetMax.executeQuery();
 			while (resultMax.next()) {
 				n = resultMax.getInt("MESSAGE_NO");
+			}
+			}catch (SQLException e) {
+				System.out.println("会話情報の自動採番できません。");
+				session.invalidate();
+				req.getRequestDispatcher("/error.jsp").forward(req, res);
 			}
 
 			//会話番号の最大値+1を入れる変数を宣言
