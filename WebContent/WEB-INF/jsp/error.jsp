@@ -7,8 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-${ erroMsg }
+<h1>>エラー</h1>
+<font color="#ff0000">${errorMsg}</font>
+<br>
+お手数ですがログインページからやり直してください
 <form action="/chat/errorPage" method="POST">
 <input type="submit" value="ログインページへ">
 </form>

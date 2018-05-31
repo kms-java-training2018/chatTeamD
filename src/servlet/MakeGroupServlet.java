@@ -123,6 +123,7 @@ public class MakeGroupServlet extends HttpServlet {
 		 */
 		req.setCharacterEncoding("UTF-8");
 		// セッション情報確認
+		String errorMsg="";
 		int errorFlag = 0;
 		HttpSession session = req.getSession();
 		SessionBean sesBean = (SessionBean) session.getAttribute("session");
@@ -137,12 +138,15 @@ public class MakeGroupServlet extends HttpServlet {
 		String[] groupMemberNo = req.getParameterValues("userNo");
 		if (groupName.equals("")) {
 			// グループ名が空
+			errorMsg="グループ名が空です";
 			errorFlag = 1;
 		} else if (groupName.length() > GROUP_NAME_LENGTH) {
 			// グループ名が所定の文字数より長い
+			errorMsg="グループ名が規定の30文字より長いです";
 			errorFlag = 1;
 		} else if (groupMemberNo==null) {
 			// グループメンバーがいない
+			errorMsg="グループメンバーがあなた以外いません";
 			errorFlag = 1;
 		}
 		if (errorFlag == 1) {
@@ -262,6 +266,7 @@ public class MakeGroupServlet extends HttpServlet {
 			} catch (SQLException e) {
 				// エラーはすべてここにくる
 				e.printStackTrace();
+				errorMsg="データベース登録時にエラーが発生しました";
 				errorFlag = 1;
 				// SQLの接続は絶対に切断
 			} finally {
@@ -274,6 +279,7 @@ public class MakeGroupServlet extends HttpServlet {
 		}
 		// 出力
 		if (errorFlag == 1) {
+			req.setAttribute("errorMsg", errorMsg);
 			req.getRequestDispatcher("/errorPage").forward(req, res);
 		} else {
 			req.getRequestDispatcher("/main").forward(req, res);
