@@ -132,8 +132,6 @@ public class DirectMessageServlet extends HttpServlet {
 
 
 
-
-
 			/*
 			* メッセージ送信処理
 			*/
