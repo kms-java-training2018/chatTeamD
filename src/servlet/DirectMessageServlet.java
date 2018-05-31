@@ -18,6 +18,7 @@ import bean.DirectMessageBean;
 
 public class DirectMessageServlet extends HttpServlet {
 
+
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		/*
 		* 画面表示処理
