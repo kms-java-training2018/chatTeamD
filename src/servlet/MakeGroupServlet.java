@@ -121,6 +121,7 @@ public class MakeGroupServlet extends HttpServlet {
 		/**
 		 * 1)パラメータチェック
 		 */
+		req.setCharacterEncoding("UTF-8");
 		// セッション情報確認
 		int errorFlag = 0;
 		HttpSession session = req.getSession();
@@ -178,9 +179,14 @@ public class MakeGroupServlet extends HttpServlet {
 			// SQL実行
 			ResultSet rs = stmt.executeQuery(sb.toString());
 			// 結果を代入
-			int maxGroupNo = rs.getInt("MAX(GROUP_NO)");
-			// その次の番号にする
-			maxGroupNo++;
+			// ArrayList<Integer> maxGroupNoList = new ArrayList<>();
+			int maxGroupNo = 0;
+			while (rs.next()) {
+				// 値を取得、その次の番号に
+				maxGroupNo = rs.getInt("MAX(GROUP_NO)") + 1;
+			}
+			// 初期化
+			sb.delete(0, sb.length());
 			/*
 			 * グループ作成
 			 */
@@ -194,9 +200,9 @@ public class MakeGroupServlet extends HttpServlet {
 			sb.append(" ) ");
 			sb.append("VALUES ");
 			sb.append(" ( ");
-			sb.append(" " + maxGroupNo + " , ");
-			sb.append(" " + groupName + " , ");
-			sb.append(" " + sesUserNo + " , ");
+			sb.append(" '" + maxGroupNo + "' , ");
+			sb.append(" '" + groupName + "' , ");
+			sb.append(" '" + sesUserNo + "' , ");
 			sb.append(" sysdate ");
 			sb.append(" ) ");
 			// SQL実行
@@ -207,7 +213,44 @@ public class MakeGroupServlet extends HttpServlet {
 			/**
 			 * 3)グループ会員登録処理
 			 */
-			for(int i=0; i < groupMemberNo.length;i++) {
+			// 自分
+			sb.append("INSERT INTO ");
+			sb.append(" t_group_info ");
+			sb.append(" ( ");
+			sb.append(" group_no ");
+			sb.append(", user_no ");
+			sb.append(", regist_date ");
+			sb.append(" ) ");
+			sb.append("VALUES ");
+			sb.append(" ( ");
+			sb.append(" '" + maxGroupNo + "' , ");
+			sb.append(" '" + sesUserNo + "' , ");
+			sb.append(" sysdate ");
+			sb.append(" ) ");
+			// SQL実行
+			ResultSet rs3 = stmt.executeQuery(sb.toString());
+			// 初期化
+			sb.delete(0, sb.length());
+
+			// 他メンバー
+			for (int i = 0; i < groupMemberNo.length; i++) {
+				sb.append("INSERT INTO ");
+				sb.append(" t_group_info ");
+				sb.append(" ( ");
+				sb.append(" group_no ");
+				sb.append(", user_no ");
+				sb.append(", regist_date ");
+				sb.append(" ) ");
+				sb.append("VALUES ");
+				sb.append(" ( ");
+				sb.append(" '" + maxGroupNo + "' , ");
+				sb.append(" '" + groupMemberNo[i] + "' , ");
+				sb.append(" sysdate ");
+				sb.append(" ) ");
+				// SQL実行
+				ResultSet rs4 = stmt.executeQuery(sb.toString());
+				// 初期化
+				sb.delete(0, sb.length());
 
 			}
 
@@ -227,7 +270,7 @@ public class MakeGroupServlet extends HttpServlet {
 		if (errorFlag == 1) {
 			req.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp").forward(req, res);
 		} else {
-			req.getRequestDispatcher("/WEB-INF/jsp/mainPage.jsp").forward(req, res);
+			req.getRequestDispatcher("/main").forward(req, res);
 		}
 
 	}
