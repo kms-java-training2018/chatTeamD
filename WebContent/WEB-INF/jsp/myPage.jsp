@@ -8,15 +8,15 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
 	${ userName }さん
 	<br>
 	<form action="/chat/myPage" method="POST">
-		<input type="hidden" name="logout" value="logout"><input type="submit"
-			value="ログアウト">
+		<input type="hidden" name="logout" value="logout"><input
+			type="submit" value="ログアウト">
 	</form>
 	<hr>
-	<br>
+	<!-- ここまでです -->
 	<br>
 	<form action="/chat/myPage" method="POST">
 		<center>
