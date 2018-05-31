@@ -8,6 +8,14 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	${ userName }さん
+	<br>
+	<form action="/chat/myPage" method="POST">
+		<input type="hidden" name="logout" value="logout"><input type="submit"
+			value="ログアウト">
+	</form>
+	<hr>
 	<br>
 	<br>
 	<form action="/chat/myPage" method="POST">
@@ -22,22 +30,16 @@
 					<td width="20%"><textarea cols="30" rows="20"
 							name="myPageText">${ myPageText }</textarea>
 				</tr>
-				<tr>
-					<td><input type="submit" value="プロフィールを更新"></td>
-					<td>
-						<form action="/chat/main" method="POST">
-							<input type="submit" value="メインメニューに戻る">
-						</form>
-					</td>
-				</tr>
+
 			</table>
 		</center>
-		<br> ${ errorMsg }<br> <input type="submit"
-			value="プロフィールを更新">
+		<input type="submit" value="プロフィールを更新">
+	</form>
+	<form action="/chat/main" method="POST">
+		<input type="submit" value="メインメニューに戻る"> <br> ${ errorMsg }<br>
 	</form>
 
 	${ errorMsg }
 	<br>
-
 </body>
 </html>
