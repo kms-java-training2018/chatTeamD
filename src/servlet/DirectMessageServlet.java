@@ -121,7 +121,7 @@ public class DirectMessageServlet extends HttpServlet {
 			//directMessage.jspで指定されたsendMessageというパラメータを受け取り、変数に格納(データの降り口)
 			String sendMessage = req.getParameter("sendMessage");
 			//(1)-1入力値のチェック
-			if (sendMessage == null || sendMessage.length() > 100) {
+			if (sendMessage == null || sendMessage.length() < 100) {
 				System.out.println("パラメーターが不正");
 				//エラーメッセージを表示し、メッセージ画面に遷移
 				System.out.println("100字以内のメッセージを入力してください。");
