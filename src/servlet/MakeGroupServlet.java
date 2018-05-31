@@ -135,105 +135,90 @@ public class MakeGroupServlet extends HttpServlet {
 		// 入力値チェック
 		String groupName = req.getParameter("groupName");
 		String[] groupMemberNo = req.getParameterValues("userNo");
-		if (groupName.equals(null) || groupName.length() > GROUP_NAME_LENGTH || groupMemberNo.length == 0) {
-			/*
-			 * エラー条件
-			 * 1．グループ名が空
-			 * 2．グループ名が所定の文字数より長い
-			 * 3．グループメンバーがいない
-			 */
+		if (groupName.equals("")) {
+			// グループ名が空
+			errorFlag = 1;
+		} else if (groupName.length() > GROUP_NAME_LENGTH) {
+			// グループ名が所定の文字数より長い
+			errorFlag = 1;
+		} else if (groupMemberNo==null) {
+			// グループメンバーがいない
+			errorFlag = 1;
+		}
+		if (errorFlag == 1) {
 			// エラーページへ
-			req.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(req, res);
-		}
-		/**
-		 * 2)グループ登録処理
-		 */
-		StringBuilder sb = new StringBuilder();
-		/*
-		 * DBログイン
-		 */
-		Connection conn = null;
-		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
-		String user = "DEV_TEAM_D";
-		String dbPassword = "D_DEV_TEAM";
-		// JDBCドライバーのロード
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
 
-		// 接続作成
-		try {
-			conn = DriverManager.getConnection(url, user, dbPassword);
-			Statement stmt = conn.createStatement();
-			// SQL作成
-			/*
-			 * group_noの自動採番
-			 */
-			// 最大値取得
-			sb.append("SELECT ");
-			sb.append(" MAX(group_no) ");
-			sb.append("FROM ");
-			sb.append(" m_group ");
-			// SQL実行
-			ResultSet rs = stmt.executeQuery(sb.toString());
-			// 結果を代入
-			// ArrayList<Integer> maxGroupNoList = new ArrayList<>();
-			int maxGroupNo = 0;
-			while (rs.next()) {
-				// 値を取得、その次の番号に
-				maxGroupNo = rs.getInt("MAX(GROUP_NO)") + 1;
-			}
-			// 初期化
-			sb.delete(0, sb.length());
-			/*
-			 * グループ作成
-			 */
-			sb.append("INSERT INTO ");
-			sb.append(" m_group ");
-			sb.append(" ( ");
-			sb.append(" group_no ");
-			sb.append(", group_name ");
-			sb.append(", regist_user_no ");
-			sb.append(", regist_date ");
-			sb.append(" ) ");
-			sb.append("VALUES ");
-			sb.append(" ( ");
-			sb.append(" '" + maxGroupNo + "' , ");
-			sb.append(" '" + groupName + "' , ");
-			sb.append(" '" + sesUserNo + "' , ");
-			sb.append(" sysdate ");
-			sb.append(" ) ");
-			// SQL実行
-			ResultSet rs2 = stmt.executeQuery(sb.toString());
-			// 初期化
-			sb.delete(0, sb.length());
-
+		} else {
+			// それ以外の場合処理続ける
 			/**
-			 * 3)グループ会員登録処理
+			 * 2)グループ登録処理
 			 */
-			// 自分
-			sb.append("INSERT INTO ");
-			sb.append(" t_group_info ");
-			sb.append(" ( ");
-			sb.append(" group_no ");
-			sb.append(", user_no ");
-			sb.append(", regist_date ");
-			sb.append(" ) ");
-			sb.append("VALUES ");
-			sb.append(" ( ");
-			sb.append(" '" + maxGroupNo + "' , ");
-			sb.append(" '" + sesUserNo + "' , ");
-			sb.append(" sysdate ");
-			sb.append(" ) ");
-			// SQL実行
-			ResultSet rs3 = stmt.executeQuery(sb.toString());
-			// 初期化
-			sb.delete(0, sb.length());
+			StringBuilder sb = new StringBuilder();
+			/*
+			 * DBログイン
+			 */
+			Connection conn = null;
+			String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
+			String user = "DEV_TEAM_D";
+			String dbPassword = "D_DEV_TEAM";
+			// JDBCドライバーのロード
+			try {
+				Class.forName("oracle.jdbc.driver.OracleDriver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
 
-			// 他メンバー
-			for (int i = 0; i < groupMemberNo.length; i++) {
+			// 接続作成
+			try {
+				conn = DriverManager.getConnection(url, user, dbPassword);
+				Statement stmt = conn.createStatement();
+				// SQL作成
+				/*
+				 * group_noの自動採番
+				 */
+				// 最大値取得
+				sb.append("SELECT ");
+				sb.append(" MAX(group_no) ");
+				sb.append("FROM ");
+				sb.append(" m_group ");
+				// SQL実行
+				ResultSet rs = stmt.executeQuery(sb.toString());
+				// 結果を代入
+				// ArrayList<Integer> maxGroupNoList = new ArrayList<>();
+				int maxGroupNo = 0;
+				while (rs.next()) {
+					// 値を取得、その次の番号に
+					maxGroupNo = rs.getInt("MAX(GROUP_NO)") + 1;
+				}
+				// 初期化
+				sb.delete(0, sb.length());
+				/*
+				 * グループ作成
+				 */
+				sb.append("INSERT INTO ");
+				sb.append(" m_group ");
+				sb.append(" ( ");
+				sb.append(" group_no ");
+				sb.append(", group_name ");
+				sb.append(", regist_user_no ");
+				sb.append(", regist_date ");
+				sb.append(" ) ");
+				sb.append("VALUES ");
+				sb.append(" ( ");
+				sb.append(" '" + maxGroupNo + "' , ");
+				sb.append(" '" + groupName + "' , ");
+				sb.append(" '" + sesUserNo + "' , ");
+				sb.append(" sysdate ");
+				sb.append(" ) ");
+				// SQL実行
+				ResultSet rs2 = stmt.executeQuery(sb.toString());
+				// 初期化
+				sb.delete(0, sb.length());
+
+				/**
+				 * 3)グループ会員登録処理
+				 */
+				// 自分
 				sb.append("INSERT INTO ");
 				sb.append(" t_group_info ");
 				sb.append(" ( ");
@@ -244,31 +229,52 @@ public class MakeGroupServlet extends HttpServlet {
 				sb.append("VALUES ");
 				sb.append(" ( ");
 				sb.append(" '" + maxGroupNo + "' , ");
-				sb.append(" '" + groupMemberNo[i] + "' , ");
+				sb.append(" '" + sesUserNo + "' , ");
 				sb.append(" sysdate ");
 				sb.append(" ) ");
 				// SQL実行
-				ResultSet rs4 = stmt.executeQuery(sb.toString());
+				ResultSet rs3 = stmt.executeQuery(sb.toString());
 				// 初期化
 				sb.delete(0, sb.length());
 
-			}
+				// 他メンバー
+				for (int i = 0; i < groupMemberNo.length; i++) {
+					sb.append("INSERT INTO ");
+					sb.append(" t_group_info ");
+					sb.append(" ( ");
+					sb.append(" group_no ");
+					sb.append(", user_no ");
+					sb.append(", regist_date ");
+					sb.append(" ) ");
+					sb.append("VALUES ");
+					sb.append(" ( ");
+					sb.append(" '" + maxGroupNo + "' , ");
+					sb.append(" '" + groupMemberNo[i] + "' , ");
+					sb.append(" sysdate ");
+					sb.append(" ) ");
+					// SQL実行
+					ResultSet rs4 = stmt.executeQuery(sb.toString());
+					// 初期化
+					sb.delete(0, sb.length());
 
-		} catch (SQLException e) {
-			// エラーはすべてここにくる
-			e.printStackTrace();
-			errorFlag = 1;
-			// SQLの接続は絶対に切断
-		} finally {
-			try {
-				conn.close();
+				}
+
 			} catch (SQLException e) {
+				// エラーはすべてここにくる
 				e.printStackTrace();
+				errorFlag = 1;
+				// SQLの接続は絶対に切断
+			} finally {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		// 出力
 		if (errorFlag == 1) {
-			req.getRequestDispatcher("/WEB-INF/jsp/errorPage.jsp").forward(req, res);
+			req.getRequestDispatcher("/errorPage").forward(req, res);
 		} else {
 			req.getRequestDispatcher("/main").forward(req, res);
 		}
