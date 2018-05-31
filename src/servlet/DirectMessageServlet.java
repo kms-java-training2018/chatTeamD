@@ -74,7 +74,7 @@ public class DirectMessageServlet extends HttpServlet {
 				//パラメータのチェック
 				//mainPage.jspで指定されたuserNoというパラメータを受け取り、変数に格納(データの降り口)
 				userNo = req.getParameter("userNo");
-				String sqlGetuserNo = "SELECT USER_NO FROM M_USER WHERE USER_NO = " + userNo + "";
+				String sqlGetuserNo = "SELECT USER_NO FROM M_USER WHERE USER_NO = '" + userNo + "'";
 				PreparedStatement pStmtGetuserNo = conn.prepareStatement(sqlGetuserNo);
 				//(1)-3		チェックでエラーが発生した場合の処理
 			} catch (SQLException e) {
@@ -86,7 +86,7 @@ public class DirectMessageServlet extends HttpServlet {
 			//(2)会話情報取得処理
 			//(2)-1会話情報取得
 			//SQLのSELECT文を準備
-			String sqlMes = "SELECT MESSAGE FROM T_MESSAGE_INFO WHERE USER_NO = " + userNo + "";
+			String sqlMes = "SELECT MESSAGE FROM T_MESSAGE_INFO WHERE USER_NO = '" + userNo + "'";
 			//SQLをDBに届けるPreparedStatementのインスタンスを取得
 			PreparedStatement pStmtMes = conn.prepareStatement(sqlMes);
 			//ResultSetインスタンスにSELECT文の結果を格納する
@@ -138,8 +138,8 @@ public class DirectMessageServlet extends HttpServlet {
 
 			try {
 				//SQLのSELECT文を準備
-				String sqlSendMes = "INSERT INTO T_MESSAGE_INFO(MESSAGE_NO, SEND_USER_NO, MESSAGE, TO_SEND_USER_NO,DELETE_FLAG, REGIST_DATE)VALUES("
-						+ newMesNo + "," + myNo + "," + sendMessage + "," + userNo + ", 0, SYSDATE)";
+				String sqlSendMes = "INSERT INTO T_MESSAGE_INFO(MESSAGE_NO, SEND_USER_NO, MESSAGE, TO_SEND_USER_NO,DELETE_FLAG, REGIST_DATE)VALUES('"
+						+ newMesNo + "','" + myNo + "','" + sendMessage + "','" + userNo + "', 0, SYSDATE)";
 				//SQLをDBに届けるPreparedStatementのインスタンスを取得
 				PreparedStatement pStmtSendMes = conn.prepareStatement(sqlSendMes);
 
