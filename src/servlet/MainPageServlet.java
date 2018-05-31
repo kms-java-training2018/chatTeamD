@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import bean.MainPageBean;
 import bean.SessionBean;
+import bean.UserListBean;
+import model.GetUserListModel;
 import model.MainPageModel;
 
 public class MainPageServlet extends HttpServlet {
@@ -22,6 +24,8 @@ public class MainPageServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		// loginからはpostで送られてくる
 		// 初期化
+		UserListBean userListBean = new UserListBean();
+		GetUserListModel userListModel = new GetUserListModel();
 		MainPageBean bean = new MainPageBean();
 		MainPageModel model = new MainPageModel();
 		String direction = "/WEB-INF/jsp/mainPage.jsp";
@@ -38,6 +42,7 @@ public class MainPageServlet extends HttpServlet {
 		} else {
 			// 2～3処理
 			try {
+				// MainPageModelつかう
 				bean = model.dispInfo(bean, sesUserNo);
 			} catch (Exception e) {
 				e.printStackTrace();

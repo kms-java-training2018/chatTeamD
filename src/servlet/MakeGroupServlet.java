@@ -98,6 +98,8 @@ public class MakeGroupServlet extends HttpServlet {
 
 			}
 			// 出力
+			req.setAttribute("bean", bean);
+			req.setAttribute("errorMsg", bean.getErrorMsg());
 			req.getRequestDispatcher(direction).forward(req, res);
 
 		}
