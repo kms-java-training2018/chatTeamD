@@ -66,13 +66,33 @@ public class MyPageServlet extends HttpServlet {
 
 					Statement stmt = conn.createStatement();
 
-					/*
-					 * SQL SELECT文
-					 * SELECT USER_NAME, MY_PAGE_TEXT
-					 * FROM M_USER
-					 * WHERE USER_NO = 'userNo'
-					 */
-					// SQL作成
+					// ヘッダー部分です。各自以下内容をコピーし
+					// 実装をお願いします。
+					// SQL文作成
+					// USER_NAME取得
+					req.setCharacterEncoding("UTF-8");
+					String userName = "";
+					sb.append("SELECT ");
+					sb.append("USER_NAME ");
+					sb.append("FROM ");
+					sb.append("M_USER ");
+					sb.append("WHERE ");
+					sb.append("USER_ID = '" + userId + "'");
+
+					// SQL実行
+					ResultSet rs = stmt.executeQuery(sb.toString());
+					while(rs.next()) {
+						userName = rs.getString("USER_NAME");
+					}
+					// SQL文初期化
+					sb.delete(0, sb.length());
+					// jpsで表示するためにuserNameセット
+					req.setAttribute("userName", userName);
+					// ここまで。
+
+
+					// SQL文作成
+					// USER_NAME, MY_PAGE_TEXT取得
 					sb.append("SELECT ");
 					sb.append("USER_NAME, ");
 					sb.append("MY_PAGE_TEXT ");
@@ -82,9 +102,9 @@ public class MyPageServlet extends HttpServlet {
 					sb.append(" user_id = '" + userId + "' ");
 
 					// SQL実行
+					rs = stmt.executeQuery(sb.toString());
 
-					ResultSet rs = stmt.executeQuery(sb.toString());
-					//String showMyName = "";
+
 					String myName = "";
 					String errorMsg1 = "";
 
@@ -147,6 +167,14 @@ public class MyPageServlet extends HttpServlet {
 			return;
 			}
 
+		// ヘッダーログアウト
+		String logout = req.getParameter("logout");
+		if(logout != "") {
+			req.getRequestDispatcher("/login").forward(req, res);
+			return;
+		}
+		// ここまで追加してください
+
 		int dispName = sendDispName.length();
 		int myPageText = sendMyPageText.length();
 
@@ -186,6 +214,9 @@ public class MyPageServlet extends HttpServlet {
 					conn = DriverManager.getConnection(url, user, dbPassword);
 
 					Statement stmt = conn.createStatement();
+
+
+
 
 					// SQL作成
 					if(sendDispName != "" && sendMyPageText != "") {
@@ -255,7 +286,7 @@ public class MyPageServlet extends HttpServlet {
 
 
 				req.setAttribute("msg", msg);
-		req.getRequestDispatcher("/WEB-INF/jsp/myPage.jsp").forward(req, res);
+		req.getRequestDispatcher("/main").forward(req, res);
 
 	}
 }
