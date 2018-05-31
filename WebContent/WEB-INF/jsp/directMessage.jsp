@@ -12,14 +12,14 @@
 	<h2>メッセージ</h2>
 	あなた：メッセージのサンプルだよー（｀・ω・´）
 	<br>
-	<a href="/chat/showProfile">あいて</a>：いえーい（｀・ω・´）
+	<a href="/chat/showProfile">${username}</a>：${message}
 	<br>
-	<br>${message}
+	<br><br>
+	<br>
 
 
-
-	<input type="text" name="sendMessage" size="30">
 	<form action="/chat/directMessage" method="POST">
+	<input type="text" name="sendMessage" size="30">
 		<input type="submit" value="メッセージの送信" name= "sendMessage">
 	</form>
 	<form action="/chat/main" method="POST">

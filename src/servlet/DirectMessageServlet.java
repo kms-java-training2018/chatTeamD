@@ -35,9 +35,13 @@ public class DirectMessageServlet extends HttpServlet {
 		//ログインユーザーあての会話情報を格納する変数を宣言
 		String message = null;
 
+		//相手ユーザーの名前を格納する変数を宣言
+		String username = null;
+
 		//会話番号の最大値を格納する変数を宣言
 		int n = 0;
-		//
+		//エラーページ用の変数を宣言
+		String errorMsg = "";
 
 		try {
 			//JDBCドライバーのロード
@@ -71,9 +75,10 @@ public class DirectMessageServlet extends HttpServlet {
 
 				//sessionスコープに正しい値が入っていない場合はログインページに戻す
 			} catch (SQLException e) {
-				System.out.println("セッションがありません。");
+				errorMsg = "セッションがありません";
 				session.invalidate();
-				req.getRequestDispatcher("/error.jsp").forward(req, res);
+				req.setAttribute("errorMsg", errorMsg);
+				req.getRequestDispatcher("/errorPage").forward(req, res);
 			}
 			//(1)-2パラメータチェック
 			try {
@@ -84,16 +89,17 @@ public class DirectMessageServlet extends HttpServlet {
 				PreparedStatement pStmtGetuserNo = conn.prepareStatement(sqlGetuserNo);
 				//(1)-3		チェックでエラーが発生した場合の処理
 			} catch (SQLException e) {
-				System.out.println("セッションがありません。");
+				errorMsg = "セッションがありません。";
 				session.invalidate();
-				req.getRequestDispatcher("/error.jsp").forward(req, res);
+				req.setAttribute("errorMsg", errorMsg);
+				req.getRequestDispatcher("/errorPage").forward(req, res);
 			}
 
 			//(2)会話情報取得処理
 			//(2)-1会話情報取得
 			//SQLのSELECT文を準備
 			try {
-				String sqlMes = "SELECT MESSAGE FROM T_MESSAGE_INFO WHERE SEND_USER_NO = '" + userNo + "' AND TO_SEND_USER_NO = '" + myNo + "'";
+				String sqlMes = "SELECT MESSAGE, USER_NAME FROM T_MESSAGE_INFO INNER JOIN M_USER ON T_MESSAGE_INFO.SEND_USER_NO = M_USER.USER_NO WHERE SEND_USER_NO = '" + userNo + "' AND TO_SEND_USER_NO = '" + myNo + "'";
 
 				//SQLをDBに届けるPreparedStatementのインスタンスを取得
 				PreparedStatement pStmtMes = conn.prepareStatement(sqlMes);
@@ -101,18 +107,32 @@ public class DirectMessageServlet extends HttpServlet {
 				ResultSet resultMes = pStmtMes.executeQuery();
 				while (resultMes.next()) {
 					message = resultMes.getString("MESSAGE");
+					username = resultMes.getString("USER_NAME");
 
 				}
 
 			} catch (SQLException e) {
 				System.out.println("会話情報取得できません。");
 				session.invalidate();
-				req.getRequestDispatcher("/error.jsp").forward(req, res);
+				req.setAttribute("errorMsg", errorMsg);
+				req.getRequestDispatcher("/errorPage").forward(req, res);
 			}
 
 			session.setAttribute("message", message);
+			session.setAttribute("username", username);
+
 
 			req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
+
+
+
+
+
+
+
+
+
+
 
 			/*
 			* メッセージ送信処理
@@ -121,7 +141,7 @@ public class DirectMessageServlet extends HttpServlet {
 			//directMessage.jspで指定されたsendMessageというパラメータを受け取り、変数に格納(データの降り口)
 			String sendMessage = req.getParameter("sendMessage");
 			//(1)-1入力値のチェック
-			if (sendMessage == null || sendMessage.length() < 100) {
+			if (sendMessage.equals(null) || sendMessage.length() > 100) {
 				System.out.println("パラメーターが不正");
 				//エラーメッセージを表示し、メッセージ画面に遷移
 				System.out.println("100字以内のメッセージを入力してください。");
@@ -142,9 +162,10 @@ public class DirectMessageServlet extends HttpServlet {
 				n = resultMax.getInt("MESSAGE_NO");
 			}
 			}catch (SQLException e) {
-				System.out.println("会話情報の自動採番できません。");
+				errorMsg = "会話情報の自動採番できません。";
 				session.invalidate();
-				req.getRequestDispatcher("/error.jsp").forward(req, res);
+				req.setAttribute("errorMsg", errorMsg);
+				req.getRequestDispatcher("/errorPage").forward(req, res);
 			}
 
 			//会話番号の最大値+1を入れる変数を宣言
@@ -159,10 +180,11 @@ public class DirectMessageServlet extends HttpServlet {
 
 				//内容を登録できなかった場合、エラー画面に遷移する
 			} catch (SQLException e) {
-				System.out.println("会話内容が登録できません。");
+				errorMsg = "会話内容が登録できません。";
 				e.printStackTrace();
 				session.invalidate();
-				req.getRequestDispatcher("/error.jsp").forward(req, res);
+				req.setAttribute("errorMsg", errorMsg);
+				req.getRequestDispatcher("/errorPage").forward(req, res);
 			}
 
 			/*
