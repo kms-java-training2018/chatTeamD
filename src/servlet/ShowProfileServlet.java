@@ -42,7 +42,7 @@ public class ShowProfileServlet extends HttpServlet {
 		String userNo = (String) req.getParameter("userId");
 
 		// デバッグ用userNo設定
-		userNo = "1";
+		userNo = "13";
 
 		// 取得したユーザーナンバーをセット
 		bean.setUserNo(userNo);
@@ -71,12 +71,7 @@ public class ShowProfileServlet extends HttpServlet {
 
 			Statement stmt = conn.createStatement();
 
-			/*
-			 * SQL SELECT文
-			 * SELECT USER_NAME, MY_PAGE_TEXT
-			 * FROM M_USER
-			 * WHERE USER_NO = 'userNo'
-			 */
+
 			// SQL作成
 			sb.append("SELECT ");
 			sb.append(" user_name ");

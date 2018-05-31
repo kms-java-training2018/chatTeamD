@@ -9,30 +9,30 @@
 </head>
 <body>
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
-	${ userName }さん
+	${ session.getUserName() }さん
 	<br>
-	<form action="/chat/myPage" method="POST">
+	<form action="/chat/logout" method="POST">
 		<input type="hidden" name="logout" value="logout"><input
 			type="submit" value="ログアウト">
 	</form>
 	<hr>
 	<!-- ここまでです -->
 	<br>
+	<center>
 	<form action="/chat/myPage" method="POST">
-		<center>
-			<table width=>
+
+			<table>
 				<tr>
-					<td width="20%">名前</td>
-					<td width="20%"><textarea cols="30" name="dispName">${ myName }</textarea>
+					<td width="100">名前</td>
+					<td><textarea cols="30" name="dispName">${ myName }</textarea>
 				</tr>
 				<tr>
-					<td width="20%">自己紹介</td>
-					<td width="20%"><textarea cols="30" rows="20"
+					<td width="100">自己紹介</td>
+					<td><textarea cols="30" rows="20"
 							name="myPageText">${ myPageText }</textarea>
 				</tr>
-
 			</table>
-		</center>
+
 		<input type="submit" value="プロフィールを更新">
 	</form>
 	<form action="/chat/main" method="POST">
@@ -41,5 +41,6 @@
 
 	${ errorMsg }
 	<br>
+	</center>
 </body>
 </html>

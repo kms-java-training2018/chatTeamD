@@ -20,9 +20,6 @@ public class LoginBean {
 		return userId;
 	}
 
-	public void authentication(String been) {
-	}
-
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}

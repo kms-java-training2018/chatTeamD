@@ -69,7 +69,7 @@
 		<servlet-name>ShowProfileServlet</servlet-name>
 		<url-pattern>/showProfile</url-pattern>
 	</servlet-mapping>
-		<servlet>
+	<servlet>
 		<servlet-name>ErrorPageServlet</servlet-name>
 		<servlet-class>servlet.ErrorPageServlet</servlet-class>
 	</servlet>
@@ -77,12 +77,20 @@
 		<servlet-name>ErrorPageServlet</servlet-name>
 		<url-pattern>/errorPage</url-pattern>
 	</servlet-mapping>
-			<servlet>
+	<servlet>
 		<servlet-name>MyPageUpdateServlet</servlet-name>
 		<servlet-class>servlet.MyPageUpdateServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>MyPageUpdateServlet</servlet-name>
 		<url-pattern>/updateMyPage</url-pattern>
+	</servlet-mapping>
+				<servlet>
+		<servlet-name>LogoutServlet</servlet-name>
+		<servlet-class>servlet.LogoutServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/logout</url-pattern>
 	</servlet-mapping>
 </web-app>

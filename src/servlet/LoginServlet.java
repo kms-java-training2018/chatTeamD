@@ -56,14 +56,17 @@ public class LoginServlet extends HttpServlet {
 			SessionBean sessionBean = new SessionBean();
 			sessionBean.setUserName(bean.getUserName());
 			sessionBean.setUserNo(bean.getUserNo());
+			sessionBean.setUserId(bean.getUserId());
 			HttpSession session = req.getSession();
 			session.setAttribute("session", sessionBean);
 			session.setAttribute("userId", userId);
 			// 行き先を次の画面に
 			direction = "/main";
+		}else {
+			// エラーメッセージの表示
+			req.setAttribute("errorMessage", bean.getErrorMessage());
 		}
-		// エラーメッセージの表示
-		req.setAttribute("errorMessage", bean.getErrorMessage());
+
 		req.getRequestDispatcher(direction).forward(req, res);
 	}
 }
