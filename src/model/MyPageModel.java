@@ -8,17 +8,23 @@ import java.sql.Statement;
 
 import bean.MyPageBean;
 
-/**
- * ログイン画面ビジネスロジック
- */
 public class MyPageModel {
 
+	/**
+	 * @author hanawa-tomonori
+	 * 自分のユーザ情報取得ロジック
+	 */
+
 	public MyPageBean output(MyPageBean bean) {
+
+		// -------------------------------------------------------------
 		// 初期化
 		StringBuilder sb = new StringBuilder();
 		String userId = bean.getUserId();
 		String myPageText = "";
+		// -------------------------------------------------------------
 
+		// -------------------------------------------------------------
 		Connection conn = null;
 		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
 		String user = "DEV_TEAM_D";
@@ -37,6 +43,8 @@ public class MyPageModel {
 			conn = DriverManager.getConnection(url, user, dbPassword);
 
 			Statement stmt = conn.createStatement();
+
+			// -------------------------------------------------------------
 			// SQL文作成
 			// USER_NAME, MY_PAGE_TEXT取得
 			sb.append("SELECT ");
@@ -46,19 +54,24 @@ public class MyPageModel {
 			sb.append("M_USER ");
 			sb.append("WHERE ");
 			sb.append(" user_id = '" + userId + "' ");
+			// -------------------------------------------------------------
 
 			// SQL実行
 			ResultSet rs = stmt.executeQuery(sb.toString());
 
+			// -------------------------------------------------------------
+			// 取得した情報をbeanへセット
 			while (rs.next()) {
 				bean.setMyPageText(rs.getString("MY_PAGE_TEXT"));
 				bean.setUserName(rs.getString("USER_NAME"));
 				myPageText = rs.getString("MY_PAGE_NAME");
 			}
+			// レコードが取得できなければ、エラーメッセージをセット
 			if (myPageText == "") {
 				bean.setErrorMessage("レコードが取得できませんでした");
 				return bean;
 			}
+			// -------------------------------------------------------------
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -71,18 +84,27 @@ public class MyPageModel {
 			}
 
 		}
-
+		// -------------------------------------------------------------
 		return bean;
 	}
 
+	/**
+	 * @author hanawa-tomonori
+	 * 自分のユーザ情報更新ロジック
+	 */
+
 	public MyPageBean update(MyPageBean bean) {
+
+		// -------------------------------------------------------------
 		// 初期化
 		StringBuilder sb = new StringBuilder();
 		String userId = bean.getUserId();
 		String myPageText = "";
 		String sendDispName = bean.getUserName();
 		String sendMyPageText = bean.getMyPageText();
+		// -------------------------------------------------------------
 
+		// -------------------------------------------------------------
 		Connection conn = null;
 		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
 		String user = "DEV_TEAM_D";
@@ -104,6 +126,10 @@ public class MyPageModel {
 			// SQL作成
 			if (sendDispName != "" && sendMyPageText != "") {
 
+				// -------------------------------------------------------------
+				// プロフィール情報更新
+				// ・表示名(USER_NAME)
+				// ・自己紹介文(MY_PAGE_TEXT)
 				sb.append("UPDATE ");
 				sb.append("M_USER ");
 				sb.append("SET ");
@@ -112,6 +138,25 @@ public class MyPageModel {
 				sb.append("WHERE ");
 				sb.append(" user_id = '" + userId + "' ");
 				ResultSet rs = stmt.executeQuery(sb.toString());
+				// -------------------------------------------------------------
+
+				// SQL初期化
+				sb.delete(0, sb.length());
+
+				// -------------------------------------------------------------
+				// 更新後の表示名(USER_NAME)取得
+				sb.append("SELECT ");
+				sb.append("USER_NAME ");
+				sb.append("FROM ");
+				sb.append("M_USER ");
+				sb.append("WHERE ");
+				sb.append(" user_id = '" + userId + "' ");
+				rs = stmt.executeQuery(sb.toString());
+				// -------------------------------------------------------------
+
+				// beanへ、表示名をセット
+				bean.setUserName(rs.getString("USER_NAME"));
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -124,6 +169,7 @@ public class MyPageModel {
 			}
 
 		}
+		// -------------------------------------------------------------
 
 		return bean;
 	}
