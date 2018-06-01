@@ -9,6 +9,8 @@ public class SessionBean {
 
 	private String userId;
 
+	private String otherUsersNo;
+
 	public String getUserNo() {
 		return userNo;
 	}
@@ -31,6 +33,14 @@ public class SessionBean {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getOtherUsersNo() {
+		return otherUsersNo;
+	}
+
+	public void setOtherUsersNo(String otherUsersNo) {
+		this.otherUsersNo = otherUsersNo;
 	}
 
 }
