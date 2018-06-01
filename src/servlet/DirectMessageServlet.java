@@ -200,19 +200,14 @@ public class DirectMessageServlet extends HttpServlet {
 				req.getRequestDispatcher("/errorPage").forward(req, res);
 			}
 
-			//登録後、メッセージ画面に遷移
-			req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
-
 			/*
 			* メッセージ削除処理
 			*/
-			//directMessage.jspの削除ボタンを押したとき(deleteMessageの信号が送られてきたとき)のみ以下の処理を実行する
-//			if() {
-//
-//			}
 			//確認ダイアログ表示処理
-
+			
 			//会話情報論理削除処理
+			
+			
 			//SQLのSELECT文を準備
 
 			//SQLをDBに届けるPreparedStatementのインスタンスを取得
