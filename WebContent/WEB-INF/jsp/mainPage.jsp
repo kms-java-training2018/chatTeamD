@@ -8,6 +8,15 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
+	${ session.getUserName() }さん
+	<br>
+	<form action="/chat/logout" method="POST">
+		<input type="hidden" name="logout" value="logout"><input
+			type="submit" value="ログアウト">
+	</form>
+	<hr>
+	<!-- ここまでです -->
 	<h1>チャット研修プログラム</h1>
 	<h2>メインメニュー</h2>
 	<br>■会員一覧
@@ -22,7 +31,7 @@
 	</c:forEach>
 
 	<br>■グループ一覧
-	<br> ${groupbean.getGroupNullMes()[status.index]}
+	<br> ${groupbean.getGroupNullMes()}
 	<c:forEach var="obj" items="${groupbean.getGroupNo()}" varStatus="status">
 		<form name="GM" method="get" action="/chat/groupMessage">
 				<input type=hidden name="groupNo" value="${groupbean.getGroupNo()[status.index]}"> <a

@@ -8,6 +8,15 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
+	${ session.getUserName() }さん
+	<br>
+	<form action="/chat/logout" method="POST">
+		<input type="hidden" name="logout" value="logout"><input
+			type="submit" value="ログアウト">
+	</form>
+	<hr>
+	<!-- ここまでです -->
 	<h1>チャット研修プログラム</h1>
 	<h2>グループ作成</h2>
 	<p>誰にもチェックを入れなかった場合、あなたひとりのグループができます</p>
