@@ -204,10 +204,11 @@ public class DirectMessageServlet extends HttpServlet {
 			* メッセージ削除処理
 			*/
 			//確認ダイアログ表示処理
-			
+
 			//会話情報論理削除処理
-			
-			
+
+
+
 			//SQLのSELECT文を準備
 
 			//SQLをDBに届けるPreparedStatementのインスタンスを取得

@@ -19,7 +19,7 @@
 	<br>
 	<br><br>
 	<br>
-    
+
 
 	<form action="/chat/directMessage" method="POST">
 	<input type="text" name="sendMessage" size="30">
