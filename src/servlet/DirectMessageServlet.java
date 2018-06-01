@@ -147,6 +147,7 @@ public class DirectMessageServlet extends HttpServlet {
 			conn = DriverManager.getConnection(url, user, dbPassword);
 			Statement stmt = conn.createStatement();
 
+
 			//(1)パラメータチェック
 		    //sessionスコープを使う下準備
 		    HttpSession session = req.getSession();
@@ -171,7 +172,7 @@ public class DirectMessageServlet extends HttpServlet {
 			//ResultSetインスタンスにSELECT文の結果を格納する
 			ResultSet resultMax = pStmtGetMax.executeQuery();
 			while (resultMax.next()) {
-				bean.setN(resultMax.getInt("MESSAGE_NO"));
+				bean.setN(resultMax.getInt("MAX(MESSAGE_NO)"));
 			}
 			}catch (SQLException e) {
 				bean.setErrorMsg("会話情報の自動採番できません。");
@@ -181,7 +182,7 @@ public class DirectMessageServlet extends HttpServlet {
 			}
 
 			//会話番号の最大値+1を入れる変数を宣言
-			int newMesNo = bean.getMyNo() + 1;
+			int newMesNo = bean.getN() + 1;
 
 			try {
 				//SQLのSELECT文を準備
