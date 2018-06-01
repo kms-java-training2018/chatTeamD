@@ -25,6 +25,9 @@
 	<input type="text" name="sendMessage" size="30">
 		<input type="submit" value="メッセージの送信" name= "sendMessage">
 	</form>
+	<form action="/chat/directMessage" method="POST">
+		<input type="submit" value="メッセージの削除" name="deleteMessage">
+	</form>
 	<form action="/chat/main" method="POST">
 		<input type="submit" value="メインメニューへ戻る">
 	</form>
