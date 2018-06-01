@@ -12,23 +12,23 @@
 	<h2>メインメニュー</h2>
 	<br>■会員一覧
 	<br>
-	<c:forEach var="obj" items="${bean.getUserName()}" varStatus="status">
+	<c:forEach var="obj" items="${userbean.getUserName()}" varStatus="status">
 			<form name="${obj}" method="get" action="/chat/directMessage">
-				<input type=hidden name="userNo" value="${bean.getUserNo()[status.index]}">
+				<input type=hidden name="userNo" value="${userbean.getUserNo()[status.index]}">
 				<a href="javascript:${obj}.submit()">${obj}</a>
 			</form>
-		<p>> ${bean.getDirectMessage()[status.index]}</p>
+		<p>> ${userbean.getDirectMessage()[status.index]}</p>
 		<br>
 	</c:forEach>
 
 	<br>■グループ一覧
 	<br> ${bean.getGroupNullMes()[status.index]}
-	<c:forEach var="obj" items="${bean.getGroupName()}" varStatus="status">
+	<c:forEach var="obj" items="${groupbean.getGroupName()}" varStatus="status">
 		<form name="${obj}" method="get" action="/chat/groupMessage">
-				<input type=hidden name="groupNo" value="${bean.getGroupNo()[status.index]}"> <a
+				<input type=hidden name="groupNo" value="${groupbean.getGroupNo()[status.index]}"> <a
 					href="javascript:${obj}.submit()">${obj}</a>
 			</form>
-		<p>> ${bean.getGroupMessage()[status.index]}</p>
+		<p>> ${groupbean.getGroupMessage()[status.index]}</p>
 		<br>
 	</c:forEach>
 
