@@ -110,6 +110,8 @@ public class GroupMessageServlet extends HttpServlet {
 		}
 		// -------------------------------------------------------------
 
+		req.setAttribute("bean", bean);
+
 		req.getRequestDispatcher("/WEB-INF/jsp/groupMessage.jsp").forward(req, res);
 
 	}

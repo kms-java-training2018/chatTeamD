@@ -23,8 +23,8 @@
 	<br>
 	<br>
 	<form action="/chat/groupMessage" method="POST">
-	<input type="hidden" name="groupNo">
-		<input type="text" name="message">
+	<!--  <input type="hidden" name="groupNo" value="${bean.getGroupNo }">
+		<input type="text" name="message">-->
 		<input type="submit" value="メッセージの送信">
 	</form>
 	<form action="/chat/main" method="POST">
