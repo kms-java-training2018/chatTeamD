@@ -24,7 +24,7 @@
 	<br>■グループ一覧
 	<br> ${bean.getGroupNullMes()[status.index]}
 	<c:forEach var="obj" items="${bean.getGroupName()}" varStatus="status">
-		<form name="${obj}" method="post" action="/chat/groupMessage">
+		<form name="${obj}" method="get" action="/chat/groupMessage">
 				<input type=hidden name="groupNo" value="${bean.getGroupNo()[status.index]}"> <a
 					href="javascript:${obj}.submit()">${obj}</a>
 			</form>
