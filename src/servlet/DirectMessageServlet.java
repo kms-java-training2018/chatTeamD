@@ -128,6 +128,7 @@ public class DirectMessageServlet extends HttpServlet {
 			/*
 			* メッセージ送信処理
 			*/
+
 		//データベースと接続
 		Connection conn = null;
 		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
@@ -154,11 +155,28 @@ public class DirectMessageServlet extends HttpServlet {
 			//directMessage.jspで指定されたsendMessageというパラメータを受け取り、変数に格納(データの降り口)
 			String sendMessage = req.getParameter("sendMessage");
 			//(1)-1入力値のチェック
-			if (sendMessage.equals(null) || sendMessage.length() > 100) {
+			if (sendMessage == null || sendMessage.length() > 100) {
 				System.out.println("パラメーターが不正");
 				//エラーメッセージを表示し、メッセージ画面に遷移
 				System.out.println("100字以内のメッセージを入力してください。");
 				req.getRequestDispatcher("/directMessage.jsp").forward(req, res);
+			}
+
+
+			/*
+			* メッセージ削除処理
+			*/
+			//directMessage.jspの削除ボタンを押したとき(deleteMessageの信号が送られてきたとき)のみ以下の処理を実行する
+			String deleteDirection = (String) req.getParameter("deleteMessage");
+			if(deleteDirection.equals("deleteMessage")) {
+
+			//確認ダイアログ表示処理
+
+
+			//会話情報論理削除処理
+			//SQLのSELECT文を準備
+
+			//SQLをDBに届けるPreparedStatementのインスタンスを取得
 			}
 
 			//会話情報登録処理
@@ -203,19 +221,7 @@ public class DirectMessageServlet extends HttpServlet {
 			//登録後、メッセージ画面に遷移
 			req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
 
-			/*
-			* メッセージ削除処理
-			*/
-			//directMessage.jspの削除ボタンを押したとき(deleteMessageの信号が送られてきたとき)のみ以下の処理を実行する
-//			if() {
-//
-//			}
-			//確認ダイアログ表示処理
 
-			//会話情報論理削除処理
-			//SQLのSELECT文を準備
-
-			//SQLをDBに届けるPreparedStatementのインスタンスを取得
 
 		} catch (SQLException e) {
 			e.printStackTrace();
