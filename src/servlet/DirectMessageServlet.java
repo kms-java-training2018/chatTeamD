@@ -18,18 +18,17 @@ import bean.DirectMessageBean;
 
 public class DirectMessageServlet extends HttpServlet {
 
-
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		/*
 		* 画面表示処理
 		*/
-		//データベースと接続
-		Connection conn = null;
-		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
-		String user = "DEV_TEAM_D";
-		String dbPassword = "D_DEV_TEAM";
+			//データベースと接続
+			Connection conn = null;
+			String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
+			String user = "DEV_TEAM_D";
+			String dbPassword = "D_DEV_TEAM";
 
-		DirectMessageBean bean = new DirectMessageBean();
+			DirectMessageBean bean = new DirectMessageBean();
 
 		try {
 			//JDBCドライバーのロード
@@ -39,8 +38,13 @@ public class DirectMessageServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 			//データベースへの接続作成
-				conn = DriverManager.getConnection(url, user, dbPassword);
-				Statement stmt = conn.createStatement();
+				try {
+					conn = DriverManager.getConnection(url, user, dbPassword);
+					Statement stmt = conn.createStatement();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+
 
 		//(1)パラメーターチェック
 			//(1)-1セッション確認
@@ -107,24 +111,45 @@ public class DirectMessageServlet extends HttpServlet {
 				req.getRequestDispatcher("/errorPage").forward(req, res);
 			}
 
+			req.setAttribute("userNo", bean.getUserNo());
 			session.setAttribute("message", bean.getMessage());
 			session.setAttribute("username", bean.getUsername());
-
-
 			req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
+		}finally {
+			try {
+			    conn.close();
+		    } catch (SQLException e) {
+			    e.printStackTrace();
+		    }
+		}
+		}
 
-
-
-
-
-
-
-
-
+	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 			/*
 			* メッセージ送信処理
 			*/
+		//データベースと接続
+		Connection conn = null;
+		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
+		String user = "DEV_TEAM_D";
+		String dbPassword = "D_DEV_TEAM";
+
+		DirectMessageBean bean = new DirectMessageBean();
+
+	try {
+		//JDBCドライバーのロード
+			try {
+				Class.forName("oracle.jdbc.driver.OracleDriver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		//データベースへの接続作成
+			conn = DriverManager.getConnection(url, user, dbPassword);
+			Statement stmt = conn.createStatement();
+
 			//(1)パラメータチェック
+		    //sessionスコープを使う下準備
+		    HttpSession session = req.getSession();
 			//directMessage.jspで指定されたsendMessageというパラメータを受け取り、変数に格納(データの降り口)
 			String sendMessage = req.getParameter("sendMessage");
 			//(1)-1入力値のチェック

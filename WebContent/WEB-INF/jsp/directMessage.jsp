@@ -12,7 +12,10 @@
 	<h2>メッセージ</h2>
 	あなた：メッセージのサンプルだよー（｀・ω・´）
 	<br>
-	<a href="/chat/showProfile" name="otherUserNo">${username}</a>：${message}
+	<form name="showProfile" action="/chat/showProfile" method="GET">
+	<input type=hidden name="otherUserNo" value="${userNo}">
+	<a href="javascript:showProfile.submit()">${username}</a>：${message}
+	</form>
 	<br>
 	<br><br>
 	<br>
