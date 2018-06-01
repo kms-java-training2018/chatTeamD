@@ -12,7 +12,7 @@
 	<h2>メッセージ</h2>
 	あなた：メッセージのサンプルだよー（｀・ω・´）
 	<br>
-	<a href="/chat/showProfile">${username}</a>：${message}
+	<a href="/chat/showProfile" name="otherUserNo">${username}</a>：${message}
 	<br>
 	<br><br>
 	<br>

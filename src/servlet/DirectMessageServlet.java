@@ -33,15 +33,16 @@ public class DirectMessageServlet extends HttpServlet {
 
 		try {
 			//JDBCドライバーのロード
-			try {
-				Class.forName("oracle.jdbc.driver.OracleDriver");
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
+				try {
+					Class.forName("oracle.jdbc.driver.OracleDriver");
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
 			//データベースへの接続作成
-			conn = DriverManager.getConnection(url, user, dbPassword);
-			Statement stmt = conn.createStatement();
+				conn = DriverManager.getConnection(url, user, dbPassword);
+				Statement stmt = conn.createStatement();
 
+		//(1)パラメーターチェック
 			//(1)-1セッション確認
 			//sessionスコープを使う下準備
 			HttpSession session = req.getSession();
