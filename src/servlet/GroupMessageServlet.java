@@ -44,8 +44,8 @@ public class GroupMessageServlet extends HttpServlet {
 
 		// -------------------------------------------------------------
 
-		req.getParameter("groupNo");
-		bean.setGroupNo("1");
+		String groupNo = req.getParameter("groupNo");
+		bean.setGroupNo(groupNo);
 
 		// -------------------------------------------------------------
 		// SQL実行
@@ -58,10 +58,57 @@ public class GroupMessageServlet extends HttpServlet {
 
 		req.setAttribute("userName", bean.getListUserName());
 		req.setAttribute("message", bean.getListMessage());
+		req.setAttribute("bean", bean);
 		req.getRequestDispatcher(direction).forward(req, res);
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+
+		// -------------------------------------------------------------
+		// 初期化
+		GroupMessageBean bean = new GroupMessageBean();
+		GroupMessageModel model = new GroupMessageModel();
+		String direction = "/WEB-INF/jsp/groupMessage.jsp";
+		String errorMsg = "";
+		// -------------------------------------------------------------
+
+		req.setCharacterEncoding("UTF-8");
+		String groupNo = req.getParameter("groupNo");
+
+
+		// -------------------------------------------------------------
+		// Sessionの取得
+		HttpSession session = req.getSession();
+		SessionBean sesBean = (SessionBean) session.getAttribute("session");
+		String sesUserId = sesBean.getUserId();
+		String sesUserNo = sesBean.getUserNo();
+		String myPageText = (String) req.getAttribute("myPageText");
+		// -------------------------------------------------------------
+
+		// -------------------------------------------------------------
+		// Sessionにユーザ情報がなければ、エラーページへ遷移
+		if (sesUserNo == null) {
+			errorMsg = "セッションが切れました";
+			req.setAttribute("errorMsg", errorMsg);
+			req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, res);
+			return;
+		}
+
+		// -------------------------------------------------------------
+
+		String message = req.getParameter("message");
+		bean.setMessage(message);
+		bean.setUserNo(sesUserNo);
+		bean.setGroupNo(groupNo);
+
+		// -------------------------------------------------------------
+		// SQL実行
+		try {
+			bean = model.send(bean);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// -------------------------------------------------------------
 
 		req.getRequestDispatcher("/WEB-INF/jsp/groupMessage.jsp").forward(req, res);
 

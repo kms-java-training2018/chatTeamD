@@ -10,14 +10,21 @@
 <body>
 	<h1>チャット研修プログラム</h1>
 	<h2>グループメッセージ</h2>
-	<a href="/chat/showProfile">たかつか</a>：グループメッセージのサンプルだよー４（´・ω・｀）
-		<br><a href="/chat/showProfile">いしかわ</a>：グループメッセージのサンプルだよー３（´・ω・｀）
-		<br><a href="/chat/showProfile">ますだ</a>：グループメッセージのサンプルだよー２（´・ω・｀）
-		<br><a href="/chat/showProfile">たかつか</a>：グループメッセージのサンプルだよー１（´・ω・｀）
-		<br>あなた：わーい！たーのしー！
+	<c:forEach var="obj" items="${bean.getListUserName()}"
+		varStatus="status">
+		<form name="${obj}" method="get" action="/chat/showProfile">
+			<input type=hidden name="groupNo"> <a
+				href="javascript:${obj}.submit()">${obj}</a>
+				<p>「 ${bean.getListMessage()[status.index]} 」</p>
+		</form>
+		<br>
+	</c:forEach>
+	<p></p>
 	<br>
 	<br>
 	<form action="/chat/groupMessage" method="POST">
+	<input type="hidden" name="groupNo">
+		<input type="text" name="message">
 		<input type="submit" value="メッセージの送信">
 	</form>
 	<form action="/chat/main" method="POST">
