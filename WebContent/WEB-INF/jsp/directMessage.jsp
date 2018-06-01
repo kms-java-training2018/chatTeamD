@@ -8,6 +8,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+<script>
+
+// -->
+</script>
 	<h1>チャット研修プログラム</h1>
 	<h2>メッセージ</h2>
 	あなた：メッセージのサンプルだよー（｀・ω・´）
@@ -27,7 +31,7 @@
 	</form>
 	<form action="/chat/directMessage" method="POST">
 		<input type=hidden name="deleteMessage" value="deleteMessage">
-		<input type="submit" value="メッセージの削除">
+		<input type="submit" value="メッセージの削除" onClick=confirm('本当に削除しますか?')>
 	</form>
 	<form action="/chat/main" method="POST">
 		<input type="submit" value="メインメニューへ戻る">

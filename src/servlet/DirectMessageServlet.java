@@ -168,16 +168,19 @@ public class DirectMessageServlet extends HttpServlet {
 			*/
 			//directMessage.jspの削除ボタンを押したとき(deleteMessageの信号が送られてきたとき)のみ以下の処理を実行する
 			String deleteDirection = (String) req.getParameter("deleteMessage");
-			if(deleteDirection.equals("deleteMessage")) {
 
-			//確認ダイアログ表示処理
+				if("deleteMessage".equals( deleteDirection)) {
+
+					//確認ダイアログ表示処理(これはjspで行う)
+					System.out.println("成功");
+
+					//会話情報論理削除処理
+					//SQLのSELECT文を準備
+
+					//SQLをDBに届けるPreparedStatementのインスタンスを取得
+					}
 
 
-			//会話情報論理削除処理
-			//SQLのSELECT文を準備
-
-			//SQLをDBに届けるPreparedStatementのインスタンスを取得
-			}
 
 			//会話情報登録処理
 
