@@ -80,7 +80,7 @@ public class GetUserListModel {
 			}
 			// beanのフィールドにset
 			bean.setUserNo(userNo);
-			bean.setUserNo(userNo);
+			bean.setUserID(userID);
 			bean.setUserName(userName);
 			// 初期化
 			sb.delete(0, sb.length());
@@ -167,6 +167,8 @@ public class GetUserListModel {
 					// 会話を始めましょう！
 					directMessage.add("会話を始めましょう!");
 				}
+				// 初期化
+				sb.delete(0, sb.length());
 			}
 			// beanのフィールドにset
 			bean.setDirectMessage(directMessage);

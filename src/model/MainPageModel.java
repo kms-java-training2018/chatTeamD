@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import bean.MainPageBean;
 /**
  * メインページを表示する為の情報を取得する処理を行うモデル
+ * 【GetGroupListModel】【GetUserListModel】に分解したので使わないでください
  * @author masuda-keito
  *
  */

@@ -10,9 +10,12 @@ import bean.ShowProfileBean;
 
 public class ShowProfileModel {
 	public ShowProfileBean output(ShowProfileBean bean) {
+
+		// -------------------------------------------------------------
 		// 初期化
 		StringBuilder sb = new StringBuilder();
 		String userNo = bean.getUserNo();
+		//-------------------------------------------------------------
 
 		Connection conn = null;
 		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
@@ -45,17 +48,18 @@ public class ShowProfileModel {
 			// SQL実行
 			ResultSet rs = stmt.executeQuery(sb.toString());
 
+			// -------------------------------------------------------------
+			// 取得した情報をbeanへセット
+			// レコードが取得できなければ、エラーメッセージをセット
 			while (rs.next()) {
 				bean.setMyPageText(rs.getString("MY_PAGE_TEXT"));
 				bean.setUserName(rs.getString("USER_NAME"));
 			}
-			if ("".equals(bean.getMyPageText())) {
-				bean.setErrorMessage("レコードが取得できませんでした");
-				return bean;
-			}
+
+			// -------------------------------------------------------------
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			bean.setErrorMessage("レコードが取得できませんでした");
 			// SQLの接続は絶対に切断
 		} finally {
 			try {
