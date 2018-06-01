@@ -32,7 +32,6 @@ public class GroupMessageBean {
 
 	private ArrayList<String> listMessage = new ArrayList<>();
 
-
 	/**
 	 * メソッド
 	 */

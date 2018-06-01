@@ -21,6 +21,7 @@
 			</table>
 			<br>
 			<font color="red"><strong>${ errorMessage }</strong></font>
+			<font color="red"><strong>${ errorMessage2 }</strong></font>
 			<br><br>
 
 			<input type="submit" value="ログイン">
