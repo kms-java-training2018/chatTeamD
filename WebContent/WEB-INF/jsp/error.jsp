@@ -11,7 +11,7 @@
 <font color="#ff0000">${errorMsg}</font>
 <br>
 お手数ですがログインページからやり直してください
-<form action="/chat/errorPage" method="POST">
+<form action="/chat/logout" method="POST">
 <input type="submit" value="ログインページへ">
 </form>
 

@@ -22,7 +22,7 @@ public class LoginServlet extends HttpServlet {
 	 * 初期表示
 	 */
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		// Beanの初期化
+		// 初期化
 		LoginBean bean = new LoginBean();
 		bean.setErrorMessage("");
 		bean.setUserId("");
@@ -33,24 +33,37 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
+		// -------------------------------------------------------------
 		// 初期化
 		LoginBean bean = new LoginBean();
 		LoginModel model = new LoginModel();
 		String direction = "/WEB-INF/jsp/login.jsp";
-
+		// -------------------------------------------------------------
+		
+		// -------------------------------------------------------------
 		// パラメータの取得
 		String userId = (String) req.getParameter("userId");
 		String password = (String) req.getParameter("password");
-
+		// -------------------------------------------------------------
+		
+		// -------------------------------------------------------------
+		// userId, passwordをbeanへセット
 		bean.setUserId(userId);
 		bean.setPassword(password);
-
+		// -------------------------------------------------------------
+		
+		// -------------------------------------------------------------
+		// SQL実行
 		// 認証処理
 		try {
 			bean = model.authentication(bean);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		// -------------------------------------------------------------
+		
+		// -------------------------------------------------------------
 		// 取得に成功した場合セッション情報をセット
 		if ("".equals(bean.getErrorMessage())) {
 			SessionBean sessionBean = new SessionBean();
@@ -66,7 +79,8 @@ public class LoginServlet extends HttpServlet {
 			// エラーメッセージの表示
 			req.setAttribute("errorMessage", bean.getErrorMessage());
 		}
-
+		// -------------------------------------------------------------
+		
 		req.getRequestDispatcher(direction).forward(req, res);
 	}
 }
