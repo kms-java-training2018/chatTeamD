@@ -47,11 +47,12 @@ public class MakeGroupServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		// 途中でエラーはいている場合
 		if (bean.getErrorFlag() == 1) {
+			// 途中でエラーはいている場合
 			// 行き先をエラーページに
 			direction = "/errorPage";
 		} else {
+			// 正常に一覧取得できた場合
 			// リクエストに送る
 			req.setAttribute("bean", bean);
 		}
@@ -84,15 +85,21 @@ public class MakeGroupServlet extends HttpServlet {
 		} else {
 			// それ以外の場合処理続ける
 			try {
+				/**
+				 * 2)グループ登録処理
+				 * 3)グループ会員登録処理
+				 */
 				bean = model.makeGroup(bean, groupName, groupMemberNo, sesUserNo);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			if (bean.getErrorFlag() == 1) {
+				// モデル内でエラーを吐いていた場合
 				req.setAttribute("errorMsg", bean.getErrorMsg());
 				// 行き先をエラーページに
 				direction = "/errorPage";
 			} else {
+				// 正常にグループ作成できた場合
 				// 行き先をメインページに
 				direction = "/main";
 

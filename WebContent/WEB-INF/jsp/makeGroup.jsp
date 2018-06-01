@@ -10,7 +10,7 @@
 <body>
 	<h1>チャット研修プログラム</h1>
 	<h2>グループ作成</h2>
-	<p>誰にもチェックを入れなかった場合、あなたひとりのグループはできません</p>
+	<p>誰にもチェックを入れなかった場合、あなたひとりのグループができます</p>
 	<form action="/chat/makeGroup" method="POST">
 		グループ名<input type="text" name="groupName" value="" size="30"> <br>
 		<c:forEach var="obj" items="${bean.getUserName()}" varStatus="status">
