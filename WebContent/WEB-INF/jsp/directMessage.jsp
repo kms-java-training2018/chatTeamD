@@ -31,7 +31,7 @@
 	</form>
 	<form action="/chat/directMessage" method="POST">
 		<input type=hidden name="deleteMessage" value="deleteMessage">
-		<input type="submit" value="メッセージの削除" onClick=confirm('本当に削除しますか?')>
+		<input type="submit" value="メッセージの削除" onClick=confirm( '本当に削除しますか?' )>
 	</form>
 	<form action="/chat/main" method="POST">
 		<input type="submit" value="メインメニューへ戻る">

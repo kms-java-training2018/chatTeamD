@@ -77,12 +77,12 @@ public class DirectMessageServlet extends HttpServlet {
 			try {
 				//パラメータのチェック
 				//mainPage.jspで指定されたuserNoというパラメータを受け取り、変数に格納(データの降り口)
-				bean.setUserNo(req.getParameter("userNo"));
+				bean.setUserNo(Integer.parseInt(req.getParameter("userNo")));
 				String sqlGetuserNo = "SELECT USER_NO FROM M_USER WHERE USER_NO = '" + bean.getUserNo() + "'";
 				PreparedStatement pStmtGetuserNo = conn.prepareStatement(sqlGetuserNo);
 				//(1)-3		チェックでエラーが発生した場合の処理
 			} catch (SQLException e) {
-				bean.setErrorMsg("セッションがありません。");
+				bean.setErrorMsg("不正な遷移です。");
 				session.invalidate();
 				req.setAttribute("errorMsg", bean.getErrorMsg());
 				req.getRequestDispatcher("/errorPage").forward(req, res);
@@ -124,6 +124,11 @@ public class DirectMessageServlet extends HttpServlet {
 		}
 		}
 
+
+
+
+
+
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 			/*
 			* メッセージ送信処理
@@ -152,6 +157,66 @@ public class DirectMessageServlet extends HttpServlet {
 			//(1)パラメータチェック
 		    //sessionスコープを使う下準備
 		    HttpSession session = req.getSession();
+
+		  //LoginServletでsessionスコープに入れたuserIdから、ログインユーザーの会員番号を取得
+			//まずはsessionスコープに入っている値を取得
+			String userId = (String) session.getAttribute("userId");
+			try {
+				//SQLのSELECT文を準備
+				String sql = "SELECT USER_NO FROM M_USER WHERE USER_ID='" + userId + "'";
+				//SQLをDBに届けるPreparedStatementのインスタンスを取得
+				PreparedStatement pStmt = conn.prepareStatement(sql);
+				//ResultSetインスタンスにSELECT文の結果を格納する
+				ResultSet result = pStmt.executeQuery();
+
+				while (result.next()) {
+					bean.setMyNo(result.getInt("USER_NO"));
+				}
+				//エラーが発生した場合の処理
+			} catch (SQLException e) {
+				bean.setErrorMsg("セッションがありません");
+				session.invalidate();
+				req.setAttribute("errorMsg", bean.getErrorMsg());
+				req.getRequestDispatcher("/errorPage").forward(req, res);
+			}
+
+
+			//相手のユーザー番号を取得
+			try {
+				//mainPage.jspで指定されたuserNoというパラメータを受け取り、変数に格納(データの降り口)
+				bean.setUserNo(Integer.parseInt(req.getParameter("userNo")));
+				String sqlGetuserNo = "SELECT USER_NO FROM M_USER WHERE USER_NO = '" + bean.getUserNo() + "'";
+				PreparedStatement pStmtGetuserNo = conn.prepareStatement(sqlGetuserNo);
+				//ResultSetインスタンスにSELECT文の結果を格納する
+				ResultSet result = pStmtGetuserNo.executeQuery();
+
+				while (result.next()) {
+					bean.setUserNo(result.getInt("USER_NO"));
+				}
+				//エラーが発生した場合の処理
+			} catch (SQLException e) {
+				bean.setErrorMsg("不正な遷移です。");
+				session.invalidate();
+				req.setAttribute("errorMsg", bean.getErrorMsg());
+				req.getRequestDispatcher("/errorPage").forward(req, res);
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			//directMessage.jspで指定されたsendMessageというパラメータを受け取り、変数に格納(データの降り口)
 			String sendMessage = req.getParameter("sendMessage");
 			//(1)-1入力値のチェック

@@ -5,7 +5,7 @@ public class DirectMessageBean {
 	 * フィールド
 	 */
 	/** 相手の会員番号を格納する変数を宣言 */
-	private String userNo;
+	private int userNo;
 
 	/** ログインユーザーの会員番号を格納する変数を宣言 */
 	private int myNo;
@@ -27,11 +27,11 @@ public class DirectMessageBean {
 	/**
 	 * メソッド
 	 */
-	public String getUserNo() {
+	public int getUserNo() {
 		return userNo;
 	}
 
-	public void setUserNo(String userNo) {
+	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
 
