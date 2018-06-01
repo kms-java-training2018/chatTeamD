@@ -8,12 +8,32 @@ import java.sql.Statement;
 
 import bean.MakeGroupBean;
 
+/**
+ * 新しくグループを作成するモデル。
+ * @author masuda-keito
+ *
+ */
 public class MakeGroupModel {
 	/**
 	 * グループ名の最大長
 	 */
 	final int GROUP_NAME_LENGTH = 30;
+
+	/**
+	 * sesUserNoが作成者になり
+	 * 配列groupMemberNoの人々との
+	 * グループを作成するメソッド。
+	 * グループにはgroupNameという名前をつける。
+	 * エラー情報はbeanに格納し返される。
+	 * @param bean	……エラー情報を入れるbean
+	 * @param groupName	……作るグループの名前
+	 * @param groupMemberNo	……グループの参加者
+	 * @param sesUserNo	……グループの作成者
+	 * @return MakeGroupBean型にエラー情報を入れて返す。
+	 */
 	public MakeGroupBean makeGroup(MakeGroupBean bean, String groupName, String[] groupMemberNo, String sesUserNo) {
+		// ボッチグループ判定
+		int soloGroupFlag = 0;
 		if (groupName.equals("")) {
 			// グループ名が空
 			bean.setErrorMsg("グループ名が空です");
@@ -24,9 +44,8 @@ public class MakeGroupModel {
 			bean.setErrorFlag(1);
 		} else if (groupMemberNo == null) {
 			// グループメンバーがいない
-			bean.setErrorMsg("グループメンバーがあなた以外いません");
-			bean.setErrorFlag(1);
-			}
+			soloGroupFlag = 1;
+		}
 		if (bean.getErrorFlag() == 1) {
 			// エラーページへ
 
@@ -99,6 +118,7 @@ public class MakeGroupModel {
 				/**
 				 * 3)グループ会員登録処理
 				 */
+				// 一連の処理なのでメソッド分けない
 				// 自分
 				sb.append("INSERT INTO ");
 				sb.append(" t_group_info ");
@@ -119,25 +139,28 @@ public class MakeGroupModel {
 				sb.delete(0, sb.length());
 
 				// 他メンバー
-				for (int i = 0; i < groupMemberNo.length; i++) {
-					sb.append("INSERT INTO ");
-					sb.append(" t_group_info ");
-					sb.append(" ( ");
-					sb.append(" group_no ");
-					sb.append(", user_no ");
-					sb.append(", regist_date ");
-					sb.append(" ) ");
-					sb.append("VALUES ");
-					sb.append(" ( ");
-					sb.append(" '" + maxGroupNo + "' , ");
-					sb.append(" '" + groupMemberNo[i] + "' , ");
-					sb.append(" sysdate ");
-					sb.append(" ) ");
-					// SQL実行
-					ResultSet rs4 = stmt.executeQuery(sb.toString());
-					// 初期化
-					sb.delete(0, sb.length());
+				if (soloGroupFlag != 1) {
+					// おひとり様グループじゃなければ他メンバーも追加する
+					for (int i = 0; i < groupMemberNo.length; i++) {
+						sb.append("INSERT INTO ");
+						sb.append(" t_group_info ");
+						sb.append(" ( ");
+						sb.append(" group_no ");
+						sb.append(", user_no ");
+						sb.append(", regist_date ");
+						sb.append(" ) ");
+						sb.append("VALUES ");
+						sb.append(" ( ");
+						sb.append(" '" + maxGroupNo + "' , ");
+						sb.append(" '" + groupMemberNo[i] + "' , ");
+						sb.append(" sysdate ");
+						sb.append(" ) ");
+						// SQL実行
+						ResultSet rs4 = stmt.executeQuery(sb.toString());
+						// 初期化
+						sb.delete(0, sb.length());
 
+					}
 				}
 
 			} catch (SQLException e) {

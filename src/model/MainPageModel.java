@@ -8,9 +8,18 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import bean.MainPageBean;
-
+/**
+ * メインページを表示する為の情報を取得する処理を行うモデル
+ * @author masuda-keito
+ *
+ */
 public class MainPageModel {
-
+/**
+ * メインページ表示に必要な情報を取得するメソッド
+ * @param bean
+ * @param sesUserNo
+ * @return	会員一覧情報をbeanに格納して返す
+ */
 	public MainPageBean dispInfo(MainPageBean bean, String sesUserNo) {
 
 		int errorFlag = 0;
