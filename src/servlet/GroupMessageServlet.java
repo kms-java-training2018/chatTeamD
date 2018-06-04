@@ -112,6 +112,9 @@ public class GroupMessageServlet extends HttpServlet {
 			}
 		}
 
+		//outflag出力⇒Arraylistに入れる
+		//arraylist判定⇒1なら名前が脱退者
+
 		if (req.getParameter("exit") != null) {
 
 			int exitGroupNo = Integer.parseInt(req.getParameter("exit"));
