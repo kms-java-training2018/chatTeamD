@@ -44,7 +44,7 @@ public class GroupMessageModel {
 			// SQL文作成
 			// USER_NAME, MY_PAGE_TEXT取得
 			sb.append("SELECT ");
-			sb.append("USER_NAME, MESSAGE ");
+			sb.append("USER_NAME, USER_NO, MESSAGE ");
 			sb.append("FROM ");
 			sb.append("T_MESSAGE_INFO INNER JOIN M_USER ON T_MESSAGE_INFO.SEND_USER_NO = M_USER.USER_NO ");
 			sb.append("INNER JOIN M_GROUP ON T_MESSAGE_INFO.TO_SEND_GROUP_NO = M_GROUP.GROUP_NO ");
@@ -59,13 +59,16 @@ public class GroupMessageModel {
 			ResultSet rs = stmt.executeQuery(sb.toString());
 			ArrayList<String> userName = new ArrayList<>();
 			ArrayList<String> message = new ArrayList<>();
+			ArrayList<String> userNo = new ArrayList<>();
 			// -------------------------------------------------------------
 			// 取得した情報をbeanへセット
 			while (rs.next()) {
 				userName.add(rs.getString("USER_NAME"));
+				userNo.add(rs.getString("USER_NO"));
 				message.add(rs.getString("MESSAGE"));
-			}
 
+			}
+			bean.setListUserNo(userNo);
 			bean.setListUserName(userName);
 			bean.setListMessage(message);
 

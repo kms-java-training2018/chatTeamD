@@ -46,6 +46,7 @@ public class GroupMessageServlet extends HttpServlet {
 
 		String groupNo = req.getParameter("groupNo");
 		bean.setGroupNo(groupNo);
+		session.setAttribute("groupNo", groupNo);
 
 		// -------------------------------------------------------------
 		// SQL実行
@@ -58,6 +59,7 @@ public class GroupMessageServlet extends HttpServlet {
 
 		req.setAttribute("userName", bean.getListUserName());
 		req.setAttribute("message", bean.getListMessage());
+		req.setAttribute("userNo", bean.getListUserNo());
 		req.setAttribute("bean", bean);
 		req.getRequestDispatcher(direction).forward(req, res);
 	}
@@ -65,7 +67,8 @@ public class GroupMessageServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
 		// TODO 削除機能の実装
-		
+		// groupNoをdoGetでセッションに持たせて、Post側ではセッションを取得
+
 		// -------------------------------------------------------------
 		// 初期化
 		GroupMessageBean bean = new GroupMessageBean();
@@ -76,7 +79,6 @@ public class GroupMessageServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String groupNo = req.getParameter("groupNo");
-
 
 		// -------------------------------------------------------------
 		// Sessionの取得
@@ -98,11 +100,11 @@ public class GroupMessageServlet extends HttpServlet {
 
 		// -------------------------------------------------------------
 
+		groupNo = (String) req.getAttribute("groupNo");
 		String message = req.getParameter("message");
+
 		bean.setMessage(message);
 		bean.setUserNo(sesUserNo);
-		bean.setGroupNo(groupNo);
-		groupNo = "3";
 		bean.setGroupNo(groupNo);
 
 		// -------------------------------------------------------------
@@ -114,20 +116,19 @@ public class GroupMessageServlet extends HttpServlet {
 		}
 		// -------------------------------------------------------------
 		// -------------------------------------------------------------
-				// SQL実行
-				try {
-					bean = model.output(bean);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				// -------------------------------------------------------------
-
-				req.setAttribute("userName", bean.getListUserName());
-				req.setAttribute("message", bean.getListMessage());
-				req.setAttribute("bean", bean);
-				req.getRequestDispatcher("WEB-INF/jsp/groupMessage.jsp").forward(req, res);
+		// SQL実行
+		try {
+			bean = model.output(bean);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// -------------------------------------------------------------
+		
+		req.setAttribute("userName", bean.getListUserName());
+		req.setAttribute("message", bean.getListMessage());
+		req.setAttribute("userNo", bean.getListUserNo());
+		req.setAttribute("bean", bean);
+		req.getRequestDispatcher("WEB-INF/jsp/groupMessage.jsp").forward(req, res);
 	}
-
-
 
 }
