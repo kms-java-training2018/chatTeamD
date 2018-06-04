@@ -8,13 +8,18 @@
 <title>Insert title here</title>
 </head>
 <body>
-<script>
-
-// -->
-</script>
+<!-- 以下、ヘッダー部分-->
+	${ session.getUserName() }さん
+	<br>
+	<form action="/chat/logout" method="POST">
+		<input type="hidden" name="logout" value="logout"><input
+			type="submit" value="ログアウト">
+	</form>
+	<hr>
+	<!-- ここまで -->
 	<h1>チャット研修プログラム</h1>
 	<h2>メッセージ</h2>
-	あなた：メッセージのサンプルだよー（｀・ω・´）
+	${ session.getUserName() }：${sendMessage}
 	<br>
 	<form name="showProfile" action="/chat/showProfile" method="GET">
 	<input type=hidden name="otherUserNo" value="${userNo}">
@@ -30,8 +35,8 @@
 		<input type="submit" value="メッセージの送信" name= "sendMessage">
 	</form>
 	<form action="/chat/directMessage" method="POST">
-		<input type=hidden name="deleteMessage" value="deleteMessage">
-		<input type="submit" value="メッセージの削除" onClick=confirm( '本当に削除しますか?' )>
+		<input type="submit" value="メッセージの削除" onClick= "confirm('本当に削除しますか？')">
+		<input type=hidden name="deleteMessage" value="deleteMessage" onClick="if(confirm ('本当に削除しますか？')){submit();}">
 	</form>
 	<form action="/chat/main" method="POST">
 		<input type="submit" value="メインメニューへ戻る">
