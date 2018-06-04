@@ -106,7 +106,7 @@ public class DirectMessageServlet extends HttpServlet {
 
 			try {
 				//相手か自分のユーザー名とメッセージをとってくるSQLのSELECT文を準備
-				String sqlMes = "SELECT MESSAGE, USER_NAME, USER_NO FROM T_MESSAGE_INFO INNER JOIN M_USER ON T_MESSAGE_INFO.SEND_USER_NO = M_USER.USER_NO WHERE (SEND_USER_NO = '"+bean.getUserNo() +"' or SEND_USER_NO='"+bean.getMyNo()+"')AND (TO_SEND_USER_NO = '"+bean.getMyNo()+"'or TO_SEND_USER_NO='"+bean.getUserNo()+"')AND DELETE_FLAG='0'";
+				String sqlMes = "SELECT MESSAGE, USER_NAME, USER_NO, MESSAGE_NO FROM T_MESSAGE_INFO INNER JOIN M_USER ON T_MESSAGE_INFO.SEND_USER_NO = M_USER.USER_NO WHERE (SEND_USER_NO = '"+bean.getUserNo() +"' or SEND_USER_NO='"+bean.getMyNo()+"')AND (TO_SEND_USER_NO = '"+bean.getMyNo()+"'or TO_SEND_USER_NO='"+bean.getUserNo()+"')AND DELETE_FLAG='0'";
 				//SQLをDBに届けるPreparedStatementのインスタンスを取得
 				PreparedStatement pStmtMes = conn.prepareStatement(sqlMes);
 				//ResultSetインスタンスにSELECT文の結果を格納する
@@ -115,14 +115,17 @@ public class DirectMessageServlet extends HttpServlet {
 				ArrayList<String> userNo = new ArrayList<>();
 				ArrayList<String> userName = new ArrayList<>();
 				ArrayList<String> message = new ArrayList<>();
+				ArrayList<String> messageNo = new ArrayList<>();
 				while (resultMes.next()) {
 					userNo.add(resultMes.getString("USER_NO"));
 					userName.add(resultMes.getString("USER_NAME"));
 					message.add(resultMes.getString("MESSAGE"));
+					messageNo.add(resultMes.getString("MESSAGE_NO"));
 				}
 				bean.setListUserNo(userNo);
 				bean.setListUserName(userName);
 				bean.setListMessage(message);
+				bean.setListMsgNo(messageNo);
 
 
 
@@ -134,6 +137,7 @@ public class DirectMessageServlet extends HttpServlet {
 			}
 			//取得した情報をdirectMessage.jspに送る
 			Integer myNum=bean.getMyNo();
+			req.setAttribute("messageNo", bean.getListMsgNo());
 			req.setAttribute("myNo", myNum);
 			req.setAttribute("userNo", bean.getListUserNo());
 			session.setAttribute("message", bean.getListMessage());
@@ -179,9 +183,16 @@ public class DirectMessageServlet extends HttpServlet {
 			Statement stmt = conn.createStatement();
 
 
-			//(1)パラメータチェック
-		    //sessionスコープを使う下準備
+			String check = req.getParameter("check");
+
+			//sessionスコープを使う下準備
 		    HttpSession session = req.getSession();
+
+			if(check.equals("2")) {
+
+
+			//(1)パラメータチェック
+
 
 		  //LoginServletでsessionスコープに入れたuserIdから、ログインユーザーの会員番号を取得
 			//まずはsessionスコープに入っている値を取得
@@ -272,7 +283,7 @@ public class DirectMessageServlet extends HttpServlet {
 			try {
 				//SQLのINSERT文を準備
 				String sqlSendMes = "INSERT INTO T_MESSAGE_INFO(MESSAGE_NO, SEND_USER_NO, MESSAGE, TO_SEND_USER_NO,DELETE_FLAG, REGIST_DATE)VALUES('"
-						+ newMesNo + "','" + bean.getMyNo() + "','" + sendMessage + "','" + bean.getUserNo() + "', 0, SYSDATE)";
+						+ newMesNo + "','" + bean.getMyNo() + "','" + sendMessage + "','" + bean.getUserNo() + "', '0', SYSDATE)";
 				//SQLをDBに届けるPreparedStatementのインスタンスを取得
 				PreparedStatement pStmtSendMes = conn.prepareStatement(sqlSendMes);
 
@@ -309,6 +320,7 @@ public class DirectMessageServlet extends HttpServlet {
 				req.setAttribute("errorMsg", bean.getErrorMsg());
 				req.getRequestDispatcher("/errorPage").forward(req, res);
 			}
+			}else {
 
 
 			/*
@@ -325,9 +337,11 @@ public class DirectMessageServlet extends HttpServlet {
 					//会話情報論理削除処理
 					try {
 						//SQLのUPDATE文を準備(さっきのsendMessageのところの削除フラグを1にする)
-						String sqlDelete ="UPDATE T_MESSAGE_INFO SET DELETE_FLAG = 1 WHERE MESSAGE_NO = '"+ deleteMessageNo +"'";
+						String sqlDelete ="UPDATE T_MESSAGE_INFO SET DELETE_FLAG = '1' WHERE MESSAGE_NO = '"+ deleteMessageNo +"'";
 						//SQLをDBに届けるPreparedStatementのインスタンスを取得
 						PreparedStatement pStmtDelete = conn.prepareStatement(sqlDelete);
+						//メッセージ送信ページに戻る
+
 					}catch (SQLException e) {
 						bean.setErrorMsg("会話情報の論理削除ができません。");
 						session.invalidate();
@@ -336,6 +350,7 @@ public class DirectMessageServlet extends HttpServlet {
 					}
 
 				}
+			}
 
 
 
