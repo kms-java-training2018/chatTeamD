@@ -80,6 +80,18 @@ public class DirectMessageServlet extends HttpServlet {
 				bean.setUserNo(Integer.parseInt(req.getParameter("userNo")));
 				String sqlGetuserNo = "SELECT USER_NO FROM M_USER WHERE USER_NO = '" + bean.getUserNo() + "'";
 				PreparedStatement pStmtGetuserNo = conn.prepareStatement(sqlGetuserNo);
+				//ResultSetインスタンスにSELECT文の結果を格納する
+				ResultSet result = pStmtGetuserNo.executeQuery();
+
+				while (result.next()) {
+					bean.setUserNo(result.getInt("USER_NO"));
+				}
+
+				//相手のユーザー番号をPOSTメソッドでも利用するために、sessionスコープに格納する。
+				session.setAttribute("userNo", bean.getUserNo());
+
+
+
 				//(1)-3		チェックでエラーが発生した場合の処理
 			} catch (SQLException e) {
 				bean.setErrorMsg("不正な遷移です。");
@@ -183,9 +195,9 @@ public class DirectMessageServlet extends HttpServlet {
 
 			//相手のユーザー番号を取得
 			try {
-				//mainPage.jspで指定されたuserNoというパラメータを受け取り、変数に格納(データの降り口)
-				bean.setUserNo(Integer.parseInt(req.getParameter("userNo")));
-				String sqlGetuserNo = "SELECT USER_NO FROM M_USER WHERE USER_NO = '" + bean.getUserNo() + "'";
+				//まずはsessionスコープに入っているuserNoというパラメータを受け取り、変数に格納(データの降り口)
+				int user_No = (int) session.getAttribute("userNo");
+				String sqlGetuserNo = "SELECT USER_NO FROM M_USER WHERE USER_NO = '" + user_No + "'";
 				PreparedStatement pStmtGetuserNo = conn.prepareStatement(sqlGetuserNo);
 				//ResultSetインスタンスにSELECT文の結果を格納する
 				ResultSet result = pStmtGetuserNo.executeQuery();
@@ -205,18 +217,6 @@ public class DirectMessageServlet extends HttpServlet {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 			//directMessage.jspで指定されたsendMessageというパラメータを受け取り、変数に格納(データの降り口)
 			String sendMessage = req.getParameter("sendMessage");
 			//(1)-1入力値のチェック
@@ -226,24 +226,10 @@ public class DirectMessageServlet extends HttpServlet {
 				System.out.println("100字以内のメッセージを入力してください。");
 				req.getRequestDispatcher("/directMessage.jsp").forward(req, res);
 			}
+			session.setAttribute("sendMessage", sendMessage);
 
 
-			/*
-			* メッセージ削除処理
-			*/
-			//directMessage.jspの削除ボタンを押したとき(deleteMessageの信号が送られてきたとき)のみ以下の処理を実行する
-			String deleteDirection = (String) req.getParameter("deleteMessage");
 
-				if("deleteMessage".equals( deleteDirection)) {
-
-					//確認ダイアログ表示処理(これはjspで行う)
-					System.out.println("成功");
-
-					//会話情報論理削除処理
-					//SQLのSELECT文を準備
-
-					//SQLをDBに届けるPreparedStatementのインスタンスを取得
-					}
 
 
 
@@ -261,7 +247,7 @@ public class DirectMessageServlet extends HttpServlet {
 				bean.setN(resultMax.getInt("MAX(MESSAGE_NO)"));
 			}
 			}catch (SQLException e) {
-				bean.setErrorMsg("会話情報の自動採番できません。");
+				bean.setErrorMsg("会話情報の自動採番ができません。");
 				session.invalidate();
 				req.setAttribute("errorMsg", bean.getErrorMsg());
 				req.getRequestDispatcher("/errorPage").forward(req, res);
@@ -271,11 +257,14 @@ public class DirectMessageServlet extends HttpServlet {
 			int newMesNo = bean.getN() + 1;
 
 			try {
-				//SQLのSELECT文を準備
+				//SQLのINSERT文を準備
 				String sqlSendMes = "INSERT INTO T_MESSAGE_INFO(MESSAGE_NO, SEND_USER_NO, MESSAGE, TO_SEND_USER_NO,DELETE_FLAG, REGIST_DATE)VALUES('"
 						+ newMesNo + "','" + bean.getMyNo() + "','" + sendMessage + "','" + bean.getUserNo() + "', 0, SYSDATE)";
 				//SQLをDBに届けるPreparedStatementのインスタンスを取得
 				PreparedStatement pStmtSendMes = conn.prepareStatement(sqlSendMes);
+
+				//登録後、メッセージ画面に遷移
+				req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
 
 				//内容を登録できなかった場合、エラー画面に遷移する
 			} catch (SQLException e) {
@@ -286,8 +275,34 @@ public class DirectMessageServlet extends HttpServlet {
 				req.getRequestDispatcher("/errorPage").forward(req, res);
 			}
 
-			//登録後、メッセージ画面に遷移
-			req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
+
+			/*
+			* メッセージ削除処理
+			*/
+			//directMessage.jspの削除ボタンを押したとき(deleteMessageの信号が送られてきたとき)のみ以下の処理を実行する
+
+			//確認ダイアログ表示処理(これはjspで行う)から、OKが押されたら送られてくるパラメータを取り出す
+			String deleteDirection = (String) req.getParameter("deleteMessage");
+
+
+				//取り出せたら以下の処理を行う
+				if("deleteMessage".equals( deleteDirection)) {
+					//会話情報論理削除処理
+					try {
+						//SQLのSELECT文を準備(さっきのsendMessageのところの削除フラグを1にする)
+						String sqlDelete ="UPDATE T_MESSAGE_INFO SET DELETE_FLAG = 1 WHERE MESSAGE_NO = '"+ newMesNo +"'";
+						//SQLをDBに届けるPreparedStatementのインスタンスを取得
+						PreparedStatement pStmtDelete = conn.prepareStatement(sqlDelete);
+					}catch (SQLException e) {
+						bean.setErrorMsg("会話情報の論理削除ができません。");
+						session.invalidate();
+						req.setAttribute("errorMsg", bean.getErrorMsg());
+						req.getRequestDispatcher("/errorPage").forward(req, res);
+					}
+
+				}
+
+
 
 
 
