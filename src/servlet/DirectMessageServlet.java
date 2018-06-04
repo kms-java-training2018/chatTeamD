@@ -23,6 +23,11 @@ public class DirectMessageServlet extends HttpServlet {
 		/*
 		* 画面表示処理
 		*/
+
+
+		//メッセージ文字化け防止
+		req.setCharacterEncoding("UTF-8");
+
 			//データベースと接続
 			Connection conn = null;
 			String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
@@ -164,6 +169,10 @@ public class DirectMessageServlet extends HttpServlet {
 			* メッセージ送信処理
 			*/
 
+
+		//メッセージ文字化け防止
+		req.setCharacterEncoding("UTF-8");
+
 		//データベースと接続
 		Connection conn = null;
 		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
@@ -243,6 +252,7 @@ public class DirectMessageServlet extends HttpServlet {
 
 
 			//directMessage.jspで指定されたsendMessageというパラメータを受け取り、変数に格納(データの降り口)
+			req.setCharacterEncoding("UTF-8");
 			String sendMessage = req.getParameter("sendMessage");
 			//(1)-1入力値のチェック
 			if (sendMessage == null || sendMessage.length() > 100) {
@@ -294,7 +304,7 @@ public class DirectMessageServlet extends HttpServlet {
 
 				//さらに、送ったメッセージをリストに格納して画面に表示していく
 					//送ったメッセージを取得するSELECT文を準備
-					String sqlSentMes = "SELECT MESSAGE, USER_NAME FROM T_MESSAGE_INFO INNER JOIN M_USER ON T_MESSAGE_INFO.SEND_USER_NO = M_USER.USER_NO WHERE  =MESSAGE_NO '" +  newMesNo + "'";
+					String sqlSentMes = "SELECT MESSAGE, USER_NAME FROM T_MESSAGE_INFO INNER JOIN M_USER ON T_MESSAGE_INFO.SEND_USER_NO = M_USER.USER_NO WHERE  MESSAGE_NO= '" +  newMesNo + "'";
 					//SQLをDBに届けるPreparedStatementのインスタンスを取得
 					PreparedStatement pStmtSentMes = conn.prepareStatement(sqlSentMes);
 					//ResultSetインスタンスにINSERT文の結果を格納する
@@ -310,8 +320,8 @@ public class DirectMessageServlet extends HttpServlet {
 					bean.setListMessage(message);
 
 
-				//登録後、メッセージ画面に遷移
-				req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
+//				//登録後、メッセージ画面に遷移
+//				req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
 
 				//内容を登録できなかった場合、エラー画面に遷移する
 			} catch (SQLException e) {
@@ -450,6 +460,7 @@ public class DirectMessageServlet extends HttpServlet {
 			req.setAttribute("messageNo", bean.getListMsgNo());
 			req.setAttribute("myNo", myNum);
 			req.setAttribute("userNo", bean.getListUserNo());
+			req.setAttribute("singleUserNO", req.getParameter("userNo"));
 			session.setAttribute("message", bean.getListMessage());
 			session.setAttribute("username", bean.getListUserName());
 			req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);

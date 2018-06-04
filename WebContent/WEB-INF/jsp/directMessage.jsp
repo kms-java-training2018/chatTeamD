@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- 以下、ヘッダー部分-->
+	<!-- 以下、ヘッダー部分-->
 	${ session.getUserName() }さん
 	<br>
 	<form action="/chat/logout" method="POST">
@@ -42,20 +42,22 @@
 
 	<br>
 	<c:forEach var="obj" items="${message}" varStatus="status">
-	<c:if test="${userNo[status.index]==myNo}">
-	<form name="" action="/chat/directMessage" method="POST">
-	<input type=hidden name="check" value="1"><input type=hidden name="userNo" value="${singleUserNO}">
-	<input type=hidden name="deleteMessageNo" value="${messageNo[status.index]}" >
-	<input type="button" value="メッセージの削除"onClick="if(confirm ('本当に削除しますか？')){submit();}">
-	</form>
-	</c:if>
+		<c:if test="${userNo[status.index]==myNo}">
+			<form name="" action="/chat/directMessage" method="POST">
+				<input type=hidden name="check" value="1"><input type=hidden
+					name="userNo" value="${singleUserNO}"> <input type=hidden
+					name="deleteMessageNo" value="${messageNo[status.index]}">
+				<input type="button" value="メッセージの削除"
+					onClick="if(confirm ('本当に削除しますか？')){submit();}">
+			</form>
+		</c:if>
 
 
 
-	<form name="showProfile" action="/chat/showProfile" method="GET">
-	<input type=hidden name="otherUserNo" value="${userNo[status.index]}">
-	<a href="javascript:showProfile.submit()">${username[status.index]}</a>：${obj}
-	</form>
+		<form name="showProfile" action="/chat/showProfile" method="GET">
+			<input type=hidden name="otherUserNo" value="${userNo[status.index]}">
+			<a href="javascript:showProfile[${status.index}].submit()">${username[status.index]}</a>：${obj}
+		</form>
 	</c:forEach>
 
 
@@ -69,14 +71,16 @@
 
 
 	<br>
-	<br><br>
+	<br>
+	<br>
 	<br>
 
 
 	<form action="/chat/directMessage" method="POST">
-	<input type=hidden name="check" value="2">
-	<input type="text" name="sendMessage" size="30">
-		<input type="submit" value="メッセージの送信" name= "sendMessage">
+		<input type=hidden name="check" value="2"> <input type="text"
+			name="sendMessage" size="30"><input type=hidden name="userNo"
+			value="${singleUserNO}"> <input type="submit"
+			value="メッセージの送信" name="sendMessage">
 	</form>
 	<form action="/chat/main" method="POST">
 		<input type="submit" value="メインメニューへ戻る">
