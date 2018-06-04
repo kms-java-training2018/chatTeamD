@@ -105,21 +105,25 @@ public class DirectMessageServlet extends HttpServlet {
 			//(2)-1会話情報取得
 
 			try {
-				//相手のユーザー名とメッセージをとってくるSQLのSELECT文を準備
-				String sqlMes = "SELECT MESSAGE, USER_NAME FROM T_MESSAGE_INFO INNER JOIN M_USER ON T_MESSAGE_INFO.SEND_USER_NO = M_USER.USER_NO WHERE SEND_USER_NO = '" + bean.getUserNo() + "' AND TO_SEND_USER_NO = '" + bean.getMyNo() + "'";
+				//相手か自分のユーザー名とメッセージをとってくるSQLのSELECT文を準備
+				String sqlMes = "SELECT MESSAGE, USER_NAME, USER_NO FROM T_MESSAGE_INFO INNER JOIN M_USER ON T_MESSAGE_INFO.SEND_USER_NO = M_USER.USER_NO WHERE (SEND_USER_NO = '"+bean.getUserNo() +"' or SEND_USER_NO='"+bean.getMyNo()+"')AND (TO_SEND_USER_NO = '"+bean.getMyNo()+"'or TO_SEND_USER_NO='"+bean.getUserNo()+"')AND DELETE_FLAG='0'";
 				//SQLをDBに届けるPreparedStatementのインスタンスを取得
 				PreparedStatement pStmtMes = conn.prepareStatement(sqlMes);
 				//ResultSetインスタンスにSELECT文の結果を格納する
 				ResultSet resultMes = pStmtMes.executeQuery();
 				//結果をリストに格納する
+				ArrayList<String> userNo = new ArrayList<>();
 				ArrayList<String> userName = new ArrayList<>();
 				ArrayList<String> message = new ArrayList<>();
 				while (resultMes.next()) {
+					userNo.add(resultMes.getString("USER_NO"));
 					userName.add(resultMes.getString("USER_NAME"));
 					message.add(resultMes.getString("MESSAGE"));
 				}
+				bean.setListUserNo(userNo);
 				bean.setListUserName(userName);
 				bean.setListMessage(message);
+
 
 
 			} catch (SQLException e) {
@@ -129,7 +133,9 @@ public class DirectMessageServlet extends HttpServlet {
 				req.getRequestDispatcher("/errorPage").forward(req, res);
 			}
 			//取得した情報をdirectMessage.jspに送る
-			req.setAttribute("userNo", bean.getUserNo());
+			Integer myNum=bean.getMyNo();
+			req.setAttribute("myNo", myNum);
+			req.setAttribute("userNo", bean.getListUserNo());
 			session.setAttribute("message", bean.getListMessage());
 			session.setAttribute("username", bean.getListUserName());
 			req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
@@ -269,6 +275,28 @@ public class DirectMessageServlet extends HttpServlet {
 						+ newMesNo + "','" + bean.getMyNo() + "','" + sendMessage + "','" + bean.getUserNo() + "', 0, SYSDATE)";
 				//SQLをDBに届けるPreparedStatementのインスタンスを取得
 				PreparedStatement pStmtSendMes = conn.prepareStatement(sqlSendMes);
+
+
+				//ResultSetインスタンスにINSERT文の結果を格納する
+				ResultSet resultSendMes = pStmtSendMes.executeQuery();
+
+				//さらに、送ったメッセージをリストに格納して画面に表示していく
+					//送ったメッセージを取得するSELECT文を準備
+					String sqlSentMes = "SELECT MESSAGE, USER_NAME FROM T_MESSAGE_INFO INNER JOIN M_USER ON T_MESSAGE_INFO.SEND_USER_NO = M_USER.USER_NO WHERE  =MESSAGE_NO '" +  newMesNo + "'";
+					//SQLをDBに届けるPreparedStatementのインスタンスを取得
+					PreparedStatement pStmtSentMes = conn.prepareStatement(sqlSentMes);
+					//ResultSetインスタンスにINSERT文の結果を格納する
+					ResultSet resultSentMes = pStmtSentMes.executeQuery();
+					//結果をリストに格納する
+					ArrayList<String> userName = new ArrayList<>();
+					ArrayList<String> message = new ArrayList<>();
+					while (resultSentMes.next()) {
+						userName.add("USER_NAME");
+						message.add(resultSentMes.getString("MESSAGE"));
+					}
+					bean.setListUserName(userName);
+					bean.setListMessage(message);
+
 
 				//登録後、メッセージ画面に遷移
 				req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
