@@ -6,14 +6,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<!--	JS読み込み	-->
+<script type="text/javascript" charset="UTF-8" language="javascript" src="./dialog.js"></script>
 </head>
 <body>
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
 	${ session.getUserName() }さん
 	<br>
-	<form action="/chat/logout" method="POST">
-		<input type="hidden" name="logout" value="logout"><input
-			type="submit" value="ログアウト">
+	<form name="log_out" action="/chat/logout" method="POST">
+	<input type="button" value="logout"onClick="if(confirm ('本当にログアウトしますか？')){submit();}">
 	</form>
 	<hr>
 	<!-- ここまでです -->

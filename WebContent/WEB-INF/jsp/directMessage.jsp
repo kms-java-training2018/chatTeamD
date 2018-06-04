@@ -44,8 +44,9 @@
 	<c:forEach var="obj" items="${message}" varStatus="status">
 	<c:if test="${userNo[status.index]==myNo}">
 	<form name="" action="/chat/directMessage" method="POST">
-	<input type="button" value="メッセージの削除"onClick="confirm('本当に削除しますか？')">
-	<input type=hidden name="deleteMessageNo" value="${messageNo[status.index]}" onClick="if(confirm ('本当に削除しますか？')){submit();}" >
+	<input type=hidden name="check" value="1">
+	<input type=hidden name="deleteMessageNo" value="${messageNo[status.index]}" >
+	<input type="button" value="メッセージの削除"onClick="if(confirm ('本当に削除しますか？')){submit();}">
 	</form>
 	</c:if>
 
@@ -73,6 +74,7 @@
 
 
 	<form action="/chat/directMessage" method="POST">
+	<input type=hidden name="check" value="2">
 	<input type="text" name="sendMessage" size="30">
 		<input type="submit" value="メッセージの送信" name= "sendMessage">
 	</form>
