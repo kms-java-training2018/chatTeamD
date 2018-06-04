@@ -50,7 +50,7 @@ public class GroupMessageServlet extends HttpServlet {
 
 		// グループナンバーが取得できない場合エラー
 		if (groupNo == 0) {
-			req.getRequestDispatcher("/error").forward(req, res);
+			req.getRequestDispatcher("/errorPage").forward(req, res);
 			return;
 		}
 
@@ -95,7 +95,8 @@ public class GroupMessageServlet extends HttpServlet {
 		if (sesUserNo == null) {
 			errorMsg = "セッションが切れました";
 			req.setAttribute("errorMsg", errorMsg);
-			req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, res);
+			direction = "/errorPage";
+			req.getRequestDispatcher(direction).forward(req, res);
 			return;
 		}
 
@@ -111,7 +112,7 @@ public class GroupMessageServlet extends HttpServlet {
 			}
 		}
 
-		if (req.getParameter("groupexit") != null) {
+		if (req.getParameter("exit") != null) {
 
 			int exitGroupNo = Integer.parseInt(req.getParameter("exit"));
 			bean.setExitGroupNo(exitGroupNo);
@@ -121,7 +122,8 @@ public class GroupMessageServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			if (bean.getRegistUserNo() == Integer.parseInt(sesUserNo)) {
-				req.getRequestDispatcher("/error").forward(req, res);
+				direction = "/errorPage";
+				req.getRequestDispatcher(direction).forward(req, res);
 				return;
 			}
 			bean.setUserNo(sesUserNo);

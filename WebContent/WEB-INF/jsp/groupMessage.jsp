@@ -23,7 +23,8 @@
 				<input type="hidden" name="groupNo"
 					value="${ groupBean.getGroupNo()}"> <input type="hidden"
 					name="delete" value="${bean.getListMsgNo()[status.index]}">
-				<input type="submit" name="delete" value="削除">
+				<input type="hidden" name="delete"> <input type="button"
+					value="メッセージ削除" onClick="if(confirm ('本当に削除しますか？')){submit();}">
 			</form>
 		</c:if>
 		<br>
@@ -40,7 +41,8 @@
 	</form>
 	<form action="/chat/groupMessage" method="POST">
 		<input type="hidden" name="exit" value="${ groupBean.getGroupNo()}">
-		<input type="submit" name="groupexit" value="グループ脱退">
+		<input type="button" value="グループ脱退"
+			onClick="if(confirm ('本当にログアウトしますか？')){submit();}">
 	</form>
 	<form action="/chat/main" method="POST">
 		<input type="submit" value="メインメニューに戻る">
