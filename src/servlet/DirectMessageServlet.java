@@ -289,15 +289,15 @@ public class DirectMessageServlet extends HttpServlet {
 			//directMessage.jspの削除ボタンを押したとき(deleteMessageの信号が送られてきたとき)のみ以下の処理を実行する
 
 			//確認ダイアログ表示処理(これはjspで行う)から、OKが押されたら送られてくるパラメータを取り出す
-			String deleteDirection = (String) req.getParameter("deleteMessage");
+			int deleteMessageNo = (Integer.parseInt(req.getParameter("deleteMessageNo")));
 
 
 				//取り出せたら以下の処理を行う
-				if("deleteMessage".equals( deleteDirection)) {
+				if(deleteMessageNo != 0) {
 					//会話情報論理削除処理
 					try {
-						//SQLのSELECT文を準備(さっきのsendMessageのところの削除フラグを1にする)
-						String sqlDelete ="UPDATE T_MESSAGE_INFO SET DELETE_FLAG = 1 WHERE MESSAGE_NO = '"+ newMesNo +"'";
+						//SQLのUPDATE文を準備(さっきのsendMessageのところの削除フラグを1にする)
+						String sqlDelete ="UPDATE T_MESSAGE_INFO SET DELETE_FLAG = 1 WHERE MESSAGE_NO = '"+ deleteMessageNo +"'";
 						//SQLをDBに届けるPreparedStatementのインスタンスを取得
 						PreparedStatement pStmtDelete = conn.prepareStatement(sqlDelete);
 					}catch (SQLException e) {
