@@ -11,9 +11,8 @@
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
 	${ session.getUserName() }さん
 	<br>
-	<form action="/chat/logout" method="POST">
-		<input type="hidden" name="logout" value="logout"><input
-			type="submit" value="ログアウト">
+	<form name="log_out" action="/chat/logout" method="POST">
+	<input type="button" value="logout"onClick="if(confirm ('本当にログアウトしますか？')){submit();}">
 	</form>
 	<hr>
 	<!-- ここまでです -->
