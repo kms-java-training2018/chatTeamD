@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -102,19 +103,24 @@ public class DirectMessageServlet extends HttpServlet {
 
 			//(2)会話情報取得処理
 			//(2)-1会話情報取得
-			//SQLのSELECT文を準備
-			try {
-				String sqlMes = "SELECT MESSAGE, USER_NAME FROM T_MESSAGE_INFO INNER JOIN M_USER ON T_MESSAGE_INFO.SEND_USER_NO = M_USER.USER_NO WHERE SEND_USER_NO = '" + bean.getUserNo() + "' AND TO_SEND_USER_NO = '" + bean.getMyNo() + "'";
 
+			try {
+				//相手のユーザー名とメッセージをとってくるSQLのSELECT文を準備
+				String sqlMes = "SELECT MESSAGE, USER_NAME FROM T_MESSAGE_INFO INNER JOIN M_USER ON T_MESSAGE_INFO.SEND_USER_NO = M_USER.USER_NO WHERE SEND_USER_NO = '" + bean.getUserNo() + "' AND TO_SEND_USER_NO = '" + bean.getMyNo() + "'";
 				//SQLをDBに届けるPreparedStatementのインスタンスを取得
 				PreparedStatement pStmtMes = conn.prepareStatement(sqlMes);
 				//ResultSetインスタンスにSELECT文の結果を格納する
 				ResultSet resultMes = pStmtMes.executeQuery();
+				//結果をリストに格納する
+				ArrayList<String> userName = new ArrayList<>();
+				ArrayList<String> message = new ArrayList<>();
 				while (resultMes.next()) {
-					bean.setMessage(resultMes.getString("MESSAGE"));
-					bean.setUsername(resultMes.getString("USER_NAME"));
-
+					userName.add(resultMes.getString("USER_NAME"));
+					message.add(resultMes.getString("MESSAGE"));
 				}
+				bean.setListUserName(userName);
+				bean.setListMessage(message);
+
 
 			} catch (SQLException e) {
 				System.out.println("会話情報取得できません。");
@@ -122,11 +128,12 @@ public class DirectMessageServlet extends HttpServlet {
 				req.setAttribute("errorMsg", bean.getErrorMsg());
 				req.getRequestDispatcher("/errorPage").forward(req, res);
 			}
-
+			//取得した情報をdirectMessage.jspに送る
 			req.setAttribute("userNo", bean.getUserNo());
-			session.setAttribute("message", bean.getMessage());
-			session.setAttribute("username", bean.getUsername());
+			session.setAttribute("message", bean.getListMessage());
+			session.setAttribute("username", bean.getListUserName());
 			req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
+
 		}finally {
 			try {
 			    conn.close();

@@ -1,5 +1,7 @@
 package bean;
 
+import java.util.ArrayList;
+
 public class DirectMessageBean {
 	/**
 	 * フィールド
@@ -21,6 +23,15 @@ public class DirectMessageBean {
 
 	/**	エラーページ用の変数を宣言 */
 	private String errorMsg ;
+
+	/**	画面表示用のリストを宣言 */
+	private ArrayList<String> listUserName = new ArrayList<>();
+
+	private ArrayList<String> listMessage = new ArrayList<>();
+
+	private ArrayList<String> listUserNo = new ArrayList<>();
+
+	private ArrayList<String> listMsgNo = new ArrayList<>();
 
 
 
@@ -73,6 +84,38 @@ public class DirectMessageBean {
 
 	public void setErrorMsg(String errorMsg) {
 		this.errorMsg = errorMsg;
+	}
+
+	public ArrayList<String> getListUserName() {
+		return listUserName;
+	}
+
+	public void setListUserName(ArrayList<String> listUserName) {
+		this.listUserName = listUserName;
+	}
+
+	public ArrayList<String> getListMessage() {
+		return listMessage;
+	}
+
+	public void setListMessage(ArrayList<String> listMessage) {
+		this.listMessage = listMessage;
+	}
+
+	public ArrayList<String> getListUserNo() {
+		return listUserNo;
+	}
+
+	public void setListUserNo(ArrayList<String> listUserNo) {
+		this.listUserNo = listUserNo;
+	}
+
+	public ArrayList<String> getListMsgNo() {
+		return listMsgNo;
+	}
+
+	public void setListMsgNo(ArrayList<String> listMsgNo) {
+		this.listMsgNo = listMsgNo;
 	}
 
 }
