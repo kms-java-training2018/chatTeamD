@@ -44,7 +44,7 @@
 	<c:forEach var="obj" items="${message}" varStatus="status">
 	<c:if test="${userNo[status.index]==myNo}">
 	<form name="" action="/chat/directMessage" method="POST">
-	<input type=hidden name="check" value="1">
+	<input type=hidden name="check" value="1"><input type=hidden name="userNo" value="${singleUserNO}">
 	<input type=hidden name="deleteMessageNo" value="${messageNo[status.index]}" >
 	<input type="button" value="メッセージの削除"onClick="if(confirm ('本当に削除しますか？')){submit();}">
 	</form>
