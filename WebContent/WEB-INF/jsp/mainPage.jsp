@@ -34,7 +34,10 @@ function dialog(formname, url, method, text) {
 		<input type="button" value="ログアウト"
 			onclick="return dialog('logout', '/chat/logout', 'POST','ログアウトしてよろしいですか')">
 	</form>
-
+	<form name="log_out" action="/chat/logout" method="POST">
+	<input type="submit" value="logout"onClick="confirm('本当にログアウトしますか？')">
+	<input type=hidden name="log_out" value="${messageNo[status.index]}" onClick="if(confirm ('本当に削除しますか？')){submit();}" >
+	</form>
 	<hr>
 	<!-- ここまでです -->
 	<h1>チャット研修プログラム</h1>
