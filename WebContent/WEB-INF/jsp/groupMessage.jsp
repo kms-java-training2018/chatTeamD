@@ -12,20 +12,20 @@
 	<h2>グループメッセージ</h2>
 	<c:forEach var="obj" items="${bean.getListUserName()}"
 		varStatus="status">
-		<form name="${obj}" method="get" action="/chat/showProfile">
-			<input type=hidden name="groupNo"> <a
-				href="javascript:${obj}.submit()">${obj}</a>
-				<p>「 ${bean.getListMessage()[status.index]} 」</p>
+		<form name="showProfile" method="get" action="/chat/showProfile">
+			<input type=hidden name="otherUserNo" value="${userNo}"> <a
+				href="javascript:showProfile.submit()">${obj}</a>
+			<p>「 ${bean.getListMessage()[status.index]} 」</p>
 		</form>
 		<br>
 	</c:forEach>
+	<br>
 	<p></p>
 	<br>
 	<br>
 	<form action="/chat/groupMessage" method="POST">
-	<!--  <input type="hidden" name="groupNo" value="${bean.getGroupNo }">
-		<input type="text" name="message">-->
-		<input type="submit" value="メッセージの送信">
+		<input type="text" name="message"> <input type="submit"
+			value="メッセージの送信">
 	</form>
 	<form action="/chat/main" method="POST">
 		<input type="submit" value="メインメニューに戻る">

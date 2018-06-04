@@ -130,16 +130,24 @@ public class GroupMessageModel {
 				max = rs.getInt("MAX(MESSAGE_NO)") + 1;
 			}
 
+			sb.setLength(0);
 
 			// -------------------------------------------------------------
 			// SQL文作成
 			// USER_NAME, MY_PAGE_TEXT取得
 			sb.append("INSERT INTO ");
-			sb.append("T_MESSAGE_INFO (");
-			sb.append("MESSAGE_NO, SEND_USER_NO, MESSAGE, TO_SEND_GROUP_NO, DELETE_FLAG, REGIST_DATE ");
-			sb.append(") ");
+			sb.append("T_MESSAGE_INFO (MESSAGE_NO, SEND_USER_NO, MESSAGE, TO_SEND_GROUP_NO, DELETE_FLAG, REGIST_DATE) ");
 			sb.append("VALUES (");
-			sb.append("'" +max +"', '" + userNo + "', '" + message + "', '" + groupNo +"', '0', 'SYSDATE'");
+			sb.append("'");
+			sb.append(max);
+			sb.append("', '");
+			sb.append(userNo);
+			sb.append("', '");
+			sb.append(message);
+			sb.append("', '");
+			sb.append(groupNo);
+			sb.append("', '");
+			sb.append("0', sysdate)");
 			// -------------------------------------------------------------
 
 			// SQL実行

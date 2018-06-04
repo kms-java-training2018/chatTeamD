@@ -64,6 +64,8 @@ public class GroupMessageServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 
+		// TODO 削除機能の実装
+		
 		// -------------------------------------------------------------
 		// 初期化
 		GroupMessageBean bean = new GroupMessageBean();
@@ -100,6 +102,8 @@ public class GroupMessageServlet extends HttpServlet {
 		bean.setMessage(message);
 		bean.setUserNo(sesUserNo);
 		bean.setGroupNo(groupNo);
+		groupNo = "3";
+		bean.setGroupNo(groupNo);
 
 		// -------------------------------------------------------------
 		// SQL実行
@@ -109,10 +113,21 @@ public class GroupMessageServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		// -------------------------------------------------------------
+		// -------------------------------------------------------------
+				// SQL実行
+				try {
+					bean = model.output(bean);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				// -------------------------------------------------------------
 
-		req.setAttribute("bean", bean);
-
-		req.getRequestDispatcher("/WEB-INF/jsp/groupMessage.jsp").forward(req, res);
-
+				req.setAttribute("userName", bean.getListUserName());
+				req.setAttribute("message", bean.getListMessage());
+				req.setAttribute("bean", bean);
+				req.getRequestDispatcher("WEB-INF/jsp/groupMessage.jsp").forward(req, res);
 	}
+
+
+
 }
