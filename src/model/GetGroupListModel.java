@@ -58,6 +58,8 @@ public class GetGroupListModel {
 			sb.append(" t_group_info A full outer join m_group B on A.group_no = B.group_no ");
 			sb.append("WHERE ");
 			sb.append(" A.user_no = '" + sesUserNo + "' ");
+			sb.append("AND ");
+			sb.append(" out_flag = '0' ");
 			// SQL実行
 			ResultSet rs3 = stmt.executeQuery(sb.toString());
 			// それぞれArrayListに入れる
