@@ -9,9 +9,6 @@ public class GroupMessageBean {
 	/** 相手の会員番号を格納する変数を宣言 */
 	private String userNo;
 
-	/** ログインユーザーの会員番号を格納する変数を宣言 */
-	private int myNo;
-
 	/**ログインユーザーあての会話情報を格納する変数を宣言 */
 	private String message;
 
@@ -26,7 +23,7 @@ public class GroupMessageBean {
 
 	private String userId;
 
-	private String groupNo;
+	private int groupNo;
 
 	private ArrayList<String> listUserName = new ArrayList<>();
 
@@ -35,6 +32,14 @@ public class GroupMessageBean {
 	private ArrayList<String> listUserNo = new ArrayList<>();
 
 	private ArrayList<String> listMsgNo = new ArrayList<>();
+
+	private int messageNo;
+
+	private int groupExitNo;
+
+	private int registUserNo;
+
+	private int exitGroupNo;
 	/**
 	 * メソッド
 	 */
@@ -44,14 +49,6 @@ public class GroupMessageBean {
 
 	public void setUserNo(String userNo) {
 		this.userNo = userNo;
-	}
-
-	public int getMyNo() {
-		return myNo;
-	}
-
-	public void setMyNo(int myNo) {
-		this.myNo = myNo;
 	}
 
 	public String getMessage() {
@@ -94,11 +91,11 @@ public class GroupMessageBean {
 		this.userId = userId;
 	}
 
-	public String getGroupNo() {
+	public int getGroupNo() {
 		return groupNo;
 	}
 
-	public void setGroupNo(String groupNo) {
+	public void setGroupNo(int groupNo) {
 		this.groupNo = groupNo;
 	}
 
@@ -132,6 +129,38 @@ public class GroupMessageBean {
 
 	public void setListMsgNo(ArrayList<String> listMsgNo) {
 		this.listMsgNo = listMsgNo;
+	}
+
+	public int getMessageNo() {
+		return messageNo;
+	}
+
+	public void setMessageNo(int messageNo) {
+		this.messageNo = messageNo;
+	}
+
+	public int getGroupExitNo() {
+		return groupExitNo;
+	}
+
+	public void setGroupExitNo(int groupExitNo) {
+		this.groupExitNo = groupExitNo;
+	}
+
+	public int getRegistUserNo() {
+		return registUserNo;
+	}
+
+	public void setRegistUserNo(int registUserNo) {
+		this.registUserNo = registUserNo;
+	}
+
+	public int getExitGroupNo() {
+		return exitGroupNo;
+	}
+
+	public void setExitGroupNo(int exitGroupNo) {
+		this.exitGroupNo = exitGroupNo;
 	}
 
 }
