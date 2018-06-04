@@ -38,7 +38,7 @@
 
 	${ session.getUserName() }：<form name="" action="/chat/directMessage" method="POST">${sendMessage}
 	<input type="button" value="メッセージの削除"onClick="confirm('本当に削除しますか？')">
-	<input type=hidden name="delteMessageNo" value="${messageNo}" onClick="if(confirm ('本当に削除しますか？')){submit();}" >
+	<input type=hidden name="deleteMessageNo" value="${messageNo}" onClick="if(confirm ('本当に削除しますか？')){submit();}" >
 	</form>
 
 
