@@ -36,18 +36,26 @@
 	</c:forEach>-->
 
 
-	${ session.getUserName() }：<form name="" action="/chat/directMessage" method="POST">${sendMessage}
-	<input type="button" value="メッセージの削除"onClick="confirm('本当に削除しますか？')">
-	<input type=hidden name="deleteMessageNo" value="${messageNo}" onClick="if(confirm ('本当に削除しますか？')){submit();}" >
-	</form>
+
 
 
 
 	<br>
-	<form name="showProfile" action="/chat/showProfile" method="GET">
-	<input type=hidden name="otherUserNo" value="${userNo}">
-	<a href="javascript:showProfile.submit()">${username}</a>：${message}
+	<c:forEach var="obj" items="${message}" varStatus="status">
+	<c:if test="${userNo[status.index]==myNo}">
+	<form name="" action="/chat/directMessage" method="POST">
+	<input type="button" value="メッセージの削除"onClick="confirm('本当に削除しますか？')">
+	<input type=hidden name="deleteMessageNo" value="${messageNo[status.index]}" onClick="if(confirm ('本当に削除しますか？')){submit();}" >
 	</form>
+	</c:if>
+
+
+
+	<form name="showProfile" action="/chat/showProfile" method="GET">
+	<input type=hidden name="otherUserNo" value="${userNo[status.index]}">
+	<a href="javascript:showProfile.submit()">${username[status.index]}</a>：${obj}
+	</form>
+	</c:forEach>
 
 
 
