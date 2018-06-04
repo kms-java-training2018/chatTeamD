@@ -23,7 +23,7 @@
 	<br>
 	<c:forEach var="obj" items="${userbean.getUserNo()}" varStatus="status">
 			<form name="DM" method="get" action="/chat/directMessage">
-				<input type=hidden name="userNo" value="${userbean.getUserNo()[status.index]}">
+				<input type=hidden name="otherUserNo" value="${userbean.getUserNo()[status.index]}">
 				<a href="javascript:DM[${status.index}].submit()">${userbean.getUserName()[status.index]}</a>
 			</form>
 		<p>> ${userbean.getDirectMessage()[status.index]}</p>

@@ -32,6 +32,9 @@ public class GroupMessageBean {
 
 	private ArrayList<String> listMessage = new ArrayList<>();
 
+	private ArrayList<String> listUserNo = new ArrayList<>();
+
+	private ArrayList<String> listMsgNo = new ArrayList<>();
 	/**
 	 * メソッド
 	 */
@@ -113,6 +116,22 @@ public class GroupMessageBean {
 
 	public void setListMessage(ArrayList<String> listMessage) {
 		this.listMessage = listMessage;
+	}
+
+	public ArrayList<String> getListUserNo() {
+		return listUserNo;
+	}
+
+	public void setListUserNo(ArrayList<String> listUserNo) {
+		this.listUserNo = listUserNo;
+	}
+
+	public ArrayList<String> getListMsgNo() {
+		return listMsgNo;
+	}
+
+	public void setListMsgNo(ArrayList<String> listMsgNo) {
+		this.listMsgNo = listMsgNo;
 	}
 
 }

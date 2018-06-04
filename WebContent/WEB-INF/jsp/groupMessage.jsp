@@ -10,12 +10,18 @@
 <body>
 	<h1>チャット研修プログラム</h1>
 	<h2>グループメッセージ</h2>
-	<c:forEach var="obj" items="${bean.getListUserName()}"
-		varStatus="status">
-		<form name="showProfile" method="get" action="/chat/showProfile">
-			<input type=hidden name="otherUserNo" value="${userNo}"> <a
-				href="javascript:showProfile.submit()">${obj}</a>
-			<p>「 ${bean.getListMessage()[status.index]} 」</p>
+	<c:forEach var="obj" items="${bean.getListUserNo()}" varStatus="status">
+		<form name="SP" method="get" action="/chat/showProfile">
+			<input type=hidden name="otherUserNo"
+				value="${bean.getListUserNo()[status.index]}"> <a
+				href="javascript:SP[${status.index}].submit()">${bean.getListUserName()[status.index]}</a>
+		</form>
+		<p>「 ${bean.getListMessage()[status.index]} 」
+
+		</p>
+		<form name="DLT" method="post" action="/chat/groupMessage">
+		<input type="hidden" name="delete" value="${bean.getListMsgNo()[status.index]}">
+		<input type="submit" name="delete" value="削除">
 		</form>
 		<br>
 	</c:forEach>
