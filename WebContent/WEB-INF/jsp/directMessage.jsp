@@ -20,10 +20,10 @@
 
 <h1></h1>
     <br>
-    <form name="showProfile" action="/chat/showProfile" method="GET">
+    <form name="topShowProfile" action="/chat/showProfile" method="GET" target="newtab">
 
 		<input type=hidden name="otherUserNo" value="${bean.getUserNo()}">
-		<a href="javascript:showProfile.submit()" >${bean.getUsername()}</a>
+		<a href="javascript:topShowProfile.submit()" >${bean.getUsername()}</a>
 
 	</form>
 
@@ -32,9 +32,9 @@
 	<c:forEach var="obj" items="${bean.getListMessage()}" varStatus="status">
 		<c:if test="${bean.getListUserNo()[status.index]==bean.getMyNo()}">
 			<form name="" action="/chat/directMessage" method="POST">
-				<input type=hidden name="check" value="1"><input type=hidden
-					name="userNo" value="${bean.getUserNo()}"> <input type=hidden
-					name="deleteMessageNo" value="${bean.getListMsgNo()[status.index]}">
+				<input type=hidden name="check" value="1">
+				<input type=hidden name="userNo" value="${bean.getUserNo()}">
+				 <input type=hidden name="deleteMessageNo" value="${bean.getListMsgNo()[status.index]}">
 				<input type="button" value="メッセージの削除"
 					onClick="if(confirm ('本当に削除しますか？')){submit();}">
 			</form>
@@ -42,7 +42,7 @@
 
 
 
-		<form name="showProfile" action="/chat/showProfile" method="GET">
+		<form name="showProfile" action="/chat/showProfile" method="GET" target="newtab">
 			<input type=hidden name="otherUserNo" value="${bean.getListUserNo()[status.index]}">
 			<a href="javascript:showProfile[${status.index}].submit()" >${bean.getListUserName()[status.index]}</a>：${obj}
 		</form>
