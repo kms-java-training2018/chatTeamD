@@ -21,7 +21,7 @@
 					<td>${ showMyPageText }</td>
 				</tr>
 			</table>
-			<input type="submit" value="閉じる">
+			<input type="submit" value="戻る">
 		</center>
 	</form>
 </body>

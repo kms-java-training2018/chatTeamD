@@ -33,6 +33,12 @@ public class GroupMessageBean {
 
 	private ArrayList<String> listMsgNo = new ArrayList<>();
 
+	private ArrayList<String> listOutFlag = new ArrayList<>();
+
+	private ArrayList<String> listOutFlagUN = new ArrayList<>();
+
+	private ArrayList<String> listOutFlagUNum = new ArrayList<>();
+
 	private int messageNo;
 
 	private int groupExitNo;
@@ -40,6 +46,8 @@ public class GroupMessageBean {
 	private int registUserNo;
 
 	private int exitGroupNo;
+
+	private String outFlag1;
 	/**
 	 * メソッド
 	 */
@@ -161,6 +169,38 @@ public class GroupMessageBean {
 
 	public void setExitGroupNo(int exitGroupNo) {
 		this.exitGroupNo = exitGroupNo;
+	}
+
+	public ArrayList<String> getListOutFlag() {
+		return listOutFlag;
+	}
+
+	public void setListOutFlag(ArrayList<String> listOutFlag) {
+		this.listOutFlag = listOutFlag;
+	}
+
+	public ArrayList<String> getListOutFlagUN() {
+		return listOutFlagUN;
+	}
+
+	public void setListOutFlagUN(ArrayList<String> listOutFlagUN) {
+		this.listOutFlagUN = listOutFlagUN;
+	}
+
+	public String getOutFlag1() {
+		return outFlag1;
+	}
+
+	public void setOutFlag1(String outFlag1) {
+		this.outFlag1 = outFlag1;
+	}
+
+	public ArrayList<String> getListOutFlagUNum() {
+		return listOutFlagUNum;
+	}
+
+	public void setListOutFlagUNum(ArrayList<String> listOutFlagUNum) {
+		this.listOutFlagUNum = listOutFlagUNum;
 	}
 
 }

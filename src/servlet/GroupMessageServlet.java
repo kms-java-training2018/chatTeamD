@@ -42,11 +42,14 @@ public class GroupMessageServlet extends HttpServlet {
 
 		// -------------------------------------------------------------
 
+		// -------------------------------------------------------------
+		// beanへセット
 		int groupNo = Integer.parseInt(req.getParameter("groupNo"));
 		bean.setGroupNo(groupNo);
 		req.setAttribute("groupBean", bean);
 		bean.setUserNo(sesUserNo);
-		//session.setAttribute("groupNo", groupNo);
+		bean.setOutFlag1("送信者不明");
+		// -------------------------------------------------------------
 
 		// グループナンバーが取得できない場合エラー
 		if (groupNo == 0) {
@@ -60,6 +63,44 @@ public class GroupMessageServlet extends HttpServlet {
 			bean = model.output(bean);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		// -------------------------------------------------------------
+
+		// -------------------------------------------------------------
+		// メッセージ送信者が、グループ脱退者かの判定
+		int sizeMsg = bean.getListMessage().size();
+		int sizeOutFlag = bean.getListOutFlagUN().size();
+		int sizeOutFlagUser = bean.getListOutFlagUNum().size();
+		String setUN = "";
+		String setUserNo = "";
+		int check = 1;
+
+		for (int i = 0; i < sizeOutFlagUser; i++) {
+			setUserNo = bean.getListOutFlagUNum().get(i);
+			if (setUserNo.equals(sesUserNo)) {
+				if (bean.getListOutFlag().get(i).equals("0")) {
+					check = 0;
+				}
+			}
+		}
+
+		if (check == 1) {
+			direction = "/errorPage";
+			errorMsg = "グループに入っていません";
+			req.setAttribute("errorMsg", errorMsg);
+			req.getRequestDispatcher(direction).forward(req, res);
+			return;
+		}
+
+		for (int i = 0; i < sizeMsg; i++) {
+			setUN = bean.getListUserName().get(i);
+			for (int j = 0; j < sizeOutFlag; j++) {
+				if (setUN.equals(bean.getListOutFlagUN().get(j))) {
+					if (bean.getListOutFlag().get(j).equals("1")) {
+						bean.getListUserName().set(i, "送信者不明");
+					}
+				}
+			}
 		}
 		// -------------------------------------------------------------
 
@@ -112,9 +153,6 @@ public class GroupMessageServlet extends HttpServlet {
 			}
 		}
 
-		//outflag出力⇒Arraylistに入れる
-		//arraylist判定⇒1なら名前が脱退者
-
 		if (req.getParameter("exit") != null) {
 
 			int exitGroupNo = Integer.parseInt(req.getParameter("exit"));
@@ -148,22 +186,42 @@ public class GroupMessageServlet extends HttpServlet {
 		bean.setUserNo(sesUserNo);
 		bean.setGroupNo(groupNo);
 
+		// -------------------------------------------------------------
+		// 入力エラーチェック
+		// 入力できる文字は100桁まで
 		if (message != null) {
 			int messageLen = message.length();
 			if (messageLen > 100) {
-				req.getRequestDispatcher("/error").forward(req, res);
+				errorMsg = "文字数が多すぎます";
+
+				// SQL実行
+				// メッセージ表示
+				try {
+					bean = model.output(bean);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				req.setAttribute("errorMsg", errorMsg);
+				req.setAttribute("groupBean", bean);
+				req.setAttribute("userName", bean.getListUserName());
+				req.setAttribute("message", bean.getListMessage());
+				req.setAttribute("userNo", bean.getListUserNo());
+				req.setAttribute("bean", bean);
+				req.getRequestDispatcher(direction).forward(req, res);
 				return;
 			}
-			// -------------------------------------------------------------
-			// SQL実行
-			// メッセージ送信
+		// -------------------------------------------------------------
+
+		// -------------------------------------------------------------
+		// SQL実行
+		// メッセージ送信
 			try {
 				bean = model.send(bean);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			// -------------------------------------------------------------
 		}
+		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
 		// SQL実行
@@ -173,6 +231,24 @@ public class GroupMessageServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		// -------------------------------------------------------------
+
+		// -------------------------------------------------------------
+		// メッセージ送信者が、グループ脱退者かの判定
+		int sizeMsg = bean.getListMessage().size();
+		int sizeOutFlag = bean.getListOutFlagUN().size();
+		String setUN = "";
+		for (int i = 0; i < sizeMsg; i++) {
+			setUN = bean.getListUserName().get(i);
+			for (int j = 0; j < sizeOutFlag; j++) {
+				if (setUN.equals(bean.getListOutFlagUN().get(j))) {
+					if (bean.getListOutFlag().get(j).equals("1")) {
+						bean.getListUserName().set(i, "送信者不明");
+					}
+				}
+			}
+		}
+		bean.setOutFlag1("送信者不明");
 		// -------------------------------------------------------------
 
 		req.setAttribute("groupBean", bean);

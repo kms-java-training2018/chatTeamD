@@ -50,7 +50,7 @@ public class GroupMessageModel {
 			sb.append("T_MESSAGE_INFO.TO_SEND_GROUP_NO = '" + groupNo + "' ");
 			sb.append("AND T_MESSAGE_INFO.DELETE_FLAG = '0' ");
 			sb.append("ORDER BY ");
-			sb.append("MESSAGE_NO ");
+			sb.append("T_MESSAGE_INFO.REGIST_DATE ");
 			// -------------------------------------------------------------
 
 			// SQL実行
@@ -74,6 +74,30 @@ public class GroupMessageModel {
 			bean.setListUserName(userName);
 			bean.setListMessage(message);
 			bean.setListMsgNo(msgNo);
+
+			sb.delete(0, sb.length());
+			sb.append("SELECT ");
+			sb.append("M_USER.USER_NO, M_USER.USER_NAME, T_GROUP_INFO.OUT_FLAG ");
+			sb.append("FROM ");
+			sb.append("T_GROUP_INFO INNER JOIN M_USER ON T_GROUP_INFO.USER_NO = M_USER.USER_NO ");
+			sb.append("WHERE ");
+			sb.append("T_GROUP_INFO.GROUP_NO = " + groupNo);
+
+			ResultSet rs2 = stmt.executeQuery(sb.toString());
+			ArrayList<String> listOutFlag = new ArrayList<>();
+			ArrayList<String> listOutFlagUN = new ArrayList<>();
+			ArrayList<String> listOutFlagUNum = new ArrayList<>();
+
+			while(rs2.next()) {
+				listOutFlag.add(rs2.getString("OUT_FLAG"));
+				listOutFlagUN.add(rs2.getString("USER_NAME"));
+				listOutFlagUNum.add(rs2.getString("USER_NO"));
+			}
+			bean.setListOutFlag(listOutFlag);
+			bean.setListOutFlagUN(listOutFlagUN);
+			bean.setListOutFlagUNum(listOutFlagUNum);
+
+
 
 			// -------------------------------------------------------------
 
