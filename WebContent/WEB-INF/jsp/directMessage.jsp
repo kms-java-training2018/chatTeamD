@@ -12,39 +12,51 @@
 	${ session.getUserName() }さん
 	<br>
 	<form name="log_out" action="/chat/logout" method="POST">
-	<input type="button" value="logout"onClick="if(confirm ('本当にログアウトしますか？')){submit();}">
+		<input type="button" value="logout"
+			onClick="if(confirm ('本当にログアウトしますか？')){submit();}">
 	</form>
 	<hr>
 	<!-- ここまでです -->
 	<font color="red" size="5"><Strong>${bean.getErrorMsg()}</Strong></font>
-<h1></h1>
-    <br>
-    <form name="topShowProfile" action="/chat/showProfile" method="GET" target="newtab">
+	<h1></h1>
+	<br>
+	<form name="topShowProfile" action="/chat/showProfile" method="GET"
+		target="newtab">
 
 		<input type=hidden name="otherUserNo" value="${bean.getUserNo()}">
-		<a href="javascript:topShowProfile.submit()" >${bean.getUsername()}</a>
+		<a href="javascript:topShowProfile.submit()">${bean.getUsername()}</a>
 
 	</form>
 
 
 	<br>
-	<c:forEach var="obj" items="${bean.getListMessage()}" varStatus="status">
+	<c:forEach var="obj" items="${bean.getListMessage()}"
+		varStatus="status">
 		<c:if test="${bean.getListUserNo()[status.index]==bean.getMyNo()}">
 			<form name="" action="/chat/directMessage" method="POST">
-				<input type=hidden name="check" value="1">
-				<input type=hidden name="userNo" value="${bean.getUserNo()}">
-				 <input type=hidden name="deleteMessageNo" value="${bean.getListMsgNo()[status.index]}">
-				<input type="button" value="メッセージの削除"
+				<input type=hidden name="check" value="1"> <input
+					type=hidden name="userNo" value="${bean.getUserNo()}"> <input
+					type=hidden name="deleteMessageNo"
+					value="${bean.getListMsgNo()[status.index]}"> <input
+					type="button" value="メッセージの削除"
 					onClick="if(confirm ('本当に削除しますか？')){submit();}">
 			</form>
 		</c:if>
 
 
-
-		<form name="showProfile" action="/chat/showProfile" method="GET" target="newtab">
-			<input type=hidden name="otherUserNo" value="${bean.getListUserNo()[status.index]}">
-			<a href="javascript:showProfile[${status.index}].submit()" >${bean.getListUserName()[status.index]}</a>：${obj}
-		</form>
+		<c:choose>
+			<c:when test="${bean.getListUserNo()[status.index]==bean.getMyNo()}">
+		${bean.getListUserName()[status.index]}：${obj}
+		</c:when>
+			<c:otherwise>
+				<form name="showProfile" action="/chat/showProfile" method="GET"
+					target="newtab">
+					<input type=hidden name="otherUserNo"
+						value="${bean.getListUserNo()[status.index]}"> <a
+						href="javascript:showProfile[${status.index}].submit()">${bean.getListUserName()[status.index]}</a>：${obj}
+				</form>
+			</c:otherwise>
+		</c:choose>
 	</c:forEach>
 
 
