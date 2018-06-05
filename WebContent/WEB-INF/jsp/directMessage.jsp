@@ -46,7 +46,10 @@
 
 		<c:choose>
 			<c:when test="${bean.getListUserNo()[status.index]==bean.getMyNo()}">
+		<form name="showProfile" action="/chat/showProfile" method="GET"
+					target="newtab">
 		${bean.getListUserName()[status.index]}：${obj}
+		</form>
 		</c:when>
 			<c:otherwise>
 				<form name="showProfile" action="/chat/showProfile" method="GET"
