@@ -33,10 +33,11 @@ public class MakeGroupServlet extends HttpServlet {
 		SessionBean sesBean = (SessionBean) session.getAttribute("session");
 		String sesUserNo = sesBean.getUserNo();
 
-		if (sesUserNo.equals(null)) {
+		if (session==null || session.getAttribute("userId")==null) {
 			// セッション情報なし
 			// 行き先をエラーページに
 			direction = "/errorPage";
+			req.setAttribute("errorMsg", "セッション情報が無効です");
 		} else {
 			/**
 			 * 1)会員一覧取得処理

@@ -17,8 +17,15 @@ import model.GetUserListModel;
 public class MainPageServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-
-		req.getRequestDispatcher("/WEB-INF/jsp/mainPage.jsp").forward(req, res);
+		HttpSession session = req.getSession();
+		String direction = "/WEB-INF/jsp/mainPage.jsp";
+		if (session==null || session.getAttribute("userId")==null) {
+			// セッション情報なし
+			// 行き先をエラーページに
+			direction = "/errorPage";
+			req.setAttribute("errorMsg", "セッション情報が無効です");
+		}
+		req.getRequestDispatcher(direction).forward(req, res);
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
@@ -35,10 +42,11 @@ public class MainPageServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		SessionBean sesBean = (SessionBean) session.getAttribute("session");
 		String sesUserNo = sesBean.getUserNo();
-		if (sesUserNo.equals(null)) {
+		if (session==null || session.getAttribute("userId")==null) {
 			// セッション情報なし
 			// 行き先をエラーページに
 			direction = "/errorPage";
+			req.setAttribute("errorMsg", "セッション情報が無効です");
 		} else {
 			// 2～3処理
 			try {
