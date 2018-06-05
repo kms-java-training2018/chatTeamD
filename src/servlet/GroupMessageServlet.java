@@ -164,7 +164,22 @@ public class GroupMessageServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			if (bean.getRegistUserNo() == Integer.parseInt(sesUserNo)) {
-				direction = "/errorPage";
+				errorMsg = "作成者は抜けれません";
+				// -------------------------------------------------------------
+				// SQL実行
+				// メッセージ表示
+				try {
+					bean = model.output(bean);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				// -------------------------------------------------------------
+				req.setAttribute("errorMsg", errorMsg);
+				req.setAttribute("groupBean", bean);
+				req.setAttribute("userName", bean.getListUserName());
+				req.setAttribute("message", bean.getListMessage());
+				req.setAttribute("userNo", bean.getListUserNo());
+				req.setAttribute("bean", bean);
 				req.getRequestDispatcher(direction).forward(req, res);
 				return;
 			}

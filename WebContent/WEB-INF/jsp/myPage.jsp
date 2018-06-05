@@ -35,9 +35,9 @@
 		<input type="submit" value="プロフィールを更新">
 	</form>
 	<form action="/chat/main" method="POST">
-		<input type="submit" value="メインメニューに戻る"> <br> ${ errorMsg }<br>
+		<input type="submit" value="メインメニューに戻る">
 	</form>
-
+	<br>
 	${ errorMsg }
 	<br>
 	</center>

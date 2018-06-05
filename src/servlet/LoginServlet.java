@@ -69,22 +69,21 @@ public class LoginServlet extends HttpServlet {
 		byte[] userIdBytes = userId.getBytes();
 		byte[] passwordBytes = password.getBytes();
 
-		if(userIdBytes.length != userIdLen) {
+		if (userIdBytes.length != userIdLen) {
 			// エラー
 			errormsg2 = "半角で入力してください";
 			req.setAttribute("errorMsg2", errormsg2);
 		}
-		if(passwordBytes.length != passwordLen) {
+		if (passwordBytes.length != passwordLen) {
 			// エラー
 			errormsg2 = "半角で入力してください";
 			req.setAttribute("errorMsg2", errormsg2);
-			}
+		}
 
-		if(userIdLen > 20 || passwordLen > 20) {
+		if (userIdLen > 20 || passwordLen > 20) {
 			errormsg2 = "文字数が多いです(20文字まで)";
 			req.setAttribute("errorMsg2", errormsg2);
-			}
-
+		}
 
 		// -------------------------------------------------------------
 		// 取得に成功した場合セッション情報をセット
@@ -98,7 +97,7 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("userId", userId);
 			// 行き先を次の画面に
 			direction = "/main";
-		}else {
+		} else {
 			// エラーメッセージの表示
 			req.setAttribute("errorMessage", bean.getErrorMessage());
 		}

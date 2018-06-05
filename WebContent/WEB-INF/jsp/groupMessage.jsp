@@ -17,7 +17,9 @@
 	</form>
 	<hr>
 	<!-- ここまでです -->
-	<font color="red" size="5"><Strong>${ errorMsg }</Strong></font>
+	<center>
+		<font color="red" size="5"><Strong>${ errorMsg }</Strong></font>
+	</center>
 	<c:forEach var="obj" items="${bean.getListUserNo()}" varStatus="status">
 		<!-- 自分のメッセージ -->
 		<c:if

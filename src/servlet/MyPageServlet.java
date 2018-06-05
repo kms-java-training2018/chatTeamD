@@ -37,14 +37,14 @@ public class MyPageServlet extends HttpServlet {
 
 		// -------------------------------------------------------------
 		// Sessionにユーザ情報がなければ、エラーページへ遷移
-        if (session==null || session.getAttribute("userId")==null) {
-            // セッション情報なし
-            // 行き先をエラーページに
-            direction = "/errorPage";
-            req.setAttribute("errorMsg", "セッション情報が無効です");
-            req.getRequestDispatcher(direction).forward(req, res);
-            return;
-        }
+		if (session == null || session.getAttribute("userId") == null) {
+			// セッション情報なし
+			// 行き先をエラーページに
+			direction = "/errorPage";
+			req.setAttribute("errorMsg", "セッション情報が無効です");
+			req.getRequestDispatcher(direction).forward(req, res);
+			return;
+		}
 
 		// -------------------------------------------------------------
 
@@ -80,7 +80,8 @@ public class MyPageServlet extends HttpServlet {
 		MyPageBean bean = new MyPageBean();
 		MyPageModel model = new MyPageModel();
 		SessionBean sessionBean = new SessionBean();
-		String direction = "/WEB-INF/jsp/mainPage.jsp";
+		String direction = "/main";
+		String errorMsg = "エラー";
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
@@ -99,14 +100,14 @@ public class MyPageServlet extends HttpServlet {
 
 		// -------------------------------------------------------------
 		// Sessionにユーザ情報がなければ、エラーページへ遷移
-        if (session==null || session.getAttribute("userId")==null) {
-            // セッション情報なし
-            // 行き先をエラーページに
-            direction = "/errorPage";
-            req.setAttribute("errorMsg", "セッション情報が無効です");
-            req.getRequestDispatcher(direction).forward(req, res);
-            return;
-        }
+		if (session == null || session.getAttribute("userId") == null) {
+			// セッション情報なし
+			// 行き先をエラーページに
+			direction = "/errorPage";
+			req.setAttribute("errorMsg", "セッション情報が無効です");
+			req.getRequestDispatcher(direction).forward(req, res);
+			return;
+		}
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
@@ -116,16 +117,38 @@ public class MyPageServlet extends HttpServlet {
 
 		// 表示名は30桁まで
 		if (dispName > 30) {
-			msg = "文字数エラーです";
-			req.setAttribute("msg", msg);
-			req.getRequestDispatcher("/myPage").forward(req, res);
+			errorMsg = "表示名の文字数エラーです";
+			// -------------------------------------------------------------
+			// SQL実行
+			try {
+				bean = model.output(bean);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			// -------------------------------------------------------------
+			req.setAttribute("myName", bean.getUserName());
+			req.setAttribute("myPageText", bean.getMyPageText());
+			req.setAttribute("errorMsg", errorMsg);
+			req.getRequestDispatcher("/WEB-INF/jsp/myPage.jsp").forward(req, res);
 			return;
 		}
 
 		// 自己紹介文は100桁まで
 		if (myPageText > 100) {
-			req.setAttribute("msg", msg);
-			req.getRequestDispatcher("/myPage").forward(req, res);
+
+			// -------------------------------------------------------------
+			// SQL実行
+			try {
+				bean = model.output(bean);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			// -------------------------------------------------------------
+			errorMsg = "自己紹介文の文字数エラーです";
+			req.setAttribute("myName", bean.getUserName());
+			req.setAttribute("myPageText", bean.getMyPageText());
+			req.setAttribute("errorMsg", errorMsg);
+			req.getRequestDispatcher("/WEB-INF/jsp/myPage.jsp").forward(req, res);
 			return;
 		}
 		// -------------------------------------------------------------
@@ -141,16 +164,41 @@ public class MyPageServlet extends HttpServlet {
 		try {
 			bean = model.update(bean);
 		} catch (Exception e) {
-			e.printStackTrace();
+			errorMsg = "文字数エラーです";
+			req.setAttribute("myName", bean.getUserName());
+			req.setAttribute("myPageText", bean.getMyPageText());
+			req.setAttribute("errorMsg", errorMsg);
+			req.getRequestDispatcher("/WEB-INF/jsp/myPage.jsp").forward(req, res);
+			return;
+		}
+
+		if (!bean.getErrorMessage().equals("notError")){
+			errorMsg = "文字数エラーです";
+			req.setAttribute("myName", bean.getUserName());
+			req.setAttribute("myPageText", bean.getMyPageText());
+			req.setAttribute("errorMsg", errorMsg);
+			req.getRequestDispatcher("/WEB-INF/jsp/myPage.jsp").forward(req, res);
+			return;
 		}
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
 		// sessionへ表示名(userName)を再設定
-		sessionBean=(SessionBean)session.getAttribute("session");
+		sessionBean = (SessionBean) session.getAttribute("session");
 		sessionBean.setUserName(bean.getUserName());
 		session.setAttribute("session", sessionBean);
 		// -------------------------------------------------------------
+		// -------------------------------------------------------------
+		// SQL実行
+		try {
+			bean = model.output(bean);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// -------------------------------------------------------------
+
+		req.setAttribute("myName", bean.getUserName());
+		req.setAttribute("myPageText", bean.getMyPageText());
 
 		// メッセージ(msg)をセット
 		req.setAttribute("msg", msg);

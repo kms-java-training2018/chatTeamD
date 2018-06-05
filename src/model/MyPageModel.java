@@ -99,6 +99,7 @@ public class MyPageModel {
 		String userId = bean.getUserId();
 		String sendDispName = bean.getUserName();
 		String sendMyPageText = bean.getMyPageText();
+		bean.setErrorMessage("notError");
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
@@ -151,12 +152,15 @@ public class MyPageModel {
 				rs = stmt.executeQuery(sb.toString());
 				// -------------------------------------------------------------
 
-				// beanへ、表示名をセット
-				bean.setUserName(rs.getString("USER_NAME"));
+				while(rs.next()) {
+					// beanへ、表示名をセット
+					bean.setUserName(rs.getString("USER_NAME"));
+				}
 
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			bean.setErrorMessage("文字数が多すぎます");
+
 			// SQLの接続は絶対に切断
 		} finally {
 			try {
