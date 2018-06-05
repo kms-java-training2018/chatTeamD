@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>メインページ</title>
 <!--	JS読み込み	-->
 <script type="text/javascript" charset="UTF-8" language="javascript" src="./dialog.js"></script>
 </head>
