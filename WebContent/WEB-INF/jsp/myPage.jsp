@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>マイページ</title>
 </head>
 <body>
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
