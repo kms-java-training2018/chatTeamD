@@ -106,6 +106,7 @@ public class GroupMessageServlet extends HttpServlet {
 		}
 		// -------------------------------------------------------------
 
+		req.setAttribute("groupBean", bean);
 		req.setAttribute("userName", bean.getListUserName());
 		req.setAttribute("message", bean.getListMessage());
 		req.setAttribute("userNo", bean.getListUserNo());
@@ -165,6 +166,9 @@ public class GroupMessageServlet extends HttpServlet {
 			}
 			if (bean.getRegistUserNo() == Integer.parseInt(sesUserNo)) {
 				errorMsg = "作成者は抜けれません";
+				int groupNo = Integer.parseInt(req.getParameter("exit"));
+				bean.setUserNo(sesUserNo);
+				bean.setGroupNo(groupNo);
 				// -------------------------------------------------------------
 				// SQL実行
 				// メッセージ表示
