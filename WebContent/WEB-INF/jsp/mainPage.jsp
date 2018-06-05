@@ -23,7 +23,7 @@
 	<br>■会員一覧
 	<br>
 	<c:forEach var="obj" items="${userbean.getUserNo()}" varStatus="status">
-		<form target="newtab" name="DM" method="get" action="/chat/directMessage">
+		<form name="DM" method="get" action="/chat/directMessage">
 			<input type=hidden name="userNo"
 				value="${userbean.getUserNo()[status.index]}"> <a
 				href="javascript:DM[${status.index}].submit()">${userbean.getUserName()[status.index]}</a>
