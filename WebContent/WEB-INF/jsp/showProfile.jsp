@@ -21,7 +21,7 @@
 					<td>${ showMyPageText }</td>
 				</tr>
 			</table>
-			<input type="submit" value="戻る">
+			<a href="#" onClick="window.close();"><input type="button" value="戻る"></a>
 		</center>
 	</form>
 </body>

@@ -56,11 +56,11 @@
 		<c:if
 			test="${!bean.getListUserNo()[status.index].equals(session.getUserNo())  && !bean.getListUserName()[status.index].equals(bean.getOutFlag1())}">
 			<div align="left">
-				<form name="SP" method="get" action="/chat/showProfile">
+				<form target="newtab" name="SP" method="get"
+					action="/chat/showProfile">
 					<input type=hidden name="otherUserNo"
 						value="${bean.getListUserNo()[status.index]}"> <a
-						href="javascript:void(0);"
-						onclick="window.open('showProfile','_blank')">${bean.getListUserName()[status.index]}</a>
+						href="javascript:SP[${status.index}].submit()">${bean.getListUserName()[status.index]}</a>
 				</form>
 				<p>「 ${bean.getListMessage()[status.index]} 」</p>
 			</div>

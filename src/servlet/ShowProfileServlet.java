@@ -14,21 +14,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.SessionBean;
 import bean.ShowProfileBean;
 import model.ShowProfileModel;
 
 public class ShowProfileServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-		
+
 		// -------------------------------------------------------------
 		// 初期化
 		ShowProfileBean bean = new ShowProfileBean();
 		ShowProfileModel model = new ShowProfileModel();
-		String errorMsg = "";
 		String direction = "/WEB-INF/jsp/showProfile.jsp";
-		
+
 		// userNoを取得し、beanへセット
 		bean.setUserNo(req.getParameter("otherUserNo"));
 		// -------------------------------------------------------------
@@ -38,16 +36,16 @@ public class ShowProfileServlet extends HttpServlet {
 		// ユーザ情報が確認できなければ、エラーページへ遷移
 		// Sessionの取得
 		HttpSession session = req.getSession();
-		SessionBean sesBean = (SessionBean) session.getAttribute("session");
-		String sesUserNo = sesBean.getUserNo();
 
 		// Sessionにユーザ情報がなければ、エラーページへ遷移
-		if (sesUserNo == null) {
-			errorMsg = "セッションが切れました";
-			req.setAttribute("errorMsg", errorMsg);
-			req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, res);
-			return;
-		}
+        if (session==null || session.getAttribute("userId")==null) {
+            // セッション情報なし
+            // 行き先をエラーページに
+            direction = "/errorPage";
+            req.setAttribute("errorMsg", "セッション情報が無効です");
+            req.getRequestDispatcher(direction).forward(req, res);
+            return;
+        }
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------

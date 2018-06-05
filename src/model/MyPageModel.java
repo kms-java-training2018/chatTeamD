@@ -21,7 +21,6 @@ public class MyPageModel {
 		// 初期化
 		StringBuilder sb = new StringBuilder();
 		String userId = bean.getUserId();
-		String myPageText = "";
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
@@ -64,10 +63,9 @@ public class MyPageModel {
 			while (rs.next()) {
 				bean.setMyPageText(rs.getString("MY_PAGE_TEXT"));
 				bean.setUserName(rs.getString("USER_NAME"));
-				myPageText = rs.getString("MY_PAGE_NAME");
 			}
 			// レコードが取得できなければ、エラーメッセージをセット
-			if (myPageText == "") {
+			if (bean.getMyPageText() == "") {
 				bean.setErrorMessage("レコードが取得できませんでした");
 				return bean;
 			}
@@ -99,7 +97,6 @@ public class MyPageModel {
 		// 初期化
 		StringBuilder sb = new StringBuilder();
 		String userId = bean.getUserId();
-		String myPageText = "";
 		String sendDispName = bean.getUserName();
 		String sendMyPageText = bean.getMyPageText();
 		// -------------------------------------------------------------

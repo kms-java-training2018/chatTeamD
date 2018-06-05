@@ -25,7 +25,6 @@ public class MyPageServlet extends HttpServlet {
 		MyPageBean bean = new MyPageBean();
 		MyPageModel model = new MyPageModel();
 		String direction = "/WEB-INF/jsp/myPage.jsp";
-		String errorMsg = "";
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
@@ -33,18 +32,19 @@ public class MyPageServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		SessionBean sesBean = (SessionBean) session.getAttribute("session");
 		String sesUserId = sesBean.getUserId();
-		String sesUserNo = sesBean.getUserNo();
 		String myPageText = (String) req.getAttribute("myPageText");
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
 		// Sessionにユーザ情報がなければ、エラーページへ遷移
-		if (sesUserNo == null) {
-			errorMsg = "セッションが切れました";
-			req.setAttribute("errorMsg", errorMsg);
-			req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, res);
-			return;
-		}
+        if (session==null || session.getAttribute("userId")==null) {
+            // セッション情報なし
+            // 行き先をエラーページに
+            direction = "/errorPage";
+            req.setAttribute("errorMsg", "セッション情報が無効です");
+            req.getRequestDispatcher(direction).forward(req, res);
+            return;
+        }
 
 		// -------------------------------------------------------------
 
@@ -76,11 +76,11 @@ public class MyPageServlet extends HttpServlet {
 
 		// -------------------------------------------------------------
 		// 初期化
-		String errorMsg = "";
 		String msg = "";
 		MyPageBean bean = new MyPageBean();
 		MyPageModel model = new MyPageModel();
 		SessionBean sessionBean = new SessionBean();
+		String direction = "/WEB-INF/jsp/mainPage.jsp";
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
@@ -88,7 +88,6 @@ public class MyPageServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		SessionBean sesBean = (SessionBean) session.getAttribute("session");
 		String sesUserId = sesBean.getUserId();
-		String sesUserNo = sesBean.getUserNo();
 		// -------------------------------------------------------------
 
 		bean.setUserId(sesUserId);
@@ -100,12 +99,14 @@ public class MyPageServlet extends HttpServlet {
 
 		// -------------------------------------------------------------
 		// Sessionにユーザ情報がなければ、エラーページへ遷移
-		if (sesUserNo == null) {
-			errorMsg = "セッションが切れました";
-			req.setAttribute("errorMsg", errorMsg);
-			req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, res);
-			return;
-		}
+        if (session==null || session.getAttribute("userId")==null) {
+            // セッション情報なし
+            // 行き先をエラーページに
+            direction = "/errorPage";
+            req.setAttribute("errorMsg", "セッション情報が無効です");
+            req.getRequestDispatcher(direction).forward(req, res);
+            return;
+        }
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
@@ -155,7 +156,7 @@ public class MyPageServlet extends HttpServlet {
 		req.setAttribute("msg", msg);
 
 		// /mainへ遷移
-		req.getRequestDispatcher("/main").forward(req, res);
+		req.getRequestDispatcher(direction).forward(req, res);
 
 	}
 }

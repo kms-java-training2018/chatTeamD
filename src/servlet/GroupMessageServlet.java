@@ -33,12 +33,14 @@ public class GroupMessageServlet extends HttpServlet {
 
 		// -------------------------------------------------------------
 		// Sessionにユーザ情報がなければ、エラーページへ遷移
-		if (sesUserNo == null) {
-			errorMsg = "セッションが切れました";
-			req.setAttribute("errorMsg", errorMsg);
-			req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, res);
-			return;
-		}
+        if (session==null || session.getAttribute("userId")==null) {
+            // セッション情報なし
+            // 行き先をエラーページに
+            direction = "/errorPage";
+            req.setAttribute("errorMsg", "セッション情報が無効です");
+            req.getRequestDispatcher(direction).forward(req, res);
+            return;
+        }
 
 		// -------------------------------------------------------------
 
@@ -128,7 +130,6 @@ public class GroupMessageServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		SessionBean sesBean = (SessionBean) session.getAttribute("session");
 		String sesUserNo = sesBean.getUserNo();
-		String delete = "";
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
@@ -235,9 +236,34 @@ public class GroupMessageServlet extends HttpServlet {
 
 		// -------------------------------------------------------------
 		// メッセージ送信者が、グループ脱退者かの判定
+		// 変数の初期化
 		int sizeMsg = bean.getListMessage().size();
 		int sizeOutFlag = bean.getListOutFlagUN().size();
+		int sizeOutFlagUser = bean.getListOutFlagUNum().size();
 		String setUN = "";
+		String setUserNo = "";
+		int check = 1;
+
+		// ユーザの数だけ繰り返す
+		for (int i = 0; i < sizeOutFlagUser; i++) {
+			setUserNo = bean.getListOutFlagUNum().get(i);
+		// setUserNoとログインユーザNoが同じであればtrue
+			if (setUserNo.equals(sesUserNo)) {
+		// ログインユーザがグループを脱退しているかの判断
+				if (bean.getListOutFlag().get(i).equals("0")) {
+					check = 0;
+				}
+			}
+		}
+		// check==1であれば、ログインユーザはグループにはいっていないため
+		// エラー画面に遷移する
+		if (check == 1) {
+			direction = "/errorPage";
+			errorMsg = "グループに入っていません";
+			req.setAttribute("errorMsg", errorMsg);
+			req.getRequestDispatcher(direction).forward(req, res);
+			return;
+		}
 		for (int i = 0; i < sizeMsg; i++) {
 			setUN = bean.getListUserName().get(i);
 			for (int j = 0; j < sizeOutFlag; j++) {
