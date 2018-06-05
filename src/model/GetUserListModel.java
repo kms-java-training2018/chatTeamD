@@ -156,6 +156,7 @@ public class GetUserListModel {
 				sb.append(" AND ( to_send_user_no = '" + sesUserNo + "' ");
 				sb.append(" or to_send_user_no = '" + uN + "' )");
 				sb.append(" AND delete_flag = '0' )");
+				sb.append(" ORDER BY REGIST_DATE ");
 				// SQL実行
 				ResultSet rs2 = stmt.executeQuery(sb.toString());
 				if (rs2.next()) {

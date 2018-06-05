@@ -60,6 +60,7 @@ public class GetGroupListModel {
 			sb.append(" A.user_no = '" + sesUserNo + "' ");
 			sb.append("AND ");
 			sb.append(" out_flag = '0' ");
+			sb.append(" ORDER BY A.REGIST_DATE ");
 			// SQL実行
 			ResultSet rs3 = stmt.executeQuery(sb.toString());
 			// それぞれArrayListに入れる
@@ -150,6 +151,7 @@ public class GetGroupListModel {
 				sb.append("WHERE ");
 				sb.append(" to_send_group_no = '" + gN + "' ");
 				sb.append(" AND delete_flag =  '0' )");
+				sb.append(" ORDER BY REGIST_DATE ");
 				// SQL実行
 				ResultSet rs4 = stmt.executeQuery(sb.toString());
 				if (rs4.next()) {
