@@ -85,7 +85,7 @@ public class DirectMessageModel {
 				//相手か自分のユーザー名とメッセージをとってくるSQLのSELECT文を準備
 				String sqlMes = "SELECT MESSAGE, USER_NAME, USER_NO, MESSAGE_NO FROM T_MESSAGE_INFO INNER JOIN M_USER ON T_MESSAGE_INFO.SEND_USER_NO = M_USER.USER_NO WHERE (SEND_USER_NO = '"
 						+ bean.getUserNo() + "' or SEND_USER_NO='" + bean.getMyNo() + "')AND (TO_SEND_USER_NO = '"
-						+ bean.getMyNo() + "'or TO_SEND_USER_NO='" + bean.getUserNo() + "')AND DELETE_FLAG='0'";
+						+ bean.getMyNo() + "'or TO_SEND_USER_NO='" + bean.getUserNo() + "')AND DELETE_FLAG='0'ORDER BY T_MESSAGE_INFO.REGIST_DATE";
 				//SQLをDBに届けるPreparedStatementのインスタンスを取得
 				PreparedStatement pStmtMes = conn.prepareStatement(sqlMes);
 				//ResultSetインスタンスにSELECT文の結果を格納する
