@@ -17,24 +17,15 @@
 	</form>
 	<hr>
 	<!-- ここまで -->
-	<h1>チャット研修プログラム</h1>
-	<h2>メッセージ</h2>
-	<!--<c:forEach var="obj" items="${bean.getListUserNo()}" varStatus="status">
-		<form name="SP" method="get" action="/chat/directMessage">
-			<input type=hidden name="otherUserNo"
-				value="${bean.getListUserNo()[status.index]}"> <a
-				href="javascript:SP[${status.index}].submit()">${bean.getListUserName()[status.index]}</a>
-		</form>
-		<p>「 ${bean.getListMessage()[status.index]} 」
 
-		</p>
-		<form name="deleteMessage" method="post" action="/chat/directMessage">
-		<input type="hidden" name="delete" value="${bean.getListMsgNo()[status.index]}">
-		<input type="button" name="delete" value="削除">
-		</form>
-		<br>
-	</c:forEach>-->
+<h1></h1>
+    <br>
+    <form name="showProfile" action="/chat/showProfile" method="GET">
 
+		<input type=hidden name="otherUserNo" value="${userNo}">
+		<a href="javascript:showProfile.submit()" >${username}</a>
+
+	</form>
 
 
 
@@ -56,17 +47,9 @@
 
 		<form name="showProfile" action="/chat/showProfile" method="GET">
 			<input type=hidden name="otherUserNo" value="${userNo[status.index]}">
-			<a href="javascript:showProfile[${status.index}].submit()">${username[status.index]}</a>：${obj}
+			<a href="javascript:showProfile[${status.index}].submit()" >${username[status.index]}</a>：${obj}
 		</form>
 	</c:forEach>
-
-
-
-
-
-
-
-
 
 
 
