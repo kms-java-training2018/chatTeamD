@@ -188,52 +188,55 @@ public class DirectMessageModel {
 			//sendMessageというパラメータをチェック
 			//(1)-1入力値のチェック
 			int messageLen = sendMessage.length();
-			if (sendMessage != null) {
+			if (sendMessage.equals("")) {
+				bean.setErrorMsg("会話内容が空です。");
+			}else {
 				if ( messageLen > 100) {
-					System.out.println("パラメーターが不正");
 					bean.setErrorMsg("メッセージが長すぎます");
-					//エラーメッセージを表示し、メッセージ画面に遷移
-					System.out.println("100字以内のメッセージを入力してください。");
+				}else {
+					//会話情報登録処理
+
+					//会話番号の自動採番処理
+					//会話番号の最大値を持ってくるSQL文を送信する
+					try {
+						String sqlGetMax = "SELECT MAX(MESSAGE_NO) FROM  T_MESSAGE_INFO";
+						//SQLをDBに届けるPreparedStatementのインスタンスを取得
+						PreparedStatement pStmtGetMax = conn.prepareStatement(sqlGetMax);
+						//ResultSetインスタンスにSELECT文の結果を格納する
+						ResultSet resultMax = pStmtGetMax.executeQuery();
+						while (resultMax.next()) {
+							bean.setN(resultMax.getInt("MAX(MESSAGE_NO)"));
+						}
+					} catch (SQLException e) {
+						bean.setErrorMsg("会話情報の自動採番ができません。");
+					}
+					//会話番号の最大値+1を入れる変数を宣言
+					int newMesNo = bean.getN() + 1;
+					/*
+					 * メッセージをDBに登録
+					 */
+					try {
+						//SQLのINSERT文を準備
+						String sqlSendMes = "INSERT INTO T_MESSAGE_INFO(MESSAGE_NO, SEND_USER_NO, MESSAGE, TO_SEND_USER_NO,DELETE_FLAG, REGIST_DATE)VALUES('"
+								+ newMesNo + "','" + bean.getMyNo() + "','" + sendMessage + "','" + bean.getUserNo()
+								+ "', '0', SYSDATE)";
+						//SQLをDBに届けるPreparedStatementのインスタンスを取得
+						PreparedStatement pStmtSendMes = conn.prepareStatement(sqlSendMes);
+
+						//ResultSetインスタンスにINSERT文の結果を格納する
+						ResultSet resultSendMes = pStmtSendMes.executeQuery();
+
+						//内容を登録できなかった場合、エラー画面に遷移する
+					} catch (SQLException e) {
+						bean.setErrorMsg("会話内容が登録できません。");
+						e.printStackTrace();
+					}
 				}
 			}
 
-			//会話情報登録処理
 
-			//会話番号の自動採番処理
-			//会話番号の最大値を持ってくるSQL文を送信する
-			try {
-				String sqlGetMax = "SELECT MAX(MESSAGE_NO) FROM  T_MESSAGE_INFO";
-				//SQLをDBに届けるPreparedStatementのインスタンスを取得
-				PreparedStatement pStmtGetMax = conn.prepareStatement(sqlGetMax);
-				//ResultSetインスタンスにSELECT文の結果を格納する
-				ResultSet resultMax = pStmtGetMax.executeQuery();
-				while (resultMax.next()) {
-					bean.setN(resultMax.getInt("MAX(MESSAGE_NO)"));
-				}
-			} catch (SQLException e) {
-				bean.setErrorMsg("会話情報の自動採番ができません。");
-			}
-			//会話番号の最大値+1を入れる変数を宣言
-			int newMesNo = bean.getN() + 1;
-			/*
-			 * メッセージをDBに登録
-			 */
-			try {
-				//SQLのINSERT文を準備
-				String sqlSendMes = "INSERT INTO T_MESSAGE_INFO(MESSAGE_NO, SEND_USER_NO, MESSAGE, TO_SEND_USER_NO,DELETE_FLAG, REGIST_DATE)VALUES('"
-						+ newMesNo + "','" + bean.getMyNo() + "','" + sendMessage + "','" + bean.getUserNo()
-						+ "', '0', SYSDATE)";
-				//SQLをDBに届けるPreparedStatementのインスタンスを取得
-				PreparedStatement pStmtSendMes = conn.prepareStatement(sqlSendMes);
 
-				//ResultSetインスタンスにINSERT文の結果を格納する
-				ResultSet resultSendMes = pStmtSendMes.executeQuery();
 
-				//内容を登録できなかった場合、エラー画面に遷移する
-			} catch (SQLException e) {
-				bean.setErrorMsg("会話内容が登録できません。");
-				e.printStackTrace();
-			}
 
 		} finally {
 			try {
