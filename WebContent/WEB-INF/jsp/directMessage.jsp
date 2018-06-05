@@ -17,7 +17,7 @@
 	</form>
 	<hr>
 	<!-- ここまで -->
-
+	<font color="red" size="5"><Strong>${bean.getErrorMsg()}</Strong></font>
 <h1></h1>
     <br>
     <form name="topShowProfile" action="/chat/showProfile" method="GET" target="newtab">

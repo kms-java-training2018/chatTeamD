@@ -187,11 +187,14 @@ public class DirectMessageModel {
 
 			//sendMessageというパラメータをチェック
 			//(1)-1入力値のチェック
-			if (sendMessage == null || sendMessage.length() > 100) {
-				System.out.println("パラメーターが不正");
-				bean.setErrorMsg("メッセージが長すぎます");
-				//エラーメッセージを表示し、メッセージ画面に遷移
-				System.out.println("100字以内のメッセージを入力してください。");
+			int messageLen = sendMessage.length();
+			if (sendMessage != null) {
+				if ( messageLen > 100) {
+					System.out.println("パラメーターが不正");
+					bean.setErrorMsg("メッセージが長すぎます");
+					//エラーメッセージを表示し、メッセージ画面に遷移
+					System.out.println("100字以内のメッセージを入力してください。");
+				}
 			}
 
 			//会話情報登録処理
