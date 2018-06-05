@@ -22,22 +22,19 @@
     <br>
     <form name="showProfile" action="/chat/showProfile" method="GET">
 
-		<input type=hidden name="otherUserNo" value="${userNo}">
-		<a href="javascript:showProfile.submit()" >${username}</a>
+		<input type=hidden name="otherUserNo" value="${bean.getUserNo()}">
+		<a href="javascript:showProfile.submit()" >${bean.getUsername()}</a>
 
 	</form>
 
 
-
-
-
 	<br>
-	<c:forEach var="obj" items="${message}" varStatus="status">
-		<c:if test="${userNo[status.index]==myNo}">
+	<c:forEach var="obj" items="${bean.getListMessage()}" varStatus="status">
+		<c:if test="${bean.getListUserNo()[status.index]==bean.getMyNo()}">
 			<form name="" action="/chat/directMessage" method="POST">
 				<input type=hidden name="check" value="1"><input type=hidden
-					name="userNo" value="${singleUserNO}"> <input type=hidden
-					name="deleteMessageNo" value="${messageNo[status.index]}">
+					name="userNo" value="${bean.getUserNo()}"> <input type=hidden
+					name="deleteMessageNo" value="${bean.getListMsgNo()[status.index]}">
 				<input type="button" value="メッセージの削除"
 					onClick="if(confirm ('本当に削除しますか？')){submit();}">
 			</form>
@@ -46,8 +43,8 @@
 
 
 		<form name="showProfile" action="/chat/showProfile" method="GET">
-			<input type=hidden name="otherUserNo" value="${userNo[status.index]}">
-			<a href="javascript:showProfile[${status.index}].submit()" >${username[status.index]}</a>：${obj}
+			<input type=hidden name="otherUserNo" value="${bean.getListUserNo()[status.index]}">
+			<a href="javascript:showProfile[${status.index}].submit()" >${bean.getListUserName()[status.index]}</a>：${obj}
 		</form>
 	</c:forEach>
 
@@ -62,7 +59,7 @@
 	<form action="/chat/directMessage" method="POST">
 		<input type=hidden name="check" value="2"> <input type="text"
 			name="sendMessage" size="30"><input type=hidden name="userNo"
-			value="${singleUserNO}"> <input type="submit"
+			value="${bean.getUserNo()}"> <input type="submit"
 			value="メッセージの送信" name="sendMessage">
 	</form>
 	<form action="/chat/main" method="POST">
