@@ -37,17 +37,17 @@ public class MakeGroupModel {
 		if (groupName.equals("")) {
 			// グループ名が空
 			bean.setErrorMsg("グループ名が空です");
-			bean.setErrorFlag(1);
+			bean.setErrorFlag(2);
 		} else if (groupName.length() > GROUP_NAME_LENGTH) {
 			// グループ名が所定の文字数より長い
 			bean.setErrorMsg("グループ名が規定の30文字より長いです");
-			bean.setErrorFlag(1);
+			bean.setErrorFlag(2);
 		} else if (groupMemberNo == null) {
 			// グループメンバーがいない
 			soloGroupFlag = 1;
 		}
-		if (bean.getErrorFlag() == 1) {
-			// エラーページへ
+		if (bean.getErrorFlag() == 2) {
+			// グループ名不正、グループ作成ページへ
 
 		} else {
 			/**

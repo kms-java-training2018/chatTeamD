@@ -19,11 +19,44 @@ public class MainPageServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		HttpSession session = req.getSession();
 		String direction = "/WEB-INF/jsp/mainPage.jsp";
-		if (session==null || session.getAttribute("userId")==null) {
+		// 初期化
+		UserListBean userListBean = new UserListBean();
+		GetUserListModel userListModel = new GetUserListModel();
+		GroupListBean groupListBean = new GroupListBean();
+		GetGroupListModel groupListModel = new GetGroupListModel();
+		if (session == null || session.getAttribute("userId") == null) {
 			// セッション情報なし
 			// 行き先をエラーページに
 			direction = "/errorPage";
 			req.setAttribute("errorMsg", "セッション情報が無効です");
+		} else {
+			// セッションからユーザーNo取得
+			SessionBean sesBean = (SessionBean) session.getAttribute("session");
+			String sesUserNo = sesBean.getUserNo();
+			// 2～3処理
+			try {
+				// 2）他会員一覧取得処理
+				userListBean = userListModel.getUserList(userListBean, sesUserNo);
+				// 3）最新メッセージ取得処理
+				userListBean = userListModel.getUserLatestMessage(userListBean, sesUserNo);
+				// 4) 参加グループ一覧取得処理
+				// グループ一覧取得
+				groupListBean = groupListModel.getGroupList(groupListBean, sesUserNo);
+				// グループメッセージ取得
+				groupListBean = groupListModel.getGroupLatestMessage(groupListBean, sesUserNo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		// 途中でエラーはいている場合
+		if (userListBean.getErrorFlag() == 1 || groupListBean.getErrorFlag() == 1) {
+			// 行き先をエラーページに
+			direction = "/errorPage";
+		} else {
+			// リクエストに送る
+			req.setAttribute("userbean", userListBean);
+			req.setAttribute("groupbean", groupListBean);
 		}
 		req.getRequestDispatcher(direction).forward(req, res);
 	}
@@ -40,14 +73,15 @@ public class MainPageServlet extends HttpServlet {
 		 *  1）パラメータチェック
 		 */
 		HttpSession session = req.getSession();
-		SessionBean sesBean = (SessionBean) session.getAttribute("session");
-		String sesUserNo = sesBean.getUserNo();
-		if (session==null || session.getAttribute("userId")==null) {
+		if (session == null || session.getAttribute("userId") == null) {
 			// セッション情報なし
 			// 行き先をエラーページに
 			direction = "/errorPage";
 			req.setAttribute("errorMsg", "セッション情報が無効です");
 		} else {
+			// セッションからユーザーNo取得
+			SessionBean sesBean = (SessionBean) session.getAttribute("session");
+			String sesUserNo = sesBean.getUserNo();
 			// 2～3処理
 			try {
 				// 2）他会員一覧取得処理

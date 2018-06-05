@@ -33,7 +33,7 @@ public class MakeGroupServlet extends HttpServlet {
 		SessionBean sesBean = (SessionBean) session.getAttribute("session");
 		String sesUserNo = sesBean.getUserNo();
 
-		if (session==null || session.getAttribute("userId")==null) {
+		if (session == null || session.getAttribute("userId") == null) {
 			// セッション情報なし
 			// 行き先をエラーページに
 			direction = "/errorPage";
@@ -79,10 +79,11 @@ public class MakeGroupServlet extends HttpServlet {
 		// 入力値変数に渡す
 		String groupName = req.getParameter("groupName");
 		String[] groupMemberNo = req.getParameterValues("userNo");
-		if (sesUserNo.equals(null)) {
+		if (session == null || session.getAttribute("userId") == null) {
 			// セッション情報なし
-			// エラーページへ
+			// 行き先をエラーページに
 			direction = "/errorPage";
+			req.setAttribute("errorMsg", "セッション情報が無効です");
 		} else {
 			// それ以外の場合処理続ける
 			try {
@@ -99,14 +100,39 @@ public class MakeGroupServlet extends HttpServlet {
 				req.setAttribute("errorMsg", bean.getErrorMsg());
 				// 行き先をエラーページに
 				direction = "/errorPage";
+				req.setAttribute("bean", bean);
+			} else if (bean.getErrorFlag() == 2) {
+				// グループ名が不正だった場合
+				/**
+				 * 1)会員一覧取得処理
+				 */
+				UserListBean ulBean = new UserListBean();
+				GetUserListModel ulModel = new GetUserListModel();
+				try {
+					ulBean = ulModel.getUserList(ulBean, sesUserNo);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				if (ulBean.getErrorFlag() == 1) {
+					// 途中でエラーはいている場合
+					// 行き先をエラーページに
+					direction = "/errorPage";
+				} else {
+					// 正常に一覧取得できた場合
+					// リクエストに送る
+					req.setAttribute("bean", ulBean);
+					// 行き先をグループ作成ページに
+					direction = "/WEB-INF/jsp/makeGroup.jsp";
+				}
+
 			} else {
 				// 正常にグループ作成できた場合
 				// 行き先をメインページに
 				direction = "/main";
-
+				req.setAttribute("bean", bean);
 			}
 			// 出力
-			req.setAttribute("bean", bean);
+
 			req.setAttribute("errorMsg", bean.getErrorMsg());
 			req.getRequestDispatcher(direction).forward(req, res);
 
