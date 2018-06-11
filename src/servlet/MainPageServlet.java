@@ -25,6 +25,7 @@ public class MainPageServlet extends HttpServlet {
 		GetGroupListModel groupListModel = new GetGroupListModel();
 		ArrayList<UserListBean> userListBeanList = new ArrayList<>();
 		ArrayList<GroupListBean> groupListBeanList = new ArrayList<>();
+		SessionBean sesBean = (SessionBean) session.getAttribute("session");
 		if (session == null || session.getAttribute("userId") == null) {
 			// セッション情報なし
 			// 行き先をエラーページに
@@ -32,7 +33,7 @@ public class MainPageServlet extends HttpServlet {
 			req.setAttribute("errorMsg", "セッション情報が無効です");
 		} else {
 			// セッションからユーザーNo取得
-			SessionBean sesBean = (SessionBean) session.getAttribute("session");
+
 			String sesUserNo = sesBean.getUserNo();
 			// 2～3処理
 			try {
@@ -82,14 +83,15 @@ public class MainPageServlet extends HttpServlet {
 		 *  1）パラメータチェック
 		 */
 		HttpSession session = req.getSession();
-		if (session == null || session.getAttribute("userId") == null) {
+		SessionBean sesBean = (SessionBean) session.getAttribute("session");
+		if (session == null || session.getAttribute("userId") == null || sesBean.getUserNo() == null) {
 			// セッション情報なし
 			// 行き先をエラーページに
 			direction = "/errorPage";
 			req.setAttribute("errorMsg", "セッション情報が無効です");
 		} else {
 			// セッションからユーザーNo取得
-			SessionBean sesBean = (SessionBean) session.getAttribute("session");
+
 			String sesUserNo = sesBean.getUserNo();
 			// 2～3処理
 			try {

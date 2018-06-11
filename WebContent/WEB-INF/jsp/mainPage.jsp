@@ -7,9 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>メインページ</title>
 <!-- css読み込み -->
-<link rel="stylesheet"type="text/css"href="./css/mainPage.css"media="all">
+<link rel="stylesheet" type="text/css" href="./css/mainPage.css"
+	media="all">
 <!-- JS読み込み	-->
-
+<script src="./js/mainPage.js"></script>
 </head>
 <body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
@@ -21,16 +22,27 @@
 	</form>
 	<hr>
 	<!-- ここまでです -->
-	<h1>チャット研修プログラム</h1>
-	<h2>メインメニュー</h2>
-	<div class="page">
+	<table class="titleTable">
+		<tr>
+			<td rowspan="2" colspan="2"><p class="title">Ch@</p></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>kms2018 chat tool</td>
+		</tr>
+		<tr>
+			<td><h3>Main Menu</h3></td>
+			<td id="directMessageBtn" onclick="DMBtnclick()">DirectMessage</td>
+			<td id="groupMessageBtn" onclick="GMBtnclick()">GroupMessage"</td>
+		</tr>
+	</table>
+	<div class="page" id="directMessage">
 		<form name="DM">
 			<!-- jstlで作成したform"DM"がひとつだけの場合、インデックスが機能しないのを避ける為に作成 -->
-			<br>■会員一覧
+			<h4>～User List～</h4>
 		</form>
 		<!-- 綺麗じゃないから余裕があれば直す -->
-		<br>
-		<table>
+		<table class="table">
 			<c:forEach var="obj" items="${userbean}" varStatus="status">
 				<tr>
 					<td>
@@ -45,14 +57,15 @@
 			</c:forEach>
 		</table>
 	</div>
-	<div>
+
+	<div class="page" id="groupMessage">
 		<form name="GM">
 			<!-- jstlで作成したform"GM"がひとつだけの場合、インデックスが機能しないのを避ける為に作成 -->
-			<br>■グループ一覧
+			<h4>～Group List～</h4>
 		</form>
 		<!-- 綺麗じゃないから余裕があれば直す -->
-		<br> ${groupbean[0].getGroupNullMes()}
-		<table>
+		${groupbean[0].getGroupNullMes()}
+		<table class="table">
 			<c:forEach var="obj" items="${groupbean}" varStatus="status">
 				<tr>
 					<td>

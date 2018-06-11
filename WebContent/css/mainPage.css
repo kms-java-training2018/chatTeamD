@@ -1,18 +1,48 @@
 @charset "UTF-8";
-#page{
-	background: #ddcaaf;
+
+#page {
+	background: #FF7A00;
 	width: 900px;
 	padding: 0px;
 	text-align: center;
-	border: 1px solid #cccccc;
 	margin: 30px auto;
 }
-.page{
-	background: #f0ece8;
+
+.page {
+	background: #FFC085;
 	text-align: center;
-	line-height:0px auto;
+	width:80%;
+	line-height: 0px auto;
 	padding: 0px;
 	margin-top: 0px;
 	margin-bottom: 0px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
+.title{
+	font-size:500%
+}
+
+.titleTable{
+	margin-left: auto;
+	margin-right: auto;
+	width:800px;
+	height:200px;
+}
+
+
+.td01:target {
+  background-color: red;
+}
+
+
+
+.table {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.table td {
+	text-align: left;
+}
