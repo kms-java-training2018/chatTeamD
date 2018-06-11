@@ -29,7 +29,8 @@ public class DirectMessageServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 
 		String direction = "/WEB-INF/jsp/directMessage.jsp";
-		if (session == null || session.getAttribute("userId") == null) {
+		//修正箇所　左側の式を消しました。----------------------------------------------
+		if (session.getAttribute("userId") == null) {
 			// セッション情報なし
 			// 行き先をエラーページに
 			direction = "/errorPage";

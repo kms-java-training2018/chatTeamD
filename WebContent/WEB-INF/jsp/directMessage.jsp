@@ -9,7 +9,8 @@
 </head>
 <body>
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
-	${ session.getUserName() }さん
+	<!-- 修正箇所　bean で値を取得できないか確認　　　　　　　---------------修正済み------------------ -->
+	${ bean.username }さん
 	<br>
 	<form name="log_out" action="/chat/logout" method="POST">
 		<input type="button" value="logout"
@@ -27,12 +28,12 @@
 		<a href="javascript:topShowProfile.submit()">${bean.getUsername()}</a>
 
 	</form>
-
-
+	
 	<br>
 	<c:forEach var="obj" items="${bean.getListMessage()}"
 		varStatus="status">
 		<c:if test="${bean.getListUserNo()[status.index]==bean.getMyNo()}">
+			
 			<form name="" action="/chat/directMessage" method="POST">
 				<input type=hidden name="check" value="1"> <input
 					type=hidden name="userNo" value="${bean.getUserNo()}"> <input
@@ -41,15 +42,18 @@
 					type="button" value="メッセージの削除"
 					onClick="if(confirm ('本当に削除しますか？')){submit();}">
 			</form>
+
 		</c:if>
 
 
 		<c:choose>
 			<c:when test="${bean.getListUserNo()[status.index]==bean.getMyNo()}">
-		<form name="showProfile" action="/chat/showProfile" method="GET"
+
+	    <form name="showProfile" action="/chat/showProfile" method="GET"
 					target="newtab">
 		${bean.getListUserName()[status.index]}：${obj}
 		</form>
+
 		</c:when>
 			<c:otherwise>
 				<form name="showProfile" action="/chat/showProfile" method="GET"
