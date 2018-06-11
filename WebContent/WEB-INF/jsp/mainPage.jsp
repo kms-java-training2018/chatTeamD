@@ -6,11 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>メインページ</title>
-<!--	JS読み込み	-->
-<script type="text/javascript" charset="UTF-8" language="javascript"
-	src="./dialog.js"></script>
+<!-- css読み込み -->
+<link rel="stylesheet"type="text/css"href="/chat/WebContent/WEB-INF/css/mainPage.css">
+<!-- JS読み込み	-->
+
 </head>
-<body>
+<body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
 	${ session.getUserName() }さん
 	<br>
@@ -50,18 +51,18 @@
 			<br>■グループ一覧
 		</form>
 		<!-- 綺麗じゃないから余裕があれば直す -->
-		<br> ${groupbean.getGroupNullMes()}
+		<br> ${groupbean[0].getGroupNullMes()}
 		<table>
-			<c:forEach var="obj" items="${groupbean.getGroupNo()}" varStatus="status">
+			<c:forEach var="obj" items="${groupbean}" varStatus="status">
 				<tr>
 					<td>
 						<form name="GM" method="get" action="/chat/groupMessage">
 							<input type=hidden name="groupNo"
-								value="${groupbean.getGroupNo()[status.index]}">○ <a
-								href="javascript:GM[${status.index + 1}].submit()">${groupbean.getGroupName()[status.index]}</a>
+								value="${groupbean[status.index].groupNo}">○ <a
+								href="javascript:GM[${status.index + 1}].submit()">${groupbean[status.index].groupName}</a>
 						</form>
 					</td>
-					<td>: ${groupbean.getGroupMessage()[status.index]}</td>
+					<td>: ${groupbean[status.index].groupMessage}</td>
 				</tr>
 			</c:forEach>
 		</table>

@@ -1,52 +1,51 @@
 package bean;
 
-import java.util.ArrayList;
-
 public class GroupListBean {
 	/**
 	 * フィールド
 	 */
 	/**	表示するグループNo */
-	private ArrayList<Integer> groupNo = new ArrayList<>();
+	private int groupNo;
 
 	/**	表示するグループ名 */
-	private ArrayList<String> groupName = new ArrayList<>();
+	private String groupName;
 
 	/**	グループの最新メッセージ */
-	private ArrayList<String> groupMessage = new ArrayList<>();
+	private String groupMessage;
 
 	/** グループに参加していない場合の文言 */
 	private String groupNullMes = "";
 
 	/** エラーフラグ */
-	private int errorFlag = 0;
+	private int errorFlag;
+
+	public int getGroupNo() {
+		return groupNo;
+	}
+
+	public void setGroupNo(int groupNo) {
+		this.groupNo = groupNo;
+	}
+
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
+	public String getGroupMessage() {
+		return groupMessage;
+	}
+
+	public void setGroupMessage(String groupMessage) {
+		this.groupMessage = groupMessage;
+	}
 
 	/**
 	 * メソッド
 	 */
-	public ArrayList<Integer> getGroupNo() {
-		return groupNo;
-	}
-
-	public void setGroupNo(ArrayList<Integer> groupNo) {
-		this.groupNo = groupNo;
-	}
-
-	public ArrayList<String> getGroupName() {
-		return groupName;
-	}
-
-	public void setGroupName(ArrayList<String> groupName) {
-		this.groupName = groupName;
-	}
-
-	public ArrayList<String> getGroupMessage() {
-		return groupMessage;
-	}
-
-	public void setGroupMessage(ArrayList<String> groupMessage) {
-		this.groupMessage = groupMessage;
-	}
 
 	public String getGroupNullMes() {
 		return groupNullMes;

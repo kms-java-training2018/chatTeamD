@@ -23,10 +23,11 @@ public class GetGroupListModel {
 	 * @param sesUserNo	……参加しているグループを探したいユーザ。
 	 * @return	sesUserNoの参加しているグループ一覧をUserListBean型に格納して返す
 	 */
-	public GroupListBean getGroupList(GroupListBean bean, String sesUserNo) {
+	public ArrayList<GroupListBean> getGroupList(String sesUserNo) {
 		/**
 		 *  参加グループ一覧取得処理
 		 */
+		ArrayList<GroupListBean> beanList = new ArrayList<>();
 		StringBuilder sb = new StringBuilder();
 		/*
 		 * DBログイン
@@ -50,8 +51,6 @@ public class GetGroupListModel {
 			/*
 			 * 自分が参加しているグループ一覧取得
 			 */
-			ArrayList<Integer> groupNo = new ArrayList<>();
-			ArrayList<String> groupName = new ArrayList<>();
 			sb.append("SELECT ");
 			sb.append(" A.group_no , B.group_name ");
 			sb.append("FROM ");
@@ -63,38 +62,38 @@ public class GetGroupListModel {
 			sb.append(" ORDER BY A.REGIST_DATE ");
 			// SQL実行
 			ResultSet rs3 = stmt.executeQuery(sb.toString());
-			// それぞれArrayListに入れる
 			while (rs3.next()) {
-				groupNo.add(rs3.getInt("GROUP_NO"));
-				groupName.add(rs3.getString("GROUP_NAME"));
+				// 結果beanに入れた後ArrayListに入れる
+				GroupListBean bean = new GroupListBean();
+				bean.setGroupNo(rs3.getInt("GROUP_NO"));
+				bean.setGroupName(rs3.getString("GROUP_NAME"));
+				beanList.add(bean);
 			}
-			// sb初期化
-			sb.delete(0, sb.length());
 			// グループ0の場合メッセージ出す
-			String groupNullMes = "";
-			if (groupNo.isEmpty()) {
-				groupNullMes = "グループに参加していません";
+			if (beanList.isEmpty()) {
+				GroupListBean bean = new GroupListBean();
+				bean.setGroupNullMes("グループに参加していません");
 			}
-			// beanのフィールドにset
-			bean.setGroupNo(groupNo);
-			bean.setGroupName(groupName);
-			bean.setGroupNullMes(groupNullMes);
 		} catch (SQLException e) {
-			// エラーはすべてここにくる
+			// SQLエラーはすべてここにくる
 			e.printStackTrace();
+			// beanList初期化
+			beanList.clear();
+			// エラー情報入れたbeanだけセット
+			GroupListBean bean = new GroupListBean();
 			bean.setErrorFlag(1);
-			// SQLの接続は絶対に切断
+			beanList.add(bean);
 		} finally {
+			// SQLの接続は絶対に切断
 			try {
+				// ここで接続切断に失敗する（そもそも接続できてない場合）とreturnされず外に出るみたい
+				// その場合はbeanListがNullになるかも知れないのでサーブレットのエラー処理に任せる
 				conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 		}
-		// sb初期化
-		sb.delete(0, sb.length());
-		return bean;
+		return beanList;
 	}
 
 	/**
@@ -104,7 +103,7 @@ public class GetGroupListModel {
 	 * @param sesUserNo	……グループ一覧とメッセージをやり取りしたユーザ。
 	 * @return	UserListBean型beanに最新メッセージを持たせて返す。
 	 */
-	public GroupListBean getGroupLatestMessage(GroupListBean bean, String sesUserNo) {
+	public ArrayList<GroupListBean> getGroupLatestMessage(ArrayList<GroupListBean> beanList, String sesUserNo) {
 		/*
 		 * 最新メッセージ一覧取得
 		 */
@@ -128,9 +127,8 @@ public class GetGroupListModel {
 			conn = DriverManager.getConnection(url, user, dbPassword);
 			Statement stmt = conn.createStatement();
 			// SQL作成
-			ArrayList<String> groupMessage = new ArrayList<>();
-			for (int i = 0; i < bean.getGroupNo().size(); i++) {
-				int gN = bean.getGroupNo().get(i);
+			for (int i = 0; i < beanList.size(); i++) {
+				int gN = beanList.get(i).getGroupNo();
 				sb.append("SELECT ");
 				sb.append(" message ");
 				sb.append("FROM ");
@@ -148,33 +146,37 @@ public class GetGroupListModel {
 				// SQL実行
 				ResultSet rs4 = stmt.executeQuery(sb.toString());
 				if (rs4.next()) {
-					// データあり
-					// そのままArrayListに入れる
-					groupMessage.add(rs4.getString("MESSAGE"));
+					// メッセージあり
+					// そのまま対応するbeanに入れた後にArrayListに入れる
+					beanList.get(i).setGroupMessage(rs4.getString("Message"));
 				} else {
 					// データなし
 					// 会話を始めましょう！
-					groupMessage.add("会話を始めましょう!");
+					beanList.get(i).setGroupMessage("会話を始めましょう!");
 				}
-				// 初期化
+				// ループの為初期化
 				sb.delete(0, sb.length());
 			}
-			// beanのフィールドにset
-			bean.setGroupMessage(groupMessage);
 		} catch (SQLException e) {
-			// エラーはすべてここにくる
+			// SQLエラーはすべてここにくる
 			e.printStackTrace();
+			// beanList初期化
+			beanList.clear();
+			// エラー情報入れたbeanだけセット
+			GroupListBean bean = new GroupListBean();
 			bean.setErrorFlag(1);
-			// SQLの接続は絶対に切断
+			beanList.add(bean);
 		} finally {
 			try {
+				// ここで接続切断に失敗する（そもそも接続できてない場合）とreturnされず外に出るみたい
+				// その場合はbeanListがNullになるかも知れないのでサーブレットのエラー処理に任せる
 				conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 
 		}
-		return bean;
+		return beanList;
 	}
 
 }

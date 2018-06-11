@@ -28,7 +28,7 @@ public class MakeGroupServlet extends HttpServlet {
 		 */
 		HttpSession session = req.getSession();
 		SessionBean sesBean = (SessionBean) session.getAttribute("session");
-		String sesUserNo = sesBean.getUserNo();
+
 
 		if (session == null || session.getAttribute("userId") == null) {
 			// セッション情報なし
@@ -39,6 +39,7 @@ public class MakeGroupServlet extends HttpServlet {
 			/**
 			 * 1)会員一覧取得処理
 			 */
+			String sesUserNo = sesBean.getUserNo();
 			try {
 				userListBeanList = model.getUserList(sesUserNo);
 			} catch (Exception e) {
@@ -53,8 +54,9 @@ public class MakeGroupServlet extends HttpServlet {
 			}
 			if (userListBeanList.isEmpty() || userListBeanList.get(0).getErrorFlag() == 1) {
 				// 途中でエラーはいている場合
-				// 行き先をエラーページに
+				// エラーメッセージ送りつつ行き先をエラーページに
 				direction = "/errorPage";
+				req.setAttribute("errorMsg", "DB接続に失敗しました");
 			} else {
 				// 正常に一覧取得できた場合
 				// リクエストに送る
@@ -129,8 +131,9 @@ public class MakeGroupServlet extends HttpServlet {
 				}
 				if (userListBeanList.isEmpty() || userListBeanList.get(0).getErrorFlag() == 1) {
 					// 途中でエラーはいている場合
-					// 行き先をエラーページに
+					// エラーメッセージ送りつつ行き先をエラーページに
 					direction = "/errorPage";
+					req.setAttribute("errorMsg", "DB接続に失敗しました");
 				} else {
 					// 正常に一覧取得できた場合
 					// リクエストに送る

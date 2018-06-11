@@ -157,8 +157,7 @@ public class GetUserListModel {
 				ResultSet rs2 = stmt.executeQuery(sb.toString());
 				if (rs2.next()) {
 					// メッセージあり
-					// そのままArrayListに入れる
-					// そのまま対応するbeanに入れる
+					// そのまま対応するbeanに入れた後にArrayListに入れる
 					beanList.get(i).setDirectMessage(rs2.getString("Message"));
 				} else {
 					// メッセージなし
