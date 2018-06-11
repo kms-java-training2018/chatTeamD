@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
 		LoginBean bean = new LoginBean();
 		LoginModel model = new LoginModel();
 		String direction = "/WEB-INF/jsp/login.jsp";
-		String errormsg2 = "";
+		String errormsg = "";
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
@@ -69,25 +69,37 @@ public class LoginServlet extends HttpServlet {
 		byte[] userIdBytes = userId.getBytes();
 		byte[] passwordBytes = password.getBytes();
 
-		if (userIdBytes.length != userIdLen) {
+		errormsg = bean.getErrorMessage();
+
+		if(bean.getUserId() == "" || bean.getPassword() == "") {
 			// エラー
-			errormsg2 = "半角で入力してください";
-			req.setAttribute("errorMsg2", errormsg2);
-		}
-		if (passwordBytes.length != passwordLen) {
-			// エラー
-			errormsg2 = "半角で入力してください";
-			req.setAttribute("errorMsg2", errormsg2);
+			errormsg = errormsg + "　ID/パスワードを入力してください";
+//			req.setAttribute("errorMessage", errormsg);
+//			direction = "WEB-INF/jsp/login.jsp";
+//			req.getRequestDispatcher(direction).forward(req, res);
+//			return;
 		}
 
-		if (userIdLen > 20 || passwordLen > 20) {
-			errormsg2 = "文字数が多いです(20文字まで)";
-			req.setAttribute("errorMsg2", errormsg2);
+		if (userIdBytes.length != userIdLen || passwordBytes.length != passwordLen) {
+			// エラー
+			errormsg = errormsg + "　半角で入力してください";
+//			req.setAttribute("errorMessage", errormsg);
+//			direction = "WEB-INF/jsp/login.jsp";
+//			req.getRequestDispatcher(direction).forward(req, res);
+//			return;
+		}
+
+		if (userIdBytes.length > 20 || passwordBytes.length > 20) {
+			errormsg =  errormsg + "　文字数が多いです(半角20文字まで)";
+//			req.setAttribute("errorMessage", errormsg);
+//			direction = "WEB-INF/jsp/login.jsp";
+//			req.getRequestDispatcher(direction).forward(req, res);
+//			return;
 		}
 
 		// -------------------------------------------------------------
 		// 取得に成功した場合セッション情報をセット
-		if ("".equals(bean.getErrorMessage())) {
+		if ("".equals(errormsg)) {
 			SessionBean sessionBean = new SessionBean();
 			sessionBean.setUserName(bean.getUserName());
 			sessionBean.setUserNo(bean.getUserNo());
@@ -99,7 +111,7 @@ public class LoginServlet extends HttpServlet {
 			direction = "/main";
 		} else {
 			// エラーメッセージの表示
-			req.setAttribute("errorMessage", bean.getErrorMessage());
+			req.setAttribute("errorMessage", errormsg);
 		}
 		// -------------------------------------------------------------
 

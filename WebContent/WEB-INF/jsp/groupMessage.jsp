@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>グループチャット</title>
+
 </head>
 <body>
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
@@ -17,77 +18,88 @@
 	</form>
 	<hr>
 	<!-- ここまでです -->
+
 	<center>
 		<font color="red" size="5"><Strong>${ errorMsg }</Strong></font>
 	</center>
-	<c:forEach var="obj" items="${bean.getListUserNo()}" varStatus="status">
-		<!-- 自分のメッセージ -->
-		<c:if
-			test="${bean.getListUserNo()[status.index].equals(session.getUserNo()) }">
-			<div align="right">
-				<form name="SP" method="get" action="/chat/showProfile">
-					<input type=hidden name="otherUserNo"
-						value="${bean.getListUserNo()[status.index]}">
-					${bean.getListUserName()[status.index]}
-				</form>
-				<p>「 ${bean.getListMessage()[status.index]} 」</p>
-				<form name="DLT" method="post" action="/chat/groupMessage">
-					<input type="hidden" name="groupNo"
-						value="${ groupBean.getGroupNo()}"> <input type="hidden"
-						name="delete" value="${bean.getListMsgNo()[status.index]}">
-					<input type="hidden" name="delete"> <input type="button"
-						value="メッセージ削除" onClick="if(confirm ('本当に削除しますか？')){submit();}">
-				</form>
-			</div>
-		</c:if>
-
-		<!-- グループ脱退者のメッセージ -->
-		<c:if
-			test="${bean.getListUserName()[status.index].equals(bean.getOutFlag1()) && !bean.getListUserNo()[status.index].equals(session.getUserNo())  }">
-			<div align="left">
-				<form name="SP" method="get" action="/chat/showProfile">
-					<input type=hidden name="otherUserNo"
-						value="${bean.getListUserNo()[status.index]}">
-					${bean.getListUserName()[status.index]}
-				</form>
-				<p>「 ${bean.getListMessage()[status.index]} 」</p>
-			</div>
-		</c:if>
-
-		<!-- 他者のメッセージ -->
-		<c:if
-			test="${!bean.getListUserNo()[status.index].equals(session.getUserNo())  && !bean.getListUserName()[status.index].equals(bean.getOutFlag1())}">
-			<div align="left">
-				<form target="newtab" name="SP" method="get"
-					action="/chat/showProfile">
-					<input type=hidden name="otherUserNo"
-						value="${bean.getListUserNo()[status.index]}"> <a
-						href="javascript:SP[${status.index}].submit()">${bean.getListUserName()[status.index]}</a>
-				</form>
-				<p>「 ${bean.getListMessage()[status.index]} 」</p>
-			</div>
-		</c:if>
-		<br>
-		<hr width="100%" size="1" color="orange" style="border-style: dotted">
-	</c:forEach>
-	<br>
-	<p></p>
-	<br>
-	<br>
 	<center>
+		<h1>${ bean.getGroupName() }|作成者:${ bean.getAuthorName() }</h1>
+	</center>
+	<center>
+		<table cellspacing="0">
+			<!-- 自分 -->
+			<c:forEach items="${ list }" var="obj" varStatus="status">
+				<c:if test="${obj.userNo.equals(session.getUserNo()) }">
+					<tr>
+						<!-- name -->
+						<td colspan="3" align="right" width="100%"><c:out
+								value="${ obj.userName }" /></td>
+					</tr>
+					<tr>
+						<!-- message -->
+						<td colspan="2" align="right" width="95%">「 <c:out
+								value="${ obj.message }" />」
+						</td>
+						<!-- delete -->
+						<td width="5%" valign="bottom">
+							<form action="/chat/groupMessage" method="post">
+								<input type="hidden" name="delete"> <input type="hidden"
+									name="groupNo" value="${ bean.groupNo }"><input
+									type="hidden" name="deleteNo" value="${ obj.messageNo }">
+								<input type="button" value="削除"
+									onClick="if(confirm ('本当に削除しますか？')){submit();}">
+							</form>
+					</tr>
+					<tr>
+						<td colspan="3" height="10px"></td>
+					</tr>
+				</c:if>
+				<!-- グループ脱退者 -->
+				<c:if
+					test="${ obj.userName.equals(bean.getOutFlagMessage()) && !obj.userNo.equals(session.getUserNo()) }">
+					<tr>
+						<!-- name -->
+						<td colspan="3" width="100%"><c:out value="${ obj.name }" />
+						</td>
+					</tr>
+					<tr>
+						<!-- message -->
+						<td colspan="3" width="100%">「<c:out value="${ obj.message }" />
+							」
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="10px"></td>
+					</tr>
+				</c:if>
+				<c:if
+					test="${!obj.userName.equals(bean.getOutFlagMessage()) && !obj.userNo.equals(session.getUserNo())}">
+					<tr>
+						<td width="100%" align="left" colspan="3"><a
+							href="/chat/showProfile?otherUserNo=${ obj.userNo }"
+							target="blank"><c:out value="${ obj.userName}" /></a></td>
+					</tr>
+					<tr>
+						<td width="100%" align="left" colspan="3">「<c:out
+								value="${ obj.message}" />」
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="10px"></td>
+					</tr>
+				</c:if>
+			</c:forEach>
+		</table>
 		<form action="/chat/groupMessage" method="POST">
 			<input type="text" name="message"> <input type="hidden"
-				name="groupNo" value="${ groupBean.getGroupNo()}"><input
-				type="submit" value="メッセージの送信">
+				name="groupNo" value="${ bean.getGroupNo()}"><input
+				type="submit" value="送信">
+		</form>
+
+
+		<form action="/chat/main" method="POST">
+			<input type="submit" value="メインメニューに戻る">
 		</form>
 	</center>
-	<form action="/chat/groupMessage" method="POST">
-		<input type="hidden" name="exit" value="${ groupBean.getGroupNo()}">
-		<input type="button" value="グループ脱退"
-			onClick="if(confirm ('本当に脱退しますか？')){submit();}">
-	</form>
-	<form action="/chat/main" method="POST">
-		<input type="submit" value="メインメニューに戻る">
-	</form>
 </body>
 </html>

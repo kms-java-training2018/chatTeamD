@@ -12,13 +12,14 @@
 	${ session.getUserName() }さん
 	<br>
 	<form name="log_out" action="/chat/logout" method="POST">
-	<input type="button" value="logout"onClick="if(confirm ('本当にログアウトしますか？')){submit();}">
+		<input type="button" value="logout"
+			onClick="if(confirm ('本当にログアウトしますか？')){submit();}">
 	</form>
 	<hr>
 	<!-- ここまでです -->
 	<br>
 	<center>
-	<form action="/chat/myPage" method="POST">
+		<form action="/chat/myPage" method="POST">
 
 			<table>
 				<tr>
@@ -27,19 +28,19 @@
 				</tr>
 				<tr>
 					<td width="100">自己紹介</td>
-					<td><textarea cols="30" rows="20"
-							name="myPageText">${ myPageText }</textarea>
+					<td><textarea cols="30" rows="20" name="myPageText">${ myPageText }</textarea>
 				</tr>
 			</table>
 
-		<input type="submit" value="プロフィールを更新">
-	</form>
-	<form action="/chat/main" method="POST">
-		<input type="submit" value="メインメニューに戻る">
-	</form>
-	<br>
-	${ errorMsg }
-	<br>
+			<input type="hidden" name="dispName" value="${ bean.getUserName() }">
+			<input type="hidden" name="myPageText" value="${ bean.getMyPageText }"> <input
+				type="submit" value="プロフィールを更新">
+		</form>
+		<form action="/chat/main" method="POST">
+			<input type="submit" value="メインメニューに戻る">
+		</form>
+		<br> <font color="red"><Strong>${ errormessage }</Strong></font>
+		<br>
 	</center>
 </body>
 </html>
