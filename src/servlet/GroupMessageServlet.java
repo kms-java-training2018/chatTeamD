@@ -106,6 +106,7 @@ public class GroupMessageServlet extends HttpServlet {
 		// 背景色指定
 		int num = (int)(Math.random()*7+1);
 		bean.setMyColor(num);
+		num = 1;
 		String cssMe = "";
 		String cssOther = "";
 		switch(num) {
@@ -141,6 +142,7 @@ public class GroupMessageServlet extends HttpServlet {
 
 
 		num = (int)(Math.random()*7+1);
+		num = 2;
 		bean.setOtherColor(num);
 
 		switch(num) {
@@ -366,6 +368,7 @@ public class GroupMessageServlet extends HttpServlet {
 		bean.setMyColor(num);
 		String cssMe = "";
 		String cssOther = "";
+
 		switch(num) {
 		case 1:
 			cssMe = "red";

@@ -16,7 +16,7 @@
 	background-color: red;
 	color: white;
 	width: 35%;
-	text-align: left;
+	text-align: center;
 }
 
 #redOther {
@@ -37,7 +37,7 @@
 	background-color: aquamarine;
 	color: white;
 	width: 35%;
-	text-align: right;
+	text-align: center;
 }
 
 #lightsteelblueMe {
