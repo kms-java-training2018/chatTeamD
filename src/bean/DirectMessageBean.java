@@ -18,6 +18,9 @@ public class DirectMessageBean {
 	/**	相手ユーザーの名前を格納する変数を宣言 */
 	private String username;
 
+	/** 自分のユーザーの名前を格納する変数を宣言 */
+	private String myname;
+
 	/**	会話番号の最大値を格納する変数を宣言 */
 	private int n ;
 

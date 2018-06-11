@@ -9,8 +9,8 @@
 </head>
 <body>
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
-	<!-- 修正箇所　bean で値を取得できないか確認　　　　　　　---------------修正済み------------------ -->
-	${ bean.username }さん
+	<!-- 修正箇所　bean で値を取得できないか確認　　　　　　　--------------------------------- -->
+	${ session.getUsrName }さん
 	<br>
 	<form name="log_out" action="/chat/logout" method="POST">
 		<input type="button" value="logout"
@@ -23,17 +23,17 @@
 	<br>
 	<form name="topShowProfile" action="/chat/showProfile" method="GET"
 		target="newtab">
-
+<!-- 名前を押すとユーザープロフィールに飛ぶ処理 -->
 		<input type=hidden name="otherUserNo" value="${bean.getUserNo()}">
 		<a href="javascript:topShowProfile.submit()">${bean.getUsername()}</a>
 
 	</form>
-	
+	<!-- メッセージを表示し、自分のメッセージであれば削除ボタンを付与する処理 -->
 	<br>
 	<c:forEach var="obj" items="${bean.getListMessage()}"
 		varStatus="status">
 		<c:if test="${bean.getListUserNo()[status.index]==bean.getMyNo()}">
-			
+
 			<form name="" action="/chat/directMessage" method="POST">
 				<input type=hidden name="check" value="1"> <input
 					type=hidden name="userNo" value="${bean.getUserNo()}"> <input
@@ -45,7 +45,7 @@
 
 		</c:if>
 
-
+		<!-- 相手のユーザー名を押すとプロフィールに飛ぶ処理 -->
 		<c:choose>
 			<c:when test="${bean.getListUserNo()[status.index]==bean.getMyNo()}">
 
