@@ -327,9 +327,8 @@ public class GroupMessageModel {
 		// -------------------------------------------------------------
 		// 初期化
 		StringBuilder sb = new StringBuilder();
-		int messageNo = 0;
+		int messageNo;
 		messageNo = bean.getMessageNo();
-		String userNo = bean.getUserNo();
 		int exitGroupNo = bean.getExitGroupNo();
 		int registUserNo = 0;
 		// -------------------------------------------------------------
@@ -438,7 +437,7 @@ public class GroupMessageModel {
 			// -------------------------------------------------------------
 
 			// SQL実行
-			ResultSet rs = stmt.executeQuery(sb.toString());
+			stmt.executeQuery(sb.toString());
 
 			// -------------------------------------------------------------
 
@@ -509,6 +508,78 @@ public class GroupMessageModel {
 			while (rs.next()) {
 				bean.setGroupName(rs.getString("GROUP_NAME"));
 				bean.setAuthorName(rs.getString("USER_NAME"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// SQLの接続は絶対に切断
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+		// -------------------------------------------------------------
+		return bean;
+	}
+
+	public GroupMessageBean confirmation(GroupMessageBean bean) {
+
+		// -------------------------------------------------------------
+		// 初期化
+		StringBuilder sb = new StringBuilder();
+		int groupNo = bean.getGroupNo();
+		// -------------------------------------------------------------
+
+		// -------------------------------------------------------------
+		Connection conn = null;
+		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
+		String user = "DEV_TEAM_D";
+		String dbPassword = "D_DEV_TEAM";
+		// JDBCドライバーのロード
+		try {
+
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		// 接続作成
+		try {
+
+			conn = DriverManager.getConnection(url, user, dbPassword);
+
+			Statement stmt = conn.createStatement();
+
+			// -------------------------------------------------------------
+			// SQL文作成
+			// USER_NAME, MY_PAGE_TEXT取得
+
+			sb.append("SELECT ");
+			sb.append("USER_NO ");
+			sb.append("FROM ");
+			sb.append("T_GROUP_INFO ");
+			sb.append("WHERE ");
+			sb.append("GROUP_NO ");
+			sb.append("= ");
+			sb.append(groupNo);
+			sb.append(" ");
+			sb.append("AND ");
+			sb.append("OUT_FLAG = '0' ");
+			// -------------------------------------------------------------
+
+			ResultSet rs = stmt.executeQuery(sb.toString());
+
+			ArrayList<String> list = new ArrayList<>();
+			int i = 0;
+			while (rs.next()) {
+				list.add(rs.getString("USER_NO"));
+
+			}
+			if (!list.contains(bean.getMyNo())) {
+				bean.setConMessage("エラー");
 			}
 
 		} catch (SQLException e) {

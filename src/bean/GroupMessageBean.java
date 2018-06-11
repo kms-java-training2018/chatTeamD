@@ -33,8 +33,16 @@ public class GroupMessageBean {
 
 	private String outFlagUserNo;
 
+	private String conMessage;
+
+	private int myColor;
+
+	private int otherColor;
+
 	/** グループ名 */
 	private String groupName;
+
+	private String myNo;
 
 	/** グループ作成者 */
 	private String authorName;
@@ -152,6 +160,38 @@ public class GroupMessageBean {
 
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
+	}
+
+	public String getConMessage() {
+		return conMessage;
+	}
+
+	public void setConMessage(String conMessage) {
+		this.conMessage = conMessage;
+	}
+
+	public String getMyNo() {
+		return myNo;
+	}
+
+	public void setMyNo(String myNo) {
+		this.myNo = myNo;
+	}
+
+	public int getMyColor() {
+		return myColor;
+	}
+
+	public void setMyColor(int myColor) {
+		this.myColor = myColor;
+	}
+
+	public int getOtherColor() {
+		return otherColor;
+	}
+
+	public void setOtherColor(int otherColor) {
+		this.otherColor = otherColor;
 	}
 
 

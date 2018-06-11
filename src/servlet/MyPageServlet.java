@@ -31,7 +31,7 @@ public class MyPageServlet extends HttpServlet {
 		// Sessionの取得
 		HttpSession session = req.getSession();
 		SessionBean sesBean = (SessionBean) session.getAttribute("session");
-		String sesUserId = sesBean.getUserId();
+
 		String myPageText = (String) req.getAttribute("myPageText");
 		// -------------------------------------------------------------
 
@@ -45,6 +45,8 @@ public class MyPageServlet extends HttpServlet {
 			req.getRequestDispatcher(direction).forward(req, res);
 			return;
 		}
+
+		String sesUserId = sesBean.getUserId();
 
 		// -------------------------------------------------------------
 
@@ -89,9 +91,22 @@ public class MyPageServlet extends HttpServlet {
 		// Sessionの取得
 		HttpSession session = req.getSession();
 		SessionBean sesBean = (SessionBean) session.getAttribute("session");
-		String sesUserId = sesBean.getUserId();
+
 		// -------------------------------------------------------------
 
+		// -------------------------------------------------------------
+		// Sessionにユーザ情報がなければ、エラーページへ遷移
+		if (sesBean == null) {
+			// セッション情報なし
+			// 行き先をエラーページに
+			direction = "/errorPage";
+			req.setAttribute("errorMsg", "セッション情報が無効です");
+			req.getRequestDispatcher(direction).forward(req, res);
+			return;
+		}
+		// -------------------------------------------------------------
+
+		String sesUserId = sesBean.getUserId();
 		bean.setUserId(sesUserId);
 
 		req.setCharacterEncoding("UTF-8");
@@ -104,17 +119,7 @@ public class MyPageServlet extends HttpServlet {
 		byte[] dispNameBytes = dispName.getBytes();
 		byte[] myPageTextBytes = myPageText.getBytes();
 
-		// -------------------------------------------------------------
-		// Sessionにユーザ情報がなければ、エラーページへ遷移
-		if (session == null || session.getAttribute("userId") == null) {
-			// セッション情報なし
-			// 行き先をエラーページに
-			direction = "/errorPage";
-			req.setAttribute("errorMsg", "セッション情報が無効です");
-			req.getRequestDispatcher(direction).forward(req, res);
-			return;
-		}
-		// -------------------------------------------------------------
+
 
 		// -------------------------------------------------------------
 		// SQL実行

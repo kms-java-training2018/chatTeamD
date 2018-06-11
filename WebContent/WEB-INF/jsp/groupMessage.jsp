@@ -6,7 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>グループチャット</title>
-
+<link rel="stylesheet" type="text/css" href="./css/groupMessage.css"
+	media="all">
 </head>
 <body>
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
@@ -31,17 +32,18 @@
 			<c:forEach items="${ list }" var="obj" varStatus="status">
 				<c:if test="${obj.userNo.equals(session.getUserNo()) }">
 					<tr>
-						<!-- name -->
-						<td colspan="3" align="right" width="100%"><c:out
-								value="${ obj.userName }" /></td>
+						<td width="10%"></td>
+						<td width="38%"></td>
+						<td width="4%"></td>
+						<td width="38%" rowspan="2" id="${ cssMe }Me"><c:out
+								value="${ obj.message }" /></td>
+						<td width="10%" id="myName"><c:out value="${ obj.userName }" /></td>
 					</tr>
 					<tr>
-						<!-- message -->
-						<td colspan="2" align="right" width="95%">「 <c:out
-								value="${ obj.message }" />」
-						</td>
-						<!-- delete -->
-						<td width="5%" valign="bottom">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td width="10%">
 							<form action="/chat/groupMessage" method="post">
 								<input type="hidden" name="delete"> <input type="hidden"
 									name="groupNo" value="${ bean.groupNo }"><input
@@ -49,50 +51,62 @@
 								<input type="button" value="削除"
 									onClick="if(confirm ('本当に削除しますか？')){submit();}">
 							</form>
+						</td>
 					</tr>
+
 					<tr>
-						<td colspan="3" height="10px"></td>
+						<td colspan="5" height="10px"></td>
 					</tr>
 				</c:if>
 				<!-- グループ脱退者 -->
 				<c:if
 					test="${ obj.userName.equals(bean.getOutFlagMessage()) && !obj.userNo.equals(session.getUserNo()) }">
 					<tr>
-						<!-- name -->
-						<td colspan="3" width="100%"><c:out value="${ obj.name }" />
+						<td width="10%" rowspan="2" id="otherName"><c:out value="${ obj.userName }" /></td>
+						<td width="38%" rowspan="2" id="${ cssOther }Other"><c:out value="${ obj.message }" /></td>
+						<td width="4%"></td>
+						<td width="38%">
 						</td>
+						<td width="10%"></td>
 					</tr>
 					<tr>
-						<!-- message -->
-						<td colspan="3" width="100%">「<c:out value="${ obj.message }" />
-							」
-						</td>
+						<td></td>
+						<td></td>
+						<td></td>
 					</tr>
 					<tr>
-						<td colspan="3" height="10px"></td>
+						<td colspan="5" height="10px"></td>
 					</tr>
 				</c:if>
 				<c:if
 					test="${!obj.userName.equals(bean.getOutFlagMessage()) && !obj.userNo.equals(session.getUserNo())}">
 					<tr>
-						<td width="100%" align="left" colspan="3"><a
-							href="/chat/showProfile?otherUserNo=${ obj.userNo }"
+						<td width="10%" id="otherName"><a href="/chat/showProfile?otherUserNo=${ obj.userNo }"
 							target="blank"><c:out value="${ obj.userName}" /></a></td>
-					</tr>
-					<tr>
-						<td width="100%" align="left" colspan="3">「<c:out
-								value="${ obj.message}" />」
+						<td width="38%" rowspan="2" id="${ cssOther }Other"><c:out value="${ obj.message }" /></td>
+						<td width="4%"></td>
+						<td width="38%">
 						</td>
+						<td width="10%"></td>
 					</tr>
 					<tr>
-						<td colspan="3" height="10px"></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td width="10%"></td>
 					</tr>
+					<tr>
+						<td colspan="5" height="10px"></td>
+					</tr>
+
 				</c:if>
 			</c:forEach>
 		</table>
 		<form action="/chat/groupMessage" method="POST">
-			<input type="text" name="message"> <input type="hidden"
-				name="groupNo" value="${ bean.getGroupNo()}"><input
+			<input type="text" name="message"><input type="hidden" name="myColorNum" value="${ bean.getMyColor() }"> <input type="hidden"
+				name="groupNo" value="${ bean.getGroupNo()}">
+				<input type="hidden" name="otherColorNum" value="${ bean.getOtherColor() }">
+				<input
 				type="submit" value="送信">
 		</form>
 

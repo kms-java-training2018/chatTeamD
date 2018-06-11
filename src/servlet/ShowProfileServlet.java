@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bean.ShowProfileBean;
+import bean.MyPageBean;
 import model.ShowProfileModel;
 
 public class ShowProfileServlet extends HttpServlet {
@@ -23,7 +23,7 @@ public class ShowProfileServlet extends HttpServlet {
 
 		// -------------------------------------------------------------
 		// 初期化
-		ShowProfileBean bean = new ShowProfileBean();
+		MyPageBean bean = new MyPageBean();
 		ShowProfileModel model = new ShowProfileModel();
 		String direction = "/WEB-INF/jsp/showProfile.jsp";
 

@@ -29,7 +29,7 @@ public class GroupMessageServlet extends HttpServlet {
 		// Sessionの取得
 		HttpSession session = req.getSession();
 		SessionBean sesBean = (SessionBean) session.getAttribute("session");
-		String sesUserNo = sesBean.getUserNo();
+
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
@@ -45,6 +45,9 @@ public class GroupMessageServlet extends HttpServlet {
 
 		// -------------------------------------------------------------
 
+		String sesUserNo = sesBean.getUserNo();
+		bean.setMyNo(sesUserNo);
+
 		// -------------------------------------------------------------
 		// beanへセット
 		int groupNo = Integer.parseInt(req.getParameter("groupNo"));
@@ -59,6 +62,26 @@ public class GroupMessageServlet extends HttpServlet {
 			req.getRequestDispatcher("/errorPage").forward(req, res);
 			return;
 		}
+
+		// -------------------------------------------------------------
+		// SQL実行
+		// 所属ユーザ取得
+		try {
+			bean = model.confirmation(bean);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// -------------------------------------------------------------
+
+		if(bean.getConMessage()!=null) {
+            // セッション情報なし
+            // 行き先をエラーページに
+            direction = "/errorPage";
+            req.setAttribute("errorMsg", "セッション情報が無効です");
+            req.getRequestDispatcher(direction).forward(req, res);
+            return;
+		}
+
 
 		// -------------------------------------------------------------
 		// SQL実行
@@ -78,6 +101,85 @@ public class GroupMessageServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		// -------------------------------------------------------------
+
+		// -------------------------------------------------------------
+		// 背景色指定
+		int num = (int)(Math.random()*7+1);
+		bean.setMyColor(num);
+		String cssMe = "";
+		String cssOther = "";
+		switch(num) {
+		case 1:
+			cssMe = "red";
+			break;
+
+		case 2:
+			cssMe = "aquamarine";
+			break;
+
+		case 3:
+			cssMe = "lightsteelblue";
+			break;
+
+		case 4:
+			cssMe = "khaki";
+			break;
+
+		case 5:
+			cssMe = "springgreen";
+			break;
+
+		case 6:
+			cssMe = "orange";
+			break;
+
+		default:
+			cssMe = "white";
+			break;
+		}
+
+
+
+		num = (int)(Math.random()*7+1);
+		bean.setOtherColor(num);
+
+		switch(num) {
+		case 1:
+			cssOther = "red";
+			break;
+
+		case 2:
+			cssOther = "aquamarine";
+			break;
+
+		case 3:
+			cssOther = "lightsteelblue";
+			break;
+
+		case 4:
+			cssOther = "khaki";
+			break;
+
+		case 5:
+			cssOther = "springgreen";
+			break;
+
+		case 6:
+			cssOther = "orange";
+			break;
+
+		default:
+			cssOther = "white";
+			break;
+		}
+		// -------------------------------------------------------------
+
+		// -------------------------------------------------------------
+
+
+
+		req.setAttribute("cssMe", cssMe);
+		req.setAttribute("cssOther", cssOther);
 
 		req.setAttribute("bean", bean);
 		req.setAttribute("groupBean", bean);
@@ -102,18 +204,24 @@ public class GroupMessageServlet extends HttpServlet {
 		// Sessionの取得
 		HttpSession session = req.getSession();
 		SessionBean sesBean = (SessionBean) session.getAttribute("session");
-		String sesUserNo = sesBean.getUserNo();
+
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
 		// Sessionにユーザ情報がなければ、エラーページへ遷移
-		if (sesUserNo == null) {
-			errorMsg = "セッションが切れました";
-			req.setAttribute("errorMsg", errorMsg);
-			direction = "/errorPage";
-			req.getRequestDispatcher(direction).forward(req, res);
-			return;
-		}
+        if (sesBean==null || session.getAttribute("userId")==null) {
+            // セッション情報なし
+            // 行き先をエラーページに
+            direction = "/errorPage";
+            req.setAttribute("errorMsg", "セッション情報が無効です");
+            req.getRequestDispatcher(direction).forward(req, res);
+            return;
+        }
+
+		// -------------------------------------------------------------
+
+		String sesUserNo = sesBean.getUserNo();
+		bean.setMyNo(sesUserNo);
 
 		int testnum = 0;
 
@@ -191,6 +299,8 @@ public class GroupMessageServlet extends HttpServlet {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+
+				direction = "/erroPage";
 				req.setAttribute("errorMsg", errorMsg);
 				req.setAttribute("groupBean", bean);
 				req.setAttribute("list", list);
@@ -213,7 +323,26 @@ public class GroupMessageServlet extends HttpServlet {
 
 		// -------------------------------------------------------------
 		// SQL実行
-		// メッセージ表示
+		// 所属ユーザ取得
+		try {
+			bean = model.confirmation(bean);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// -------------------------------------------------------------
+
+		if(bean.getConMessage()!=null) {
+            // セッション情報なし
+            // 行き先をエラーページに
+            direction = "/errorPage";
+            req.setAttribute("errorMsg", "ここのえらー？");
+            req.getRequestDispatcher(direction).forward(req, res);
+            return;
+		}
+
+		// -------------------------------------------------------------
+		// SQL実行
+		// メッセージ、送信者名表示
 		try {
 			list = model.output(groupNo);
 		} catch (Exception e) {
@@ -223,7 +352,7 @@ public class GroupMessageServlet extends HttpServlet {
 
 		// -------------------------------------------------------------
 		// SQL実行
-		// メッセージ表示
+		// グループ名、グループ作成者表示
 		try {
 			bean = model.groupName(bean);
 		} catch (Exception e) {
@@ -231,7 +360,81 @@ public class GroupMessageServlet extends HttpServlet {
 		}
 		// -------------------------------------------------------------
 
+		// -------------------------------------------------------------
+		// 背景色指定
+		int num = Integer.parseInt(req.getParameter("myColorNum"));
+		bean.setMyColor(num);
+		String cssMe = "";
+		String cssOther = "";
+		switch(num) {
+		case 1:
+			cssMe = "red";
+			break;
 
+		case 2:
+			cssMe = "aquamarine";
+			break;
+
+		case 3:
+			cssMe = "lightsteelblue";
+			break;
+
+		case 4:
+			cssMe = "khaki";
+			break;
+
+		case 5:
+			cssMe = "springgreen";
+			break;
+
+		case 6:
+			cssMe = "orange";
+			break;
+
+		default:
+			cssMe = "white";
+			break;
+		}
+
+		num = Integer.parseInt(req.getParameter("otherColorNum"));
+		bean.setOtherColor(num);
+
+		switch(num) {
+		case 1:
+			cssOther = "red";
+			break;
+
+		case 2:
+			cssOther = "aquamarine";
+			break;
+
+		case 3:
+			cssOther = "lightsteelblue";
+			break;
+
+		case 4:
+			cssOther = "khaki";
+			break;
+
+		case 5:
+			cssOther = "springgreen";
+			break;
+
+		case 6:
+			cssOther = "orange";
+			break;
+
+		default:
+			cssOther = "white";
+			break;
+		}
+		// -------------------------------------------------------------
+
+		// -------------------------------------------------------------
+
+
+		req.setAttribute("cssMe", cssMe);
+		req.setAttribute("cssOther", cssOther);
 		req.setAttribute("groupBean", bean);
 		req.setAttribute("list", list);
 		req.setAttribute("bean", bean);

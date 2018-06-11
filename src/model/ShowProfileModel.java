@@ -6,10 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import bean.ShowProfileBean;
+import bean.MyPageBean;
 
 public class ShowProfileModel {
-	public ShowProfileBean output(ShowProfileBean bean) {
+
+	public MyPageBean output(MyPageBean bean) {
 
 		// -------------------------------------------------------------
 		// 初期化

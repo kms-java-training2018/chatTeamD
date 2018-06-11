@@ -1,0 +1,111 @@
+@charset "UTF-8";
+
+#main {
+	text-decoration: none;
+}
+
+#myName {
+	text-align: left;
+}
+
+#otherName {
+	text-align: right;
+}
+
+#redMe {
+	background-color: red;
+	color: white;
+	width: 35%;
+	text-align: left;
+}
+
+#redOther {
+	background-color: red;
+	color: white;
+	width: 35%;
+	text-align: right;
+}
+
+#aquamarineMe {
+	background-color: aquamarine;
+	color: white;
+	width: 35;
+	text-align: left;
+}
+
+#aquamarineOther {
+	background-color: aquamarine;
+	color: white;
+	width: 35%;
+	text-align: right;
+}
+
+#lightsteelblueMe {
+	background-color: lightsteelblue;
+	color: white;
+	width: 35;
+	text-align: left;
+}
+
+#lightsteelblueOther {
+	background-color: lightsteelblue;
+	color: white;
+	width: 35%;
+	text-align: right;
+}
+
+#khakiMe {
+	background-color: khaki;
+	color: white;
+	width: 35;
+	text-align: left;
+}
+
+#khakiOther {
+	background-color: khaki;
+	color: white;
+	width: 35%;
+	text-align: right;
+}
+
+#springgreenMe {
+	background-color: springgreen;
+	color: white;
+	width: 35;
+	text-align: left;
+}
+
+#springgreenOther {
+	background-color: springgreen;
+	color: white;
+	width: 35%;
+	text-align: right;
+}
+
+#orangeMe {
+	background-color: orange;
+	color: white;
+	width: 35;
+	text-align: left;
+}
+
+#orangeOther {
+	background-color: orange;
+	color: white;
+	width: 35%;
+	text-align: right;
+}
+
+#whiteMe {
+	background-color: white;
+	color: black;
+	width: 35;
+	text-align: left;
+}
+
+#whiteYou {
+	background-color: white;
+	color: black;
+	width: 35%;
+	text-align: right;
+}
