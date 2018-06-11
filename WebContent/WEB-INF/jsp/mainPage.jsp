@@ -7,44 +7,65 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>メインページ</title>
 <!--	JS読み込み	-->
-<script type="text/javascript" charset="UTF-8" language="javascript" src="./dialog.js"></script>
+<script type="text/javascript" charset="UTF-8" language="javascript"
+	src="./dialog.js"></script>
 </head>
 <body>
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
 	${ session.getUserName() }さん
 	<br>
 	<form name="log_out" action="/chat/logout" method="POST">
-	<input type="button" value="logout"onClick="if(confirm ('本当にログアウトしますか？')){submit();}">
+		<input type="button" value="logout"
+			onClick="if(confirm ('本当にログアウトしますか？')){submit();}">
 	</form>
 	<hr>
 	<!-- ここまでです -->
 	<h1>チャット研修プログラム</h1>
 	<h2>メインメニュー</h2>
-	<br>■会員一覧
-	<br>
-	<c:forEach var="obj" items="${userbean.getUserNo()}" varStatus="status">
-		<form name="DM" method="get" action="/chat/directMessage">
-			<input type=hidden name="userNo"
-				value="${userbean.getUserNo()[status.index]}"> <a
-				href="javascript:DM[${status.index}].submit()">${userbean.getUserName()[status.index]}</a>
+	<div>
+		<form name="DM">
+			<!-- jstlで作成したform"DM"がひとつだけの場合、インデックスが機能しないのを避ける為に作成 -->
+			<br>■会員一覧
 		</form>
-		<p>> ${userbean.getDirectMessage()[status.index]}</p>
+		<!-- 綺麗じゃないから余裕があれば直す -->
 		<br>
-	</c:forEach>
-
-	<br>■グループ一覧
-	<br> ${groupbean.getGroupNullMes()}
-	<c:forEach var="obj" items="${groupbean.getGroupNo()}"
-		varStatus="status">
-		<form name="GM" method="get" action="/chat/groupMessage">
-			<input type=hidden name="groupNo"
-				value="${groupbean.getGroupNo()[status.index]}"> <a
-				href="javascript:GM[${status.index}].submit()">${groupbean.getGroupName()[status.index]}</a>
+		<table>
+			<c:forEach var="obj" items="${userbean}" varStatus="status">
+				<tr>
+					<td>
+						<form name="DM" method="get" action="/chat/directMessage">
+							<input type=hidden name="userNo"
+								value="${userbean[status.index].userNo}"> ○<a
+								href="javascript:DM[${status.index + 1}].submit()">${userbean[status.index].userName}</a>
+						</form>
+					</td>
+					<td>: ${userbean[status.index].directMessage}</td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
+	<div>
+		<form name="GM">
+			<!-- jstlで作成したform"GM"がひとつだけの場合、インデックスが機能しないのを避ける為に作成 -->
+			<br>■グループ一覧
 		</form>
-		<p>> ${groupbean.getGroupMessage()[status.index]}</p>
-		<br>
-	</c:forEach>
-
+		<!-- 綺麗じゃないから余裕があれば直す -->
+		<br> ${groupbean.getGroupNullMes()}
+		<table>
+			<c:forEach var="obj" items="${groupbean.getGroupNo()}" varStatus="status">
+				<tr>
+					<td>
+						<form name="GM" method="get" action="/chat/groupMessage">
+							<input type=hidden name="groupNo"
+								value="${groupbean.getGroupNo()[status.index]}">○ <a
+								href="javascript:GM[${status.index + 1}].submit()">${groupbean.getGroupName()[status.index]}</a>
+						</form>
+					</td>
+					<td>: ${groupbean.getGroupMessage()[status.index]}</td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
 	<br>
 	<br>
 	<form action="/chat/makeGroup" method="GET">

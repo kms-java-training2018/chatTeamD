@@ -17,17 +17,18 @@ import bean.UserListBean;
  */
 public class GetUserListModel {
 	/**
-	 *  引数beanに引数sesUserNo以外のユーザ一覧をセットするメソッド。
+	 *  引数sesUserNo以外のユーザ情報をsetしたUserListBean一覧をArrayListにいれて返すメソッド。
 	 *
-	 * @param bean	……UserListBean型。ここから何か呼んでいるわけではないから内部で作れば不要？
-	 * @param sesUserNo	……リストから外したいユーザー。
-	 * @return	sesUserNo以外のユーザをUserListBean型に格納して返す
+	 * @param sesUserNo	……リストから外したいユーザー。ログインしているユーザーを想定
+	 * @return	sesUserNo以外のユーザをUserListBean型に格納後ArryListにいれて返す
 	 */
-	public UserListBean getUserList(UserListBean bean, String sesUserNo) {
-		int errorFlag = 0;
+	public ArrayList<UserListBean> getUserList(String sesUserNo) {
 		/**
-		 *  2）他会員一覧取得処理
+		 *  他会員一覧取得処理
 		 */
+		// bean入れるリスト宣言
+		// beanそのものはSQLの結果を取得するところで初期化、宣言
+		ArrayList<UserListBean> beanList = new ArrayList<>();
 		StringBuilder sb = new StringBuilder();
 		/*
 		 * DBログイン
@@ -61,62 +62,58 @@ public class GetUserListModel {
 			sb.append(" user_no ");
 			// SQL実行
 			ResultSet rs = stmt.executeQuery(sb.toString());
-			// それぞれArrayListに入れる
-			ArrayList<Integer> userNo = new ArrayList<>();
-			ArrayList<String> userID = new ArrayList<>();
-			ArrayList<String> userName = new ArrayList<>();
+			/*
+			 *  結果をbeanに入れる
+			 */
 			while (rs.next()) {
-				// ログインしている自分自身は除く
+				// beanを初期化
+				UserListBean bean = new UserListBean();
+				// 結果からログインしている自分自身は除く
 				int check = rs.getInt("USER_NO");
-				int check2 = Integer.parseInt(sesUserNo);
-				if (check == check2) {
+				if (check == Integer.parseInt(sesUserNo)) {
 					// 自分なので追加しない
 				} else {
-					// 自分以外なのでリストに追加
-					userNo.add(rs.getInt("USER_NO"));
-					userID.add(rs.getString("USER_ID"));
-					userName.add(rs.getString("USER_NAME"));
+					// 自分以外なのでbeanのフィールドにset
+					bean.setUserNo(rs.getInt("USER_NO"));
+					bean.setUserID(rs.getString("USER_ID"));
+					bean.setUserName(rs.getString("USER_NAME"));
+					// beanをリストに追加
+					beanList.add(bean);
 				}
 			}
-			// beanのフィールドにset
-			bean.setUserNo(userNo);
-			bean.setUserID(userID);
-			bean.setUserName(userName);
-			// 初期化
-			sb.delete(0, sb.length());
 		} catch (SQLException e) {
-			// エラーはすべてここにくる
+			// SQLエラーはすべてここにくる
 			e.printStackTrace();
-			errorFlag = 1;
-			bean.setErrorFlag(errorFlag);
-			// SQLの接続は絶対に切断
+			// beanList初期化
+			beanList.clear();
+			// エラー情報入れたbeanだけセット
+			UserListBean bean = new UserListBean();
+			bean.setErrorFlag(1);
+			beanList.add(bean);
+
 		} finally {
+			// SQLの接続は絶対に切断
 			try {
+				// ここで接続切断に失敗する（そもそも接続できてない場合）とreturnされず外に出るみたい
+				// その場合はbeanListがNullになるかも知れないのでサーブレットのエラー処理に任せる
 				conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 
 		}
-		return bean;
+		return beanList;
 	}
 
 	/**
-	 * bean内のユーザ一覧と引数のユーザ間で最新のDMを取得し、beanに入れるメソッド。
+	 * bean内のユーザ一覧と引数のユーザ間で最新のDMを取得し、beanListに入れるメソッド。
 	 *
-	 * @param bean	……最新のメッセージを取得したいユーザ一覧。入っていない場合sesUserNoを利用しgetUserListメソッドを行う
+	 * @param beanList	……最新のメッセージを取得したいユーザ一覧。入っていない場合sesUserNoを利用しgetUserListメソッドを行う
 	 * @param sesUserNo	……一覧のユーザとメッセージをやり取りしたユーザ。
 	 * @return	UserListBean型beanに最新メッセージを持たせて返す。
 	 */
-	public UserListBean getUserLatestMessage(UserListBean bean, String sesUserNo) {
-
-		// beanにユーザー一覧入っているか確認
-		if (bean.getUserID() == null) {
-			// 入っていない場合
-			// 取得する
-			GetUserListModel model = new GetUserListModel();
-			bean = model.getUserList(bean, sesUserNo);
-		}
+	public ArrayList<UserListBean> getUserLatestMessage(ArrayList<UserListBean> beanList, String sesUserNo) {
+		//TODO beanにユーザー一覧入っているか確認
 		StringBuilder sb = new StringBuilder();
 		/*
 		 * DBログイン
@@ -137,9 +134,8 @@ public class GetUserListModel {
 			conn = DriverManager.getConnection(url, user, dbPassword);
 			Statement stmt = conn.createStatement();
 			// SQL作成
-			ArrayList<String> directMessage = new ArrayList<>();
-			for (int i = 0; i < bean.getUserNo().size(); i++) {
-				int uN = bean.getUserNo().get(i);
+			for (int i = 0; i < beanList.size(); i++) {
+				int uN = beanList.get(i).getUserNo();
 				sb.append("SELECT ");
 				sb.append(" message ");
 				sb.append("FROM ");
@@ -162,34 +158,38 @@ public class GetUserListModel {
 				if (rs2.next()) {
 					// メッセージあり
 					// そのままArrayListに入れる
-					directMessage.add(rs2.getString("Message"));
+					// そのまま対応するbeanに入れる
+					beanList.get(i).setDirectMessage(rs2.getString("Message"));
 				} else {
 					// メッセージなし
-					// 会話を始めましょう！
-					directMessage.add("会話を始めましょう!");
+					// 会話を始めましょう！を入れる
+					beanList.get(i).setDirectMessage("会話を始めましょう!");
 				}
 				// 初期化
 				sb.delete(0, sb.length());
 			}
-			// beanのフィールドにset
-			bean.setDirectMessage(directMessage);
 		} catch (SQLException e) {
-			// エラーはすべてここにくる
+			// SQLエラーはすべてここにくる
 			e.printStackTrace();
+			// beanList初期化
+			beanList.clear();
+			// エラー情報入れたbeanだけセット
+			UserListBean bean = new UserListBean();
 			bean.setErrorFlag(1);
-			// SQLの接続は絶対に切断
+			beanList.add(bean);
 		} finally {
+			// SQLの接続は絶対に切断
 			try {
+				// ここで接続切断に失敗する（そもそも接続できてない場合）とreturnされず外に出るみたい
+				// その場合はbeanListがNullになるかも知れないのでサーブレットのエラー処理に任せる
 				conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 
 		}
-		// sb初期化
-		sb.delete(0, sb.length());
 
-		return bean;
+		return beanList;
 	}
 
 }

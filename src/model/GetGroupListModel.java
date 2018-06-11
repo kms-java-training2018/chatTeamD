@@ -25,7 +25,7 @@ public class GetGroupListModel {
 	 */
 	public GroupListBean getGroupList(GroupListBean bean, String sesUserNo) {
 		/**
-		 *  4) 参加グループ一覧取得処理
+		 *  参加グループ一覧取得処理
 		 */
 		StringBuilder sb = new StringBuilder();
 		/*
@@ -106,15 +106,8 @@ public class GetGroupListModel {
 	 */
 	public GroupListBean getGroupLatestMessage(GroupListBean bean, String sesUserNo) {
 		/*
-		 * メッセージ一覧取得
+		 * 最新メッセージ一覧取得
 		 */
-		// beanにユーザー一覧入っているか確認
-		if (bean.getGroupName() == null) {
-			// 入っていない場合
-			// 取得する
-			GetGroupListModel model = new GetGroupListModel();
-			bean = model.getGroupList(bean, sesUserNo);
-		}
 		StringBuilder sb = new StringBuilder();
 		/*
 		 * DBログイン
@@ -181,8 +174,6 @@ public class GetGroupListModel {
 			}
 
 		}
-		// sb初期化
-		sb.delete(0, sb.length());
 		return bean;
 	}
 

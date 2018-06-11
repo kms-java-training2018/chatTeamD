@@ -25,20 +25,22 @@ public class MakeGroupModel {
 	 * グループを作成するメソッド。
 	 * グループにはgroupNameという名前をつける。
 	 * エラー情報はbeanに格納し返される。
-	 * @param bean	……エラー情報を入れるbean
 	 * @param groupName	……作るグループの名前
 	 * @param groupMemberNo	……グループの参加者
 	 * @param sesUserNo	……グループの作成者
 	 * @return MakeGroupBean型にエラー情報を入れて返す。
 	 */
-	public MakeGroupBean makeGroup(MakeGroupBean bean, String groupName, String[] groupMemberNo, String sesUserNo) {
-		// ボッチグループ判定
+	public MakeGroupBean makeGroup( String groupName, String[] groupMemberNo, String sesUserNo) {
+		// エラー結果入力用のbean作成
+		MakeGroupBean bean =new MakeGroupBean();
+		// ボッチグループ判定用変数
 		int soloGroupFlag = 0;
+		// jspの入力値分析
 		if (groupName.equals("")) {
 			// グループ名が空
 			bean.setErrorMsg("グループ名が空です");
 			bean.setErrorFlag(2);
-		} else if (groupName.length() > GROUP_NAME_LENGTH) {
+		} else if ((groupName.getBytes()).length > GROUP_NAME_LENGTH) {
 			// グループ名が所定の文字数より長い
 			bean.setErrorMsg("グループ名が規定の30文字より長いです");
 			bean.setErrorFlag(2);
@@ -47,7 +49,7 @@ public class MakeGroupModel {
 			soloGroupFlag = 1;
 		}
 		if (bean.getErrorFlag() == 2) {
-			// グループ名不正、グループ作成ページへ
+			// グループ名不正、登録処理を行わなずbeanを返す
 
 		} else {
 			/**
@@ -164,7 +166,7 @@ public class MakeGroupModel {
 				}
 
 			} catch (SQLException e) {
-				// エラーはすべてここにくる
+				// SQLエラーはすべてここにくる
 				e.printStackTrace();
 				bean.setErrorMsg("データベース登録時にエラーが発生しました");
 				bean.setErrorFlag(1);

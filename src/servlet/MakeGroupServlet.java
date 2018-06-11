@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,16 +16,12 @@ import model.GetUserListModel;
 import model.MakeGroupModel;
 
 public class MakeGroupServlet extends HttpServlet {
-	/**
-	 * グループ名の最大長
-	 */
-	final int GROUP_NAME_LENGTH = 30;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		// グループ作成ページに移動する処理
 		// 初期化
-		UserListBean bean = new UserListBean();
 		GetUserListModel model = new GetUserListModel();
+		ArrayList<UserListBean> userListBeanList = new ArrayList<>();
 		String direction = "/WEB-INF/jsp/makeGroup.jsp";
 		/**
 		 * 1)パラメータチェック
@@ -43,19 +40,26 @@ public class MakeGroupServlet extends HttpServlet {
 			 * 1)会員一覧取得処理
 			 */
 			try {
-				bean = model.getUserList(bean, sesUserNo);
+				userListBeanList = model.getUserList(sesUserNo);
 			} catch (Exception e) {
+				// 諸々のエラーはここに来る
 				e.printStackTrace();
+				// エラーはいてるのでuserListBeanList初期化してエラー情報入れる
+				userListBeanList.clear();
+				// エラー情報入れたbeanだけセット
+				UserListBean ulBean = new UserListBean();
+				ulBean.setErrorFlag(1);
+				userListBeanList.add(ulBean);
 			}
-		}
-		if (bean.getErrorFlag() == 1) {
-			// 途中でエラーはいている場合
-			// 行き先をエラーページに
-			direction = "/errorPage";
-		} else {
-			// 正常に一覧取得できた場合
-			// リクエストに送る
-			req.setAttribute("bean", bean);
+			if (userListBeanList.isEmpty() || userListBeanList.get(0).getErrorFlag() == 1) {
+				// 途中でエラーはいている場合
+				// 行き先をエラーページに
+				direction = "/errorPage";
+			} else {
+				// 正常に一覧取得できた場合
+				// リクエストに送る
+				req.setAttribute("bean", userListBeanList);
+			}
 		}
 		// 出力
 		req.getRequestDispatcher(direction).forward(req, res);
@@ -74,8 +78,6 @@ public class MakeGroupServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		// セッション情報確認
 		HttpSession session = req.getSession();
-		SessionBean sesBean = (SessionBean) session.getAttribute("session");
-		String sesUserNo = sesBean.getUserNo();
 		// 入力値変数に渡す
 		String groupName = req.getParameter("groupName");
 		String[] groupMemberNo = req.getParameterValues("userNo");
@@ -86,41 +88,53 @@ public class MakeGroupServlet extends HttpServlet {
 			req.setAttribute("errorMsg", "セッション情報が無効です");
 		} else {
 			// それ以外の場合処理続ける
+			// ログインユーザー情報をセッションから取得
+			SessionBean sesBean = (SessionBean) session.getAttribute("session");
+			String sesUserNo = sesBean.getUserNo();
+
 			try {
 				/**
 				 * 2)グループ登録処理
 				 * 3)グループ会員登録処理
 				 */
-				bean = model.makeGroup(bean, groupName, groupMemberNo, sesUserNo);
+				bean = model.makeGroup(groupName, groupMemberNo, sesUserNo);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			if (bean.getErrorFlag() == 1) {
-				// モデル内でエラーを吐いていた場合
+				// SQLでエラーを吐いていた場合
 				req.setAttribute("errorMsg", bean.getErrorMsg());
 				// 行き先をエラーページに
 				direction = "/errorPage";
 				req.setAttribute("bean", bean);
 			} else if (bean.getErrorFlag() == 2) {
 				// グループ名が不正だった場合
+				// 再度グループ作成ページ表示
 				/**
-				 * 1)会員一覧取得処理
+				 * 会員一覧取得処理
 				 */
-				UserListBean ulBean = new UserListBean();
 				GetUserListModel ulModel = new GetUserListModel();
+				ArrayList<UserListBean> userListBeanList = new ArrayList<>();
 				try {
-					ulBean = ulModel.getUserList(ulBean, sesUserNo);
+					userListBeanList = ulModel.getUserList(sesUserNo);
 				} catch (Exception e) {
+					// 諸々のエラーはここに来る
 					e.printStackTrace();
+					// エラーはいてるのでuserListBeanList初期化してエラー情報入れる
+					userListBeanList.clear();
+					// エラー情報入れたbeanだけセット
+					UserListBean ulBean = new UserListBean();
+					ulBean.setErrorFlag(1);
+					userListBeanList.add(ulBean);
 				}
-				if (ulBean.getErrorFlag() == 1) {
+				if (userListBeanList.isEmpty() || userListBeanList.get(0).getErrorFlag() == 1) {
 					// 途中でエラーはいている場合
 					// 行き先をエラーページに
 					direction = "/errorPage";
 				} else {
 					// 正常に一覧取得できた場合
 					// リクエストに送る
-					req.setAttribute("bean", ulBean);
+					req.setAttribute("bean", userListBeanList);
 					// 行き先をグループ作成ページに
 					direction = "/WEB-INF/jsp/makeGroup.jsp";
 				}

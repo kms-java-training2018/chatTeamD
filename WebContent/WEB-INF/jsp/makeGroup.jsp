@@ -26,14 +26,14 @@
 		グループ名(最大30字)<input type="text" name="groupName" value="" size="30"> <br>
 		<table>
 			<tr>
-			<c:forEach var="obj" items="${bean.getUserName()}"
+			<c:forEach var="obj" items="${bean}"
 					varStatus="status">
 				<c:if test="${status.index % 3 == 0}">
 					</tr>
 					<tr>
 				</c:if>
 				<td>
-			<input type="checkbox" name="userNo" value="${bean.getUserNo()[status.index]}">${bean.getUserName()[status.index]}
+			<input type="checkbox" name="userNo" value="${bean[status.index].userNo}">${bean[status.index].userName}
 				</td>
 			</c:forEach>
 			</tr>
