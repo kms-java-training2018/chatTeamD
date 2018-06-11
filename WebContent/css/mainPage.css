@@ -6,4 +6,13 @@
 	text-align: center;
 	border: 1px solid #cccccc;
 	margin: 30px auto;
-};
+}
+.page{
+	background: #f0ece8;
+	text-align: center;
+	line-height:0px auto;
+	padding: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+

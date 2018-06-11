@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>メインページ</title>
 <!-- css読み込み -->
-<link rel="stylesheet"type="text/css"href="/chat/WebContent/WEB-INF/css/mainPage.css">
+<link rel="stylesheet"type="text/css"href="./css/mainPage.css"media="all">
 <!-- JS読み込み	-->
 
 </head>
@@ -23,7 +23,7 @@
 	<!-- ここまでです -->
 	<h1>チャット研修プログラム</h1>
 	<h2>メインメニュー</h2>
-	<div>
+	<div class="page">
 		<form name="DM">
 			<!-- jstlで作成したform"DM"がひとつだけの場合、インデックスが機能しないのを避ける為に作成 -->
 			<br>■会員一覧
