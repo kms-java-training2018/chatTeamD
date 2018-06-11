@@ -1,7 +1,5 @@
 package bean;
 
-import java.util.ArrayList;
-
 public class GroupMessageBean {
 	/**
 	 * フィールド
@@ -15,8 +13,6 @@ public class GroupMessageBean {
 	/**	相手ユーザーの名前を格納する変数を宣言 */
 	private String userName;
 
-	/**	会話番号の最大値を格納する変数を宣言 */
-	private int n ;
 
 	/**	エラーページ用の変数を宣言 */
 	private String errorMsg ;
@@ -25,29 +21,24 @@ public class GroupMessageBean {
 
 	private int groupNo;
 
-	private ArrayList<String> listUserName = new ArrayList<>();
-
-	private ArrayList<String> listMessage = new ArrayList<>();
-
-	private ArrayList<String> listUserNo = new ArrayList<>();
-
-	private ArrayList<String> listMsgNo = new ArrayList<>();
-
-	private ArrayList<String> listOutFlag = new ArrayList<>();
-
-	private ArrayList<String> listOutFlagUN = new ArrayList<>();
-
-	private ArrayList<String> listOutFlagUNum = new ArrayList<>();
-
 	private int messageNo;
-
-	private int groupExitNo;
 
 	private int registUserNo;
 
 	private int exitGroupNo;
 
-	private String outFlag1;
+	private String outFlagMessage;
+
+	private String outFlagUserName;
+
+	private String outFlagUserNo;
+
+	/** グループ名 */
+	private String groupName;
+
+	/** グループ作成者 */
+	private String authorName;
+
 	/**
 	 * メソッド
 	 */
@@ -75,14 +66,6 @@ public class GroupMessageBean {
 		this.userName = userName;
 	}
 
-	public int getN() {
-		return n;
-	}
-
-	public void setN(int n) {
-		this.n = n;
-	}
-
 	public String getErrorMsg() {
 		return errorMsg;
 	}
@@ -107,52 +90,12 @@ public class GroupMessageBean {
 		this.groupNo = groupNo;
 	}
 
-	public ArrayList<String> getListUserName() {
-		return listUserName;
-	}
-
-	public void setListUserName(ArrayList<String> listUserName) {
-		this.listUserName = listUserName;
-	}
-
-	public ArrayList<String> getListMessage() {
-		return listMessage;
-	}
-
-	public void setListMessage(ArrayList<String> listMessage) {
-		this.listMessage = listMessage;
-	}
-
-	public ArrayList<String> getListUserNo() {
-		return listUserNo;
-	}
-
-	public void setListUserNo(ArrayList<String> listUserNo) {
-		this.listUserNo = listUserNo;
-	}
-
-	public ArrayList<String> getListMsgNo() {
-		return listMsgNo;
-	}
-
-	public void setListMsgNo(ArrayList<String> listMsgNo) {
-		this.listMsgNo = listMsgNo;
-	}
-
 	public int getMessageNo() {
 		return messageNo;
 	}
 
 	public void setMessageNo(int messageNo) {
 		this.messageNo = messageNo;
-	}
-
-	public int getGroupExitNo() {
-		return groupExitNo;
-	}
-
-	public void setGroupExitNo(int groupExitNo) {
-		this.groupExitNo = groupExitNo;
 	}
 
 	public int getRegistUserNo() {
@@ -171,36 +114,46 @@ public class GroupMessageBean {
 		this.exitGroupNo = exitGroupNo;
 	}
 
-	public ArrayList<String> getListOutFlag() {
-		return listOutFlag;
+	public String getOutFlagMessage() {
+		return outFlagMessage;
 	}
 
-	public void setListOutFlag(ArrayList<String> listOutFlag) {
-		this.listOutFlag = listOutFlag;
+	public void setOutFlagMessage(String outFlagMessage) {
+		this.outFlagMessage = outFlagMessage;
 	}
 
-	public ArrayList<String> getListOutFlagUN() {
-		return listOutFlagUN;
+	public String getOutFlagUserNo() {
+		return outFlagUserNo;
 	}
 
-	public void setListOutFlagUN(ArrayList<String> listOutFlagUN) {
-		this.listOutFlagUN = listOutFlagUN;
+	public void setOutFlagUserNo(String outFlagUserNo) {
+		this.outFlagUserNo = outFlagUserNo;
 	}
 
-	public String getOutFlag1() {
-		return outFlag1;
+	public String getOutFlagUserName() {
+		return outFlagUserName;
 	}
 
-	public void setOutFlag1(String outFlag1) {
-		this.outFlag1 = outFlag1;
+	public void setOutFlagUserName(String outFlagUserName) {
+		this.outFlagUserName = outFlagUserName;
 	}
 
-	public ArrayList<String> getListOutFlagUNum() {
-		return listOutFlagUNum;
+	public String getAuthorName() {
+		return authorName;
 	}
 
-	public void setListOutFlagUNum(ArrayList<String> listOutFlagUNum) {
-		this.listOutFlagUNum = listOutFlagUNum;
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
 	}
+
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
+
 
 }

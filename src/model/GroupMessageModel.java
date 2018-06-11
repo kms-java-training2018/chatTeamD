@@ -10,12 +10,14 @@ import java.util.ArrayList;
 import bean.GroupMessageBean;
 
 public class GroupMessageModel {
-	public GroupMessageBean output(GroupMessageBean bean) {
+	public ArrayList<GroupMessageBean> output(int groupNo) {
 
 		// -------------------------------------------------------------
 		// 初期化
 		StringBuilder sb = new StringBuilder();
-		int groupNo = bean.getGroupNo();
+		ArrayList<GroupMessageBean> output = new ArrayList<>();
+		String exitUserName = "";
+		String outFlag = "";
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
@@ -38,6 +40,21 @@ public class GroupMessageModel {
 
 			Statement stmt = conn.createStatement();
 
+			sb.append("SELECT ");
+			sb.append("M_USER.USER_NO ");
+			sb.append("FROM ");
+			sb.append("T_GROUP_INFO INNER JOIN M_USER ON T_GROUP_INFO.USER_NO = M_USER.USER_NO ");
+			sb.append("WHERE ");
+			sb.append("T_GROUP_INFO.GROUP_NO = " + groupNo);
+			sb.append("AND T_GROUP_INFO.OUT_FLAG = '1'");
+			ArrayList<String> outflag = new ArrayList<>();
+			ResultSet rs2 = stmt.executeQuery(sb.toString());
+			while (rs2.next()) {
+				outflag.add(rs2.getString("USER_NO"));
+			}
+
+			sb.delete(0, sb.length());
+
 			// -------------------------------------------------------------
 			// SQL文作成
 			// USER_NAME, MY_PAGE_TEXT取得
@@ -56,48 +73,28 @@ public class GroupMessageModel {
 			// SQL実行
 			ResultSet rs = stmt.executeQuery(sb.toString());
 
-			ArrayList<String> userName = new ArrayList<>();
-			ArrayList<String> message = new ArrayList<>();
-			ArrayList<String> userNo = new ArrayList<>();
-			ArrayList<String> msgNo = new ArrayList<>();
-
 			// -------------------------------------------------------------
-			// 取得した情報をbeanへセット
 			while (rs.next()) {
-				userName.add(rs.getString("USER_NAME"));
-				userNo.add(rs.getString("USER_NO"));
-				message.add(rs.getString("MESSAGE"));
-				msgNo.add(rs.getString("MESSAGE_NO"));
-
+				GroupMessageBean bean = new GroupMessageBean();
+				if (outflag == null || outflag.equals("")) {
+					for (int i = 0; i < outflag.size(); i++) {
+						if (rs.getString("USER_NO").equals(outflag.get(i))) {
+							bean.setUserName("送信者不明");
+						} else {
+							bean.setUserName(rs.getString("USER_NAME"));
+						}
+						bean.setMessage(rs.getString("MESSAGE"));
+						bean.setUserNo(rs.getString("USER_NO"));
+						bean.setGroupNo(rs.getInt("MESSAGE_NO"));
+					}
+				} else {
+					bean.setUserName(rs.getString("USER_NAME"));
+					bean.setMessage(rs.getString("MESSAGE"));
+					bean.setUserNo(rs.getString("USER_NO"));
+					bean.setMessageNo(rs.getInt("MESSAGE_NO"));
+				}
+				output.add(bean);
 			}
-			bean.setListUserNo(userNo);
-			bean.setListUserName(userName);
-			bean.setListMessage(message);
-			bean.setListMsgNo(msgNo);
-
-			sb.delete(0, sb.length());
-			sb.append("SELECT ");
-			sb.append("M_USER.USER_NO, M_USER.USER_NAME, T_GROUP_INFO.OUT_FLAG ");
-			sb.append("FROM ");
-			sb.append("T_GROUP_INFO INNER JOIN M_USER ON T_GROUP_INFO.USER_NO = M_USER.USER_NO ");
-			sb.append("WHERE ");
-			sb.append("T_GROUP_INFO.GROUP_NO = " + groupNo);
-
-			ResultSet rs2 = stmt.executeQuery(sb.toString());
-			ArrayList<String> listOutFlag = new ArrayList<>();
-			ArrayList<String> listOutFlagUN = new ArrayList<>();
-			ArrayList<String> listOutFlagUNum = new ArrayList<>();
-
-			while(rs2.next()) {
-				listOutFlag.add(rs2.getString("OUT_FLAG"));
-				listOutFlagUN.add(rs2.getString("USER_NAME"));
-				listOutFlagUNum.add(rs2.getString("USER_NO"));
-			}
-			bean.setListOutFlag(listOutFlag);
-			bean.setListOutFlagUN(listOutFlagUN);
-			bean.setListOutFlagUNum(listOutFlagUNum);
-
-
 
 			// -------------------------------------------------------------
 
@@ -113,7 +110,7 @@ public class GroupMessageModel {
 
 		}
 		// -------------------------------------------------------------
-		return bean;
+		return output;
 	}
 
 	public GroupMessageBean send(GroupMessageBean bean) {
@@ -372,7 +369,7 @@ public class GroupMessageModel {
 
 			// SQL実行
 			ResultSet rs = stmt.executeQuery(sb.toString());
-			while(rs.next()) {
+			while (rs.next()) {
 				registUserNo = rs.getInt("REGIST_USER_NO");
 			}
 
@@ -394,6 +391,7 @@ public class GroupMessageModel {
 		// -------------------------------------------------------------
 		return bean;
 	}
+
 	public GroupMessageBean exit(GroupMessageBean bean) {
 
 		// -------------------------------------------------------------
@@ -458,4 +456,74 @@ public class GroupMessageModel {
 		// -------------------------------------------------------------
 		return bean;
 	}
+
+	public GroupMessageBean groupName(GroupMessageBean bean) {
+
+		// -------------------------------------------------------------
+		// 初期化
+		StringBuilder sb = new StringBuilder();
+		int groupNo = bean.getGroupNo();
+		// -------------------------------------------------------------
+
+		// -------------------------------------------------------------
+		Connection conn = null;
+		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
+		String user = "DEV_TEAM_D";
+		String dbPassword = "D_DEV_TEAM";
+		// JDBCドライバーのロード
+		try {
+
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		// 接続作成
+		try {
+
+			conn = DriverManager.getConnection(url, user, dbPassword);
+
+			Statement stmt = conn.createStatement();
+
+			// -------------------------------------------------------------
+			// SQL文作成
+			// USER_NAME, MY_PAGE_TEXT取得
+
+			sb.append("SELECT ");
+			sb.append("GROUP_NAME, USER_NAME ");
+			sb.append("FROM ");
+			sb.append("M_GROUP INNER JOIN M_USER ");
+			sb.append("ON ");
+			sb.append("M_GROUP.REGIST_USER_NO ");
+			sb.append("= ");
+			sb.append("M_USER.USER_NO ");
+			sb.append("WHERE ");
+			sb.append("GROUP_NO ");
+			sb.append("= ");
+			sb.append(groupNo);
+
+			// -------------------------------------------------------------
+
+			ResultSet rs = stmt.executeQuery(sb.toString());
+
+			while (rs.next()) {
+				bean.setGroupName(rs.getString("GROUP_NAME"));
+				bean.setAuthorName(rs.getString("USER_NAME"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// SQLの接続は絶対に切断
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+		// -------------------------------------------------------------
+		return bean;
+	}
+
 }

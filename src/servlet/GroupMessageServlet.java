@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,7 +22,7 @@ public class GroupMessageServlet extends HttpServlet {
 		GroupMessageBean bean = new GroupMessageBean();
 		GroupMessageModel model = new GroupMessageModel();
 		String direction = "/WEB-INF/jsp/groupMessage.jsp";
-		String errorMsg = "";
+		ArrayList<GroupMessageBean> list = new ArrayList<>();
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
@@ -50,7 +51,7 @@ public class GroupMessageServlet extends HttpServlet {
 		bean.setGroupNo(groupNo);
 		req.setAttribute("groupBean", bean);
 		bean.setUserNo(sesUserNo);
-		bean.setOutFlag1("送信者不明");
+		bean.setOutFlagMessage("送信者不明");
 		// -------------------------------------------------------------
 
 		// グループナンバーが取得できない場合エラー
@@ -62,55 +63,25 @@ public class GroupMessageServlet extends HttpServlet {
 		// -------------------------------------------------------------
 		// SQL実行
 		try {
-			bean = model.output(bean);
+			list = model.output(groupNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
-		// メッセージ送信者が、グループ脱退者かの判定
-		int sizeMsg = bean.getListMessage().size();
-		int sizeOutFlag = bean.getListOutFlagUN().size();
-		int sizeOutFlagUser = bean.getListOutFlagUNum().size();
-		String setUN = "";
-		String setUserNo = "";
-		int check = 1;
-
-		for (int i = 0; i < sizeOutFlagUser; i++) {
-			setUserNo = bean.getListOutFlagUNum().get(i);
-			if (setUserNo.equals(sesUserNo)) {
-				if (bean.getListOutFlag().get(i).equals("0")) {
-					check = 0;
-				}
-			}
-		}
-
-		if (check == 1) {
-			direction = "/errorPage";
-			errorMsg = "グループに入っていません";
-			req.setAttribute("errorMsg", errorMsg);
-			req.getRequestDispatcher(direction).forward(req, res);
-			return;
-		}
-
-		for (int i = 0; i < sizeMsg; i++) {
-			setUN = bean.getListUserName().get(i);
-			for (int j = 0; j < sizeOutFlag; j++) {
-				if (setUN.equals(bean.getListOutFlagUN().get(j))) {
-					if (bean.getListOutFlag().get(j).equals("1")) {
-						bean.getListUserName().set(i, "送信者不明");
-					}
-				}
-			}
+		// SQL実行
+		// メッセージ表示
+		try {
+			bean = model.groupName(bean);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		// -------------------------------------------------------------
 
-		req.setAttribute("groupBean", bean);
-		req.setAttribute("userName", bean.getListUserName());
-		req.setAttribute("message", bean.getListMessage());
-		req.setAttribute("userNo", bean.getListUserNo());
 		req.setAttribute("bean", bean);
+		req.setAttribute("groupBean", bean);
+		req.setAttribute("list", list);
 		req.getRequestDispatcher(direction).forward(req, res);
 	}
 
@@ -122,6 +93,7 @@ public class GroupMessageServlet extends HttpServlet {
 		GroupMessageModel model = new GroupMessageModel();
 		String direction = "/WEB-INF/jsp/groupMessage.jsp";
 		String errorMsg = "";
+		ArrayList<GroupMessageBean> list = new ArrayList<>();
 		// -------------------------------------------------------------
 
 		req.setCharacterEncoding("UTF-8");
@@ -146,7 +118,7 @@ public class GroupMessageServlet extends HttpServlet {
 		int testnum = 0;
 
 		if (req.getParameter("delete") != null) {
-			testnum = Integer.parseInt(req.getParameter("delete"));
+			testnum = Integer.parseInt(req.getParameter("deleteNo"));
 			bean.setMessageNo(testnum);
 			try {
 				bean = model.delete(bean);
@@ -173,16 +145,14 @@ public class GroupMessageServlet extends HttpServlet {
 				// SQL実行
 				// メッセージ表示
 				try {
-					bean = model.output(bean);
+					list = model.output(groupNo);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				// -------------------------------------------------------------
 				req.setAttribute("errorMsg", errorMsg);
 				req.setAttribute("groupBean", bean);
-				req.setAttribute("userName", bean.getListUserName());
-				req.setAttribute("message", bean.getListMessage());
-				req.setAttribute("userNo", bean.getListUserNo());
+				req.setAttribute("list", list);
 				req.setAttribute("bean", bean);
 				req.getRequestDispatcher(direction).forward(req, res);
 				return;
@@ -217,15 +187,13 @@ public class GroupMessageServlet extends HttpServlet {
 				// SQL実行
 				// メッセージ表示
 				try {
-					bean = model.output(bean);
+					list = model.output(groupNo);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				req.setAttribute("errorMsg", errorMsg);
 				req.setAttribute("groupBean", bean);
-				req.setAttribute("userName", bean.getListUserName());
-				req.setAttribute("message", bean.getListMessage());
-				req.setAttribute("userNo", bean.getListUserNo());
+				req.setAttribute("list", list);
 				req.setAttribute("bean", bean);
 				req.getRequestDispatcher(direction).forward(req, res);
 				return;
@@ -247,59 +215,25 @@ public class GroupMessageServlet extends HttpServlet {
 		// SQL実行
 		// メッセージ表示
 		try {
-			bean = model.output(bean);
+			list = model.output(groupNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
-		// メッセージ送信者が、グループ脱退者かの判定
-		// 変数の初期化
-		int sizeMsg = bean.getListMessage().size();
-		int sizeOutFlag = bean.getListOutFlagUN().size();
-		int sizeOutFlagUser = bean.getListOutFlagUNum().size();
-		String setUN = "";
-		String setUserNo = "";
-		int check = 1;
-
-		// ユーザの数だけ繰り返す
-		for (int i = 0; i < sizeOutFlagUser; i++) {
-			setUserNo = bean.getListOutFlagUNum().get(i);
-		// setUserNoとログインユーザNoが同じであればtrue
-			if (setUserNo.equals(sesUserNo)) {
-		// ログインユーザがグループを脱退しているかの判断
-				if (bean.getListOutFlag().get(i).equals("0")) {
-					check = 0;
-				}
-			}
+		// SQL実行
+		// メッセージ表示
+		try {
+			bean = model.groupName(bean);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		// check==1であれば、ログインユーザはグループにはいっていないため
-		// エラー画面に遷移する
-		if (check == 1) {
-			direction = "/errorPage";
-			errorMsg = "グループに入っていません";
-			req.setAttribute("errorMsg", errorMsg);
-			req.getRequestDispatcher(direction).forward(req, res);
-			return;
-		}
-		for (int i = 0; i < sizeMsg; i++) {
-			setUN = bean.getListUserName().get(i);
-			for (int j = 0; j < sizeOutFlag; j++) {
-				if (setUN.equals(bean.getListOutFlagUN().get(j))) {
-					if (bean.getListOutFlag().get(j).equals("1")) {
-						bean.getListUserName().set(i, "送信者不明");
-					}
-				}
-			}
-		}
-		bean.setOutFlag1("送信者不明");
 		// -------------------------------------------------------------
 
+
 		req.setAttribute("groupBean", bean);
-		req.setAttribute("userName", bean.getListUserName());
-		req.setAttribute("message", bean.getListMessage());
-		req.setAttribute("userNo", bean.getListUserNo());
+		req.setAttribute("list", list);
 		req.setAttribute("bean", bean);
 		req.getRequestDispatcher(direction).forward(req, res);
 	}
