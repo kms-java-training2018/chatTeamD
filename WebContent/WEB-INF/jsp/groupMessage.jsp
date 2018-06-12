@@ -105,9 +105,8 @@
 			</c:forEach>
 		</table>
 		<form action="/chat/groupMessage" method="POST">
-			<input type="text" name="message"><input type="hidden" name="myColorNum" value="${ bean.getMyColor() }"> <input type="hidden"
+			<input type="text" name="message"><input type="hidden"
 				name="groupNo" value="${ bean.getGroupNo()}">
-				<input type="hidden" name="otherColorNum" value="${ bean.getOtherColor() }">
 				<input
 				type="submit" value="送信">
 		</form>

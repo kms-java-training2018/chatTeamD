@@ -21,7 +21,7 @@ public class GroupMessageModel {
 		int num = 0;
 		int colorNo = 0;
 		// CSSの種類
-		final int css = 7;
+		final int css = 8;
 
 		int j = 0;
 		// -------------------------------------------------------------

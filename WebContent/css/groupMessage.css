@@ -6,10 +6,12 @@
 
 #myName {
 	text-align: left;
+	word-break: break-all;
 }
 
 #otherName {
 	text-align: right;
+	word-break: break-all;
 }
 
 #me1 {
@@ -17,6 +19,7 @@
 	color: white;
 	width: 35%;
 	text-align: left;
+	font-weight: bold;
 }
 
 
@@ -25,6 +28,7 @@
 	color: white;
 	width: 35%;
 	text-align: left;
+	font-weight: bold;
 }
 
 #me2 {
@@ -32,6 +36,7 @@
 	color: white;
 	width: 35;
 	text-align: left;
+	font-weight: bold;
 }
 
 #other2 {
@@ -39,6 +44,7 @@
 	color: white;
 	width: 35%;
 	text-align: left;
+	font-weight: bold;
 }
 
 #me3 {
@@ -46,13 +52,15 @@
 	color: white;
 	width: 35;
 	text-align: left;
+	font-weight: bold;
 }
 
 #other3 {
 	background-color: lightsteelblue;
-	color: 7;
+	color: white;
 	width: 35%;
 	text-align: left;
+	font-weight: bold;
 }
 
 #me4 {
@@ -60,6 +68,7 @@
 	color: white;
 	width: 35;
 	text-align: left;
+	font-weight: bold;
 }
 
 #other4 {
@@ -67,6 +76,7 @@
 	color: white;
 	width: 35%;
 	text-align: left;
+	font-weight: bold;
 }
 
 #me5 {
@@ -74,6 +84,7 @@
 	color: white;
 	width: 35;
 	text-align: left;
+	font-weight: bold;
 }
 
 #other5 {
@@ -81,6 +92,7 @@
 	color: white;
 	width: 35%;
 	text-align: left;
+	font-weight: bold;
 }
 
 #me6 {
@@ -88,6 +100,7 @@
 	color: white;
 	width: 35;
 	text-align: left;
+	font-weight: bold;
 }
 
 #other6 {
@@ -95,18 +108,53 @@
 	color: white;
 	width: 35%;
 	text-align: left;
+	font-weight: bold;
 }
 
 #me7 {
-	background-color: white;
-	color: black;
+	background-color: lavender;
+	color: white;
 	width: 35;
 	text-align: left;
+	font-weight: bold;
 }
 
 #you7 {
-	background-color: white;
-	color: black;
+	background-color: lavender;
+	color: white;
 	width: 35%;
 	text-align: left;
+	font-weight: bold;
+}
+
+#me8 {
+	background-color: burlywood;
+	color: white;
+	width: 35;
+	text-align: left;
+	font-weight: bold;
+}
+
+#you8 {
+	background-color: burlywood;
+	color: white;
+	width: 35%;
+	text-align: left;
+	font-weight: bold;
+}
+
+#me9 {
+	background-color: deepskyblue;
+	color: white;
+	width: 35;
+	text-align: left;
+	font-weight: bold;
+}
+
+#you9 {
+	background-color: deepskyblue;
+	color: white;
+	width: 35%;
+	text-align: left;
+	font-weight: bold;
 }

@@ -5,6 +5,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ログイン</title>
+
+
+<script src="./js/login.js"></script>
+
 </head>
 <body>
 	<form action="/chat/login" method="POST">
@@ -12,16 +16,19 @@
 			<table>
 				<tr>
 					<td>会員ID</td>
-					<td><input type="text" name="userId" value="${been.userId}" size="24"></td>
+					<td><input type="text" name="userId" value="${been.userId}"
+						title="会員ID" class="placeholder"></td>
 				</tr>
 				<tr>
 					<td>パスワード</td>
 					<td><input type="password" name="password"
-						value="${been.password}" size="25"></td>
+						value="${been.password}" title="パスワード" class="placeholder"></td>
 			</table>
+			<br> <font color="red"><strong>${ errorMessage }</strong></font>
 			<br>
-			<font color="red"><strong>${ errorMessage }</strong></font>
-			<br><br>
+			<br>
+
+
 
 			<input type="submit" value="ログイン">
 		</center>
