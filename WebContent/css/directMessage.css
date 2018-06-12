@@ -24,15 +24,14 @@
 
 }
 
-#back {
-	background-color: #3399CC
-}
-
 #page {
+
 	background: #3399CC;
 	width: 900px;
 	padding: 0px;
 	text-align: center;
 	margin: 0px;
 	border: 0px;
+	margin-left: auto;
+	margin-right: auto;
 }
