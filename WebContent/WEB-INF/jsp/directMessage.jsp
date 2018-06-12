@@ -6,10 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>個人チャット</title>
+<link rel="stylesheet" type="text/css" href="./css/directMessage.css"
+	media="all">
 </head>
-<body>
+<body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
-	<!-- 修正箇所　bean で値を取得できないか確認　　　　　　　--------------------------------- -->
 	${ session.getUserName() }さん
 	<br>
 	<form name="log_out" action="/chat/logout" method="POST">
@@ -23,51 +24,69 @@
 	<br>
 	<form name="topShowProfile" action="/chat/showProfile" method="GET"
 		target="newtab">
-<!-- 名前を押すとユーザープロフィールに飛ぶ処理 -->
+		<!-- 名前を押すとユーザープロフィールに飛ぶ処理 -->
 		<input type=hidden name="otherUserNo" value="${bean.getUserNo()}">
 		<a href="javascript:topShowProfile.submit()">${bean.getUsername()}</a>
 
 	</form>
 	<!-- メッセージを表示し、自分のメッセージであれば削除ボタンを付与する処理 -->
 	<br>
-	<c:forEach var="obj" items="${bean.getListMessage()}"
-		varStatus="status">
-		<c:if test="${bean.getListUserNo()[status.index]==bean.getMyNo()}">
-
-			<form name="" action="/chat/directMessage" method="POST">
-				<input type=hidden name="check" value="1"> <input
-					type=hidden name="userNo" value="${bean.getUserNo()}"> <input
-					type=hidden name="deleteMessageNo"
-					value="${bean.getListMsgNo()[status.index]}"> <input
-					type="button" value="メッセージの削除"
-					onClick="if(confirm ('本当に削除しますか？')){submit();}">
-			</form>
-
-		</c:if>
-
-		<!-- 相手のユーザー名を押すとプロフィールに飛ぶ処理 -->
-		<c:choose>
-			<c:when test="${bean.getListUserNo()[status.index]==bean.getMyNo()}">
-
-	    <form name="showProfile" action="/chat/showProfile" method="GET"
-					target="newtab">
-		${bean.getListUserName()[status.index]}：${obj}
-		</form>
-
-		</c:when>
-			<c:otherwise>
-				<form name="showProfile" action="/chat/showProfile" method="GET"
-					target="newtab">
-					<input type=hidden name="otherUserNo"
-						value="${bean.getListUserNo()[status.index]}"> <a
-						href="javascript:showProfile[${status.index}].submit()">${bean.getListUserName()[status.index]}</a>：${obj}
-				</form>
-			</c:otherwise>
-		</c:choose>
-	</c:forEach>
+	<table>
+		<c:forEach var="obj" items="${bean.listMessage}" varStatus="status">
+			<c:if test="${bean.getListUserNo()[status.index]==bean.getMyNo()}">
+			</c:if>
+			<c:choose>
+				<c:when test="${bean.getListUserNo()[status.index]==bean.getMyNo()}">
 
 
+					<tr>
+						<td width="10%" align="left" rowspan="2"></td>
+						<td width="38%" align="left" rowspan="2"></td>
+						<td width="4%"></td>
+						<td width="38%" align="right" rowspan="2" id="me">${obj}</td>
+						<td width="10%" align="right" >${bean.getListUserName()[status.index]}</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td align="right"><form name="" action="/chat/directMessage" method="POST">
+								<input type=hidden name="check" value="1"> <input
+									type=hidden name="userNo" value="${bean.getUserNo()}">
+								<input type=hidden name="deleteMessageNo"
+									value="${bean.getListMsgNo()[status.index]}"> <input
+									type="button" value="削除"
+									onClick="if(confirm ('本当に削除しますか？')){submit();}">
+							</form></td>
+					</tr>
+					<tr>
+						<td colspan="5" height="10px"></td>
+					</tr>
+				</c:when>
+				<c:otherwise>
 
+					<tr>
+						<td width="10%" align="left" rowspan="2" id="otherName"><form
+								name="showProfile" action="/chat/showProfile" method="GET"
+								target="newtab">
+								<input type=hidden name="otherUserNo"
+									value="${bean.getListUserNo()[status.index]}"> <a
+									href="javascript:showProfile[${status.index}].submit()">${bean.getListUserName()[status.index]}</a>
+							</form></td>
+						<td width="38%" align="left" rowspan="2" id="you">${obj}</td>
+						<td width="4%"></td>
+						<td width="38%" align="left" rowspan="2"></td>
+						<td width="10%" align="left"></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td colspan="5" height="10px"></td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+	</table>
 	<br>
 	<br>
 	<br>
@@ -76,7 +95,7 @@
 
 	<form action="/chat/directMessage" method="POST">
 		<input type=hidden name="check" value="2"> <input type="text"
-			name="sendMessage" size="30"><input type=hidden name="userNo"
+			name="sendMessage" size="50"><input type=hidden name="userNo"
 			value="${bean.getUserNo()}"> <input type="submit"
 			value="メッセージの送信" name="sendMessage">
 	</form>

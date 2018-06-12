@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+#main {
+	text-decoration: none;
+}
+
+
+#me {
+	background-color: lime;
+	color: black;
+	border: 1px solid #ccc;
+  border-collapse: separate;
+  border-radius: 10px;
+  border-spacing: 0;
+}
+
+#you {
+	background-color: white;
+	color: black;
+	border: 1px solid #ccc;
+  border-collapse: separate;
+  border-radius: 10px;
+  border-spacing: 0;
+
+}
+
+#back {
+	background-color: #3399CC
+}
+
+#page {
+	background: #3399CC;
+	width: 900px;
+	padding: 0px;
+	text-align: center;
+	margin: 0px;
+	border: 0px;
+}
