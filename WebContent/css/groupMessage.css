@@ -12,100 +12,101 @@
 	text-align: right;
 }
 
-#1Me {
+#me1 {
 	background-color: red;
 	color: white;
 	width: 35%;
-	text-align: center;
+	text-align: left;
 }
 
-#1Other {
+
+#other1 {
 	background-color: red;
 	color: white;
 	width: 35%;
-	text-align: right;
+	text-align: left;
 }
 
-#2Me {
+#me2 {
 	background-color: aquamarine;
 	color: white;
 	width: 35;
 	text-align: left;
 }
 
-#2Other {
+#other2 {
 	background-color: aquamarine;
 	color: white;
 	width: 35%;
-	text-align: center;
+	text-align: left;
 }
 
-#3Me {
+#me3 {
 	background-color: lightsteelblue;
 	color: white;
 	width: 35;
 	text-align: left;
 }
 
-#3Other {
+#other3 {
 	background-color: lightsteelblue;
 	color: 7;
 	width: 35%;
-	text-align: right;
+	text-align: left;
 }
 
-#4Me {
+#me4 {
 	background-color: khaki;
 	color: white;
 	width: 35;
 	text-align: left;
 }
 
-#4Other {
+#other4 {
 	background-color: khaki;
 	color: white;
 	width: 35%;
-	text-align: right;
+	text-align: left;
 }
 
-#5Me {
+#me5 {
 	background-color: springgreen;
 	color: white;
 	width: 35;
 	text-align: left;
 }
 
-#5Other {
+#other5 {
 	background-color: springgreen;
 	color: white;
 	width: 35%;
-	text-align: right;
+	text-align: left;
 }
 
-#6Me {
+#me6 {
 	background-color: orange;
 	color: white;
 	width: 35;
 	text-align: left;
 }
 
-#6Other {
+#other6 {
 	background-color: orange;
 	color: white;
 	width: 35%;
-	text-align: right;
+	text-align: left;
 }
 
-#7Me {
+#me7 {
 	background-color: white;
 	color: black;
 	width: 35;
 	text-align: left;
 }
 
-#7You {
+#you7 {
 	background-color: white;
 	color: black;
 	width: 35%;
-	text-align: right;
+	text-align: left;
 }
