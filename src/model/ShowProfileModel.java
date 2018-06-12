@@ -6,18 +6,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import bean.LoginBean;
+import bean.MyPageBean;
 
-/**
- * ログイン画面ビジネスロジック
- */
-public class LoginModel {
+public class ShowProfileModel {
 
-	public LoginBean authentication(LoginBean bean) {
+	public MyPageBean output(MyPageBean bean) {
+
+		// -------------------------------------------------------------
 		// 初期化
 		StringBuilder sb = new StringBuilder();
-		String userId = bean.getUserId();
-		String password = bean.getPassword();
+		String userNo = bean.getUserNo();
+		//-------------------------------------------------------------
 
 		Connection conn = null;
 		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
@@ -37,31 +36,31 @@ public class LoginModel {
 			conn = DriverManager.getConnection(url, user, dbPassword);
 
 			Statement stmt = conn.createStatement();
-
-			// SQL作成
+			// SQL文作成
+			// USER_NAME, MY_PAGE_TEXT取得
 			sb.append("SELECT ");
-			sb.append(" user_no ");
-			sb.append(", user_name ");
+			sb.append("USER_NAME, ");
+			sb.append("MY_PAGE_TEXT ");
 			sb.append("FROM ");
-			sb.append(" m_user ");
+			sb.append("M_USER ");
 			sb.append("WHERE ");
-			sb.append(" user_id = '" + userId + "' ");
-			sb.append(" AND password = '" + password + "'");
+			sb.append("USER_NO = '" + userNo + "' ");
 
 			// SQL実行
-
 			ResultSet rs = stmt.executeQuery(sb.toString());
 
-			if (!rs.next()) {
-				bean.setErrorMessage("パスワードが一致しませんでした。");
-			} else {
-				bean.setUserNo(rs.getString("user_no"));
-				bean.setUserName(rs.getString("user_name"));
-				bean.setErrorMessage("");
-
+			// -------------------------------------------------------------
+			// 取得した情報をbeanへセット
+			// レコードが取得できなければ、エラーメッセージをセット
+			while (rs.next()) {
+				bean.setMyPageText(rs.getString("MY_PAGE_TEXT"));
+				bean.setUserName(rs.getString("USER_NAME"));
 			}
+
+			// -------------------------------------------------------------
+
 		} catch (SQLException e) {
-			e.printStackTrace();
+			bean.setErrorMessage("レコードが取得できませんでした");
 			// SQLの接続は絶対に切断
 		} finally {
 			try {

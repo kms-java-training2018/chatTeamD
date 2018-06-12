@@ -6,18 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import bean.LoginBean;
+import bean.LogoutBean;
 
-/**
- * ログイン画面ビジネスロジック
- */
-public class LoginModel {
-
-	public LoginBean authentication(LoginBean bean) {
+public class LogoutModel {
+	public LogoutBean logout(LogoutBean bean) {
 		// 初期化
 		StringBuilder sb = new StringBuilder();
 		String userId = bean.getUserId();
-		String password = bean.getPassword();
 
 		Connection conn = null;
 		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
@@ -40,25 +35,17 @@ public class LoginModel {
 
 			// SQL作成
 			sb.append("SELECT ");
-			sb.append(" user_no ");
-			sb.append(", user_name ");
+			sb.append("user_name ");
 			sb.append("FROM ");
 			sb.append(" m_user ");
 			sb.append("WHERE ");
 			sb.append(" user_id = '" + userId + "' ");
-			sb.append(" AND password = '" + password + "'");
 
 			// SQL実行
 
 			ResultSet rs = stmt.executeQuery(sb.toString());
-
-			if (!rs.next()) {
-				bean.setErrorMessage("パスワードが一致しませんでした。");
-			} else {
-				bean.setUserNo(rs.getString("user_no"));
+			while (rs.next()) {
 				bean.setUserName(rs.getString("user_name"));
-				bean.setErrorMessage("");
-
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

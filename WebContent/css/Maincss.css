@@ -1,0 +1,9 @@
+@charset "UTF-8";
+.header{
+	text-align:center
+}
+
+.bgcolor{
+	background-color: bisque ;
+	font-family: 'Avenir', 'Corbel', 'MS Pゴシック';
+}

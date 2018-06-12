@@ -7,6 +7,10 @@ public class SessionBean {
 	/** 表示名 */
 	private String userName;
 
+	private String userId;
+
+	private String otherUsersNo;
+
 	public String getUserNo() {
 		return userNo;
 	}
@@ -21,6 +25,22 @@ public class SessionBean {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getOtherUsersNo() {
+		return otherUsersNo;
+	}
+
+	public void setOtherUsersNo(String otherUsersNo) {
+		this.otherUsersNo = otherUsersNo;
 	}
 
 }

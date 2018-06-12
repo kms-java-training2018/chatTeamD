@@ -5,13 +5,24 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>プロフィール</title>
 </head>
 <body>
-	<h1>チャット研修プログラム</h1>
-	<h2>プロフィール確認</h2>
-	<form action="" method="POST">
-		<input type="submit" value="閉じる">
+<br><br><br><br>
+	<form action="/chat/showProfile" method="POST">
+		<center>
+			<table>
+				<tr>
+					<td>名前</td>
+					<td>${ showName }</td>
+				</tr>
+				<tr>
+					<td>自己紹介</td>
+					<td>${ showMyPageText }</td>
+				</tr>
+			</table>
+			<input type="button" value="戻る" onClick="window.close();">
+		</center>
 	</form>
 </body>
 </html>

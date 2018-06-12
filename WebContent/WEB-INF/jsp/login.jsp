@@ -4,19 +4,27 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>ログイン</title>
 </head>
 <body>
-	<h1>チャット研修プログラム</h1>
-	<h2>ログイン</h2>
 	<form action="/chat/login" method="POST">
-		<p>会員ID</p>
-		<input type="text" name="userId" value="${loginBean.userId}">
-		<p>パスワード</p>
-		<input type="text" name="password" value="${loginBean.password}">
-		<br>
-		<P>${loginBean.errorMessage}</P>
-		<input type="submit" value="ログイン">
+		<center>
+			<table>
+				<tr>
+					<td>会員ID</td>
+					<td><input type="text" name="userId" value="${been.userId}" size="24"></td>
+				</tr>
+				<tr>
+					<td>パスワード</td>
+					<td><input type="password" name="password"
+						value="${been.password}" size="25"></td>
+			</table>
+			<br>
+			<font color="red"><strong>${ errorMessage }</strong></font>
+			<br><br>
+
+			<input type="submit" value="ログイン">
+		</center>
 	</form>
 </body>
 </html>

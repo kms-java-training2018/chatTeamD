@@ -1,0 +1,112 @@
+@charset "UTF-8";
+
+#main {
+	text-decoration: none;
+}
+
+#myName {
+	text-align: left;
+}
+
+#otherName {
+	text-align: right;
+}
+
+#me1 {
+	background-color: red;
+	color: white;
+	width: 35%;
+	text-align: left;
+}
+
+
+#other1 {
+	background-color: red;
+	color: white;
+	width: 35%;
+	text-align: left;
+}
+
+#me2 {
+	background-color: aquamarine;
+	color: white;
+	width: 35;
+	text-align: left;
+}
+
+#other2 {
+	background-color: aquamarine;
+	color: white;
+	width: 35%;
+	text-align: left;
+}
+
+#me3 {
+	background-color: lightsteelblue;
+	color: white;
+	width: 35;
+	text-align: left;
+}
+
+#other3 {
+	background-color: lightsteelblue;
+	color: 7;
+	width: 35%;
+	text-align: left;
+}
+
+#me4 {
+	background-color: khaki;
+	color: white;
+	width: 35;
+	text-align: left;
+}
+
+#other4 {
+	background-color: khaki;
+	color: white;
+	width: 35%;
+	text-align: left;
+}
+
+#me5 {
+	background-color: springgreen;
+	color: white;
+	width: 35;
+	text-align: left;
+}
+
+#other5 {
+	background-color: springgreen;
+	color: white;
+	width: 35%;
+	text-align: left;
+}
+
+#me6 {
+	background-color: orange;
+	color: white;
+	width: 35;
+	text-align: left;
+}
+
+#other6 {
+	background-color: orange;
+	color: white;
+	width: 35%;
+	text-align: left;
+}
+
+#me7 {
+	background-color: white;
+	color: black;
+	width: 35;
+	text-align: left;
+}
+
+#you7 {
+	background-color: white;
+	color: black;
+	width: 35%;
+	text-align: left;
+}

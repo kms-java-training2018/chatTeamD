@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+#page {
+	background: #FF7A00;
+	width: 900px;
+	padding: 0px;
+	text-align: center;
+	margin: 0px;
+	border: 0px;
+}
+
+.page {
+	background: #FFC085;
+	text-align: center;
+	width: 80%;
+	line-height: 0px auto;
+	padding: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.title {
+	font-size: 200%
+}
+
+.rogoTable {
+	margin-left: auto;
+	margin-right: auto;
+	width:80%;
+}
+
+.titleTable {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 0px;
+	width: 80%;
+	padding-bottom: 0px;
+	background-color: #FF7A00;
+	border: none;
+}
+
+.table {
+	display: inline-block;
+	vertical-align: top;
+	padding-left: 100px;
+}
+
+.table td {
+	text-align: left;
+}

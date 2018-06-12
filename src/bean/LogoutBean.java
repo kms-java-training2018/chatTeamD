@@ -1,6 +1,6 @@
 package bean;
 
-public class LoginBean {
+public class LogoutBean {
 	/** 会員ID */
 	private String userId;
 
@@ -56,3 +56,4 @@ public class LoginBean {
 		this.userNo = userNo;
 	}
 }
+

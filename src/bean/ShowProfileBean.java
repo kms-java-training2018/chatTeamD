@@ -1,11 +1,16 @@
 package bean;
 
-public class LoginBean {
+public class ShowProfileBean {
 	/** 会員ID */
 	private String userId;
 
 	/** パスワード */
 	private String password;
+
+	/** エラーメッセージ */
+	private String erroMsg;
+
+	private String myPageText;
 
 	/** エラーメッセージ */
 	private String errorMessage;
@@ -54,5 +59,21 @@ public class LoginBean {
 
 	public void setUserNo(String userNo) {
 		this.userNo = userNo;
+	}
+
+	public String getMyPageText() {
+		return myPageText;
+	}
+
+	public void setMyPageText(String myPageText) {
+		this.myPageText = myPageText;
+	}
+
+	public String getErroMsg() {
+		return erroMsg;
+	}
+
+	public void setErroMsg(String erroMsg) {
+		this.erroMsg = erroMsg;
 	}
 }
