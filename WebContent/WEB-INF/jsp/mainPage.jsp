@@ -7,21 +7,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>メインページ</title>
 <!-- css読み込み -->
-<link rel="stylesheet" type="text/css" href="./css/Maincss.css" media="all">
-<link rel="stylesheet" type="text/css" href="./css/mainPage.css" media="all">
+<link rel="stylesheet" type="text/css" href="./css/Maincss.css"
+	media="all">
+<link rel="stylesheet" type="text/css" href="./css/mainPage.css"
+	media="all">
 <!-- JS読み込み	-->
 <script src="./js/mainPage.js"></script>
 </head>
 <body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
 	<div id="header">
-	${ session.getUserName() }さん
-	<br>
-	<form name="log_out" action="/chat/logout" method="POST">
-		<input type="button" value="logout"
-			onClick="if(confirm ('本当にログアウトしますか？')){submit();}">
-	</form>
-	<hr>
+		${ session.getUserName() }さん <br>
+		<form name="log_out" action="/chat/logout" method="POST">
+			<input type="button" value="logout"
+				onClick="if(confirm ('本当にログアウトしますか？')){submit();}">
+		</form>
+		<hr>
 	</div>
 	<!-- ここまでです -->
 	<table class="rogoTable">
@@ -51,7 +52,8 @@
 			<!-- jstlで作成したform"DM"がひとつだけの場合、インデックスが機能しないのを避ける為に作成 -->
 		</form>
 		<!-- 綺麗じゃないから余裕があれば直す -->
-		<table class="table">
+		<img src="./img/DM.png" alt="dm" height="150">
+		<table class="dmTable">
 			<c:forEach var="obj" items="${userbean}" varStatus="status">
 				<tr>
 					<td>
@@ -61,7 +63,7 @@
 								href="javascript:DM[${status.index + 1}].submit()">${userbean[status.index].userName}</a>
 						</form>
 					</td>
-					<td>: ${userbean[status.index].directMessage}</td>
+					<td>${userbean[status.index].directMessage}</td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -74,12 +76,6 @@
 			<!-- jstlで作成したform"GM"がひとつだけの場合、インデックスが機能しないのを避ける為に作成 -->
 		</form>
 		<!-- 綺麗じゃないから余裕があれば直す -->
-		${groupbean[0].getGroupNullMes()} <img src="./img/makeGroup.png"
-			usemap="#Map" alt="makeGroup" height="100">
-		<map name="Map">
-			<area shape="circle" coords="50,50,50" href="/chat/makeGroup"
-				alt="makeGroup">
-		</map>
 		<table class="table">
 			<c:forEach var="obj" items="${groupbean}" varStatus="status">
 				<tr>
@@ -94,6 +90,12 @@
 				</tr>
 			</c:forEach>
 		</table>
+		${groupbean[0].getGroupNullMes()} <img src="./img/makeGroup.png"
+			usemap="#Map" alt="makeGroup" height="100">
+		<map name="Map">
+			<area shape="circle" coords="50,50,50" href="/chat/makeGroup"
+				alt="makeGroup">
+		</map>
 		<br>
 	</div>
 </body>
