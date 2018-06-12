@@ -22,24 +22,31 @@
 	</form>
 	<hr>
 	<!-- ここまでです -->
-	<table class="titleTable">
+	<table class="rogoTable">
 		<tr>
-			<td rowspan="2" colspan="2"><p class="title">Ch@</p></td>
-			<td></td>
+			<td><p class="title">Ch@</p></td>
+			<td><img src="./img/editProfile.png" usemap="#EditProfile"
+				alt="editProfile" height="100" align="right"> <map
+					name="EditProfile">
+					<area shape="circle" coords="50,50,50" href="/chat/myPage"
+						alt="editProfile">
+				</map></td>
 		</tr>
 		<tr>
+			<td></td>
 			<td>kms2018 chat tool</td>
 		</tr>
+	</table>
+	<table class="titleTable">
 		<tr>
-			<td><h3>Main Menu</h3></td>
 			<td id="directMessageBtn" onclick="DMBtnclick()">DirectMessage</td>
-			<td id="groupMessageBtn" onclick="GMBtnclick()">GroupMessage"</td>
+			<td id="groupMessageBtn" onclick="GMBtnclick()">GroupMessage</td>
 		</tr>
 	</table>
 	<div class="page" id="directMessage">
+		<br>
 		<form name="DM">
 			<!-- jstlで作成したform"DM"がひとつだけの場合、インデックスが機能しないのを避ける為に作成 -->
-			<h4>～User List～</h4>
 		</form>
 		<!-- 綺麗じゃないから余裕があれば直す -->
 		<table class="table">
@@ -56,15 +63,21 @@
 				</tr>
 			</c:forEach>
 		</table>
+		<br>
 	</div>
 
 	<div class="page" id="groupMessage">
+		<br>
 		<form name="GM">
 			<!-- jstlで作成したform"GM"がひとつだけの場合、インデックスが機能しないのを避ける為に作成 -->
-			<h4>～Group List～</h4>
 		</form>
 		<!-- 綺麗じゃないから余裕があれば直す -->
-		${groupbean[0].getGroupNullMes()}
+		${groupbean[0].getGroupNullMes()} <img src="./img/makeGroup.png"
+			usemap="#Map" alt="makeGroup" height="100">
+		<map name="Map">
+			<area shape="circle" coords="50,50,50" href="/chat/makeGroup"
+				alt="makeGroup">
+		</map>
 		<table class="table">
 			<c:forEach var="obj" items="${groupbean}" varStatus="status">
 				<tr>
@@ -79,16 +92,7 @@
 				</tr>
 			</c:forEach>
 		</table>
+		<br>
 	</div>
-	<br>
-	<br>
-	<form action="/chat/makeGroup" method="GET">
-		<input type="submit" value="グループの作成">
-	</form>
-	<form action="/chat/myPage" method="GET">
-		<input type="submit" value="プロフィール画面へ">
-	</form>
-
-
 </body>
 </html>
