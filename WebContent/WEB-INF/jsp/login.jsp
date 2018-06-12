@@ -20,7 +20,7 @@
 			<p class="sub">kms2018 chat tool</p>
 			<br>
 			<br> <input type="text" name="userId" value="${been.userId}"
-				title="会員ID/半角20字まで" class="placeholder" class="id"> <input
+				title="USER ID" class="placeholder" class="id"> <input
 				type="password" name="password" value="${been.password}"
 				title="1234567890" class="placeholder" class="password"> <br>
 			<div class="error">${ errorMessage }</div><br>
