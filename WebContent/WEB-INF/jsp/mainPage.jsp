@@ -7,13 +7,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>メインページ</title>
 <!-- css読み込み -->
-<link rel="stylesheet" type="text/css" href="./css/mainPage.css"
-	media="all">
+<link rel="stylesheet" type="text/css" href="./css/Maincss.css" media="all">
+<link rel="stylesheet" type="text/css" href="./css/mainPage.css" media="all">
 <!-- JS読み込み	-->
 <script src="./js/mainPage.js"></script>
 </head>
 <body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
+	<div id="header">
 	${ session.getUserName() }さん
 	<br>
 	<form name="log_out" action="/chat/logout" method="POST">
@@ -21,6 +22,7 @@
 			onClick="if(confirm ('本当にログアウトしますか？')){submit();}">
 	</form>
 	<hr>
+	</div>
 	<!-- ここまでです -->
 	<table class="rogoTable">
 		<tr>

@@ -1,9 +1,42 @@
 @charset "UTF-8";
-.header{
-	text-align:center
+
+#header {
+	width: 900px;
+	text-align: left;
+	background-color: #B13228;
+	color: #FFFFFF;
 }
 
-.bgcolor{
-	background-color: bisque ;
+#page {
+	background: #FF7A00;
+	width: 900px;
+	padding: 0px;
+	text-align: center;
+	margin-top: 0px;
+	border: 0px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.page {
+	background: #FFC085;
+	text-align: center;
+	width: 80%;
+	line-height: 0px auto;
+	padding: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.centerizedTable {
+	text-align:left;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.bgcolor {
+	background-color: bisque;
 	font-family: 'Avenir', 'Corbel', 'MS Pゴシック';
 }
