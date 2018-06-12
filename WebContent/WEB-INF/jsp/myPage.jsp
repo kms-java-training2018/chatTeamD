@@ -6,9 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>マイページ</title>
+	<link rel="stylesheet" type="text/css" href="./css/Maincss.css"
+	media="all">
 </head>
-<body>
+<body class="background">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
+	<div id="header">
 	${ session.getUserName() }さん
 	<br>
 	<form name="log_out" action="/chat/logout" method="POST">
@@ -16,6 +19,7 @@
 			onClick="if(confirm ('本当にログアウトしますか？')){submit();}">
 	</form>
 	<hr>
+	</div>
 	<!-- ここまでです -->
 	<br>
 	<center>

@@ -221,7 +221,7 @@ public class GroupMessageServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 
-				direction = "/erroPage";
+				direction = "/WEB-INF/jsp/groupMessage.jsp";
 				req.setAttribute("errorMsg", errorMsg);
 				req.setAttribute("groupBean", bean);
 				req.setAttribute("list", list);

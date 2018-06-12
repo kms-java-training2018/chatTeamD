@@ -6,30 +6,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ログイン</title>
 
-
+<link rel="stylesheet" type="text/css" href="./css/login.css"
+	media="all">
 <script src="./js/login.js"></script>
 
 </head>
-<body>
+<body class="main">
 	<form action="/chat/login" method="POST">
 		<center>
-			<table>
-				<tr>
-					<td>会員ID</td>
-					<td><input type="text" name="userId" value="${been.userId}"
-						title="会員ID" class="placeholder"></td>
-				</tr>
-				<tr>
-					<td>パスワード</td>
-					<td><input type="password" name="password"
-						value="${been.password}" title="パスワード" class="placeholder"></td>
-			</table>
-			<br> <font color="red"><strong>${ errorMessage }</strong></font>
 			<br>
 			<br>
-
-
-
+			<p class="title">Ch@</p>
+			<p class="sub">kms2018 chat tool</p>
+			<br>
+			<br> <input type="text" name="userId" value="${been.userId}"
+				title="会員ID/半角20字まで" class="placeholder" class="id"> <input
+				type="password" name="password" value="${been.password}"
+				title="1234567890" class="placeholder" class="password"> <br>
+			<div class="error">${ errorMessage }</div><br>
 			<input type="submit" value="ログイン">
 		</center>
 	</form>

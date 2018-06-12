@@ -6,8 +6,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>プロフィール</title>
+	<link rel="stylesheet" type="text/css" href="./css/Maincss.css"
+	media="all">
 </head>
-<body>
+<body class="background">
 <br><br><br><br>
 	<form action="/chat/showProfile" method="POST">
 		<center>

@@ -16,14 +16,9 @@ public class GroupMessageModel {
 		// 初期化
 		StringBuilder sb = new StringBuilder();
 		ArrayList<GroupMessageBean> output = new ArrayList<>();
-		String exitUserName = "";
-		String outFlag = "";
 		int num = 0;
-		int colorNo = 0;
 		// CSSの種類
-		final int css = 8;
-
-		int j = 0;
+		final int css = 9;
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
