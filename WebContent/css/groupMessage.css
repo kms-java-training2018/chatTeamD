@@ -12,98 +12,98 @@
 	text-align: right;
 }
 
-#redMe {
+#1Me {
 	background-color: red;
 	color: white;
 	width: 35%;
 	text-align: center;
 }
 
-#redOther {
+#1Other {
 	background-color: red;
 	color: white;
 	width: 35%;
 	text-align: right;
 }
 
-#aquamarineMe {
+#2Me {
 	background-color: aquamarine;
 	color: white;
 	width: 35;
 	text-align: left;
 }
 
-#aquamarineOther {
+#2Other {
 	background-color: aquamarine;
 	color: white;
 	width: 35%;
 	text-align: center;
 }
 
-#lightsteelblueMe {
+#3Me {
 	background-color: lightsteelblue;
 	color: white;
 	width: 35;
 	text-align: left;
 }
 
-#lightsteelblueOther {
+#3Other {
 	background-color: lightsteelblue;
-	color: white;
+	color: 7;
 	width: 35%;
 	text-align: right;
 }
 
-#khakiMe {
+#4Me {
 	background-color: khaki;
 	color: white;
 	width: 35;
 	text-align: left;
 }
 
-#khakiOther {
+#4Other {
 	background-color: khaki;
 	color: white;
 	width: 35%;
 	text-align: right;
 }
 
-#springgreenMe {
+#5Me {
 	background-color: springgreen;
 	color: white;
 	width: 35;
 	text-align: left;
 }
 
-#springgreenOther {
+#5Other {
 	background-color: springgreen;
 	color: white;
 	width: 35%;
 	text-align: right;
 }
 
-#orangeMe {
+#6Me {
 	background-color: orange;
 	color: white;
 	width: 35;
 	text-align: left;
 }
 
-#orangeOther {
+#6Other {
 	background-color: orange;
 	color: white;
 	width: 35%;
 	text-align: right;
 }
 
-#whiteMe {
+#7Me {
 	background-color: white;
 	color: black;
 	width: 35;
 	text-align: left;
 }
 
-#whiteYou {
+#7You {
 	background-color: white;
 	color: black;
 	width: 35%;

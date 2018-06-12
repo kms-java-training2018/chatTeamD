@@ -39,6 +39,8 @@ public class GroupMessageBean {
 
 	private int otherColor;
 
+	private int colorNo;
+
 	/** グループ名 */
 	private String groupName;
 
@@ -192,6 +194,14 @@ public class GroupMessageBean {
 
 	public void setOtherColor(int otherColor) {
 		this.otherColor = otherColor;
+	}
+
+	public int getColorNo() {
+		return colorNo;
+	}
+
+	public void setColorNo(int colorNo) {
+		this.colorNo = colorNo;
 	}
 
 

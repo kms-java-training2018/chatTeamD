@@ -18,6 +18,12 @@ public class GroupMessageModel {
 		ArrayList<GroupMessageBean> output = new ArrayList<>();
 		String exitUserName = "";
 		String outFlag = "";
+		int num = 0;
+		int colorNo = 0;
+		// CSSの種類
+		final int css = 7;
+
+		int j = 0;
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
@@ -75,6 +81,7 @@ public class GroupMessageModel {
 
 			// -------------------------------------------------------------
 			while (rs.next()) {
+				int check = 0;
 				GroupMessageBean bean = new GroupMessageBean();
 				if (outflag == null || outflag.equals("")) {
 					for (int i = 0; i < outflag.size(); i++) {
@@ -93,7 +100,22 @@ public class GroupMessageModel {
 					bean.setUserNo(rs.getString("USER_NO"));
 					bean.setMessageNo(rs.getInt("MESSAGE_NO"));
 				}
+
+				for (int i = 0; i < output.size(); i++) {
+					if (bean.getUserNo().equals(output.get(i).getUserNo())) {
+						check = 1;
+						bean.setColorNo(output.get(i).getColorNo());
+						break;
+					}
+				}
+
+				if(check == 0) {
+					num = (int) (Math.random() * css +1);
+					bean.setColorNo(num);
+				}
+
 				output.add(bean);
+
 			}
 
 			// -------------------------------------------------------------

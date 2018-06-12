@@ -101,88 +101,6 @@ public class GroupMessageServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		// -------------------------------------------------------------
-
-		// -------------------------------------------------------------
-		// 背景色指定
-		int num = (int)(Math.random()*7+1);
-		bean.setMyColor(num);
-		num = 1;
-		String cssMe = "";
-		String cssOther = "";
-		switch(num) {
-		case 1:
-			cssMe = "red";
-			break;
-
-		case 2:
-			cssMe = "aquamarine";
-			break;
-
-		case 3:
-			cssMe = "lightsteelblue";
-			break;
-
-		case 4:
-			cssMe = "khaki";
-			break;
-
-		case 5:
-			cssMe = "springgreen";
-			break;
-
-		case 6:
-			cssMe = "orange";
-			break;
-
-		default:
-			cssMe = "white";
-			break;
-		}
-
-
-
-		num = (int)(Math.random()*7+1);
-		num = 2;
-		bean.setOtherColor(num);
-
-		switch(num) {
-		case 1:
-			cssOther = "red";
-			break;
-
-		case 2:
-			cssOther = "aquamarine";
-			break;
-
-		case 3:
-			cssOther = "lightsteelblue";
-			break;
-
-		case 4:
-			cssOther = "khaki";
-			break;
-
-		case 5:
-			cssOther = "springgreen";
-			break;
-
-		case 6:
-			cssOther = "orange";
-			break;
-
-		default:
-			cssOther = "white";
-			break;
-		}
-		// -------------------------------------------------------------
-
-		// -------------------------------------------------------------
-
-
-
-		req.setAttribute("cssMe", cssMe);
-		req.setAttribute("cssOther", cssOther);
-
 		req.setAttribute("bean", bean);
 		req.setAttribute("groupBean", bean);
 		req.setAttribute("list", list);
@@ -443,5 +361,10 @@ public class GroupMessageServlet extends HttpServlet {
 		req.setAttribute("bean", bean);
 		req.getRequestDispatcher(direction).forward(req, res);
 	}
+
+	// TODO 送信ボタン/削除ボタン押した後データ引継ぎ
+
+
+
 
 }

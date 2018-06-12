@@ -35,7 +35,7 @@
 						<td width="10%"></td>
 						<td width="38%"></td>
 						<td width="4%"></td>
-						<td width="38%" rowspan="2" id="${ cssMe }Me"><c:out
+						<td width="38%" rowspan="2" id="${ obj.colorNo }Me"><c:out
 								value="${ obj.message }" /></td>
 						<td width="10%" id="myName"><c:out value="${ obj.userName }" /></td>
 					</tr>
@@ -63,7 +63,7 @@
 					test="${ obj.userName.equals(bean.getOutFlagMessage()) && !obj.userNo.equals(session.getUserNo()) }">
 					<tr>
 						<td width="10%" rowspan="2" id="otherName"><c:out value="${ obj.userName }" /></td>
-						<td width="38%" rowspan="2" id="${ cssOther }Other"><c:out value="${ obj.message }" /></td>
+						<td width="38%" rowspan="2" id="${ obj.colorNo }Other"><c:out value="${ obj.message }" /></td>
 						<td width="4%"></td>
 						<td width="38%">
 						</td>
@@ -83,7 +83,7 @@
 					<tr>
 						<td width="10%" id="otherName"><a href="/chat/showProfile?otherUserNo=${ obj.userNo }"
 							target="blank"><c:out value="${ obj.userName}" /></a></td>
-						<td width="38%" rowspan="2" id="${ cssOther }Other"><c:out value="${ obj.message }" /></td>
+						<td width="38%" rowspan="2" id="${ obj.colorNo }Other"><c:out value="${ obj.message }" /></td>
 						<td width="4%"></td>
 						<td width="38%">
 						</td>
@@ -109,7 +109,11 @@
 				<input
 				type="submit" value="送信">
 		</form>
-
+			<form action="/chat/groupMessage" method="POST">
+		<input type="hidden" name="exit" value="${ groupBean.getGroupNo()}">
+		<input type="button" value="グルーピ脱退"
+			onClick="if(confirm ('本当に脱退しますか')){submit();}">
+	</form>
 
 		<form action="/chat/main" method="POST">
 			<input type="submit" value="メインメニューに戻る">
