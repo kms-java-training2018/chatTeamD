@@ -9,14 +9,17 @@
 <!-- css読み込み -->
 <link rel="stylesheet" type="text/css" href="./css/Maincss.css"
 	media="all">
+<link rel="stylesheet" type="text/css" href="./css/makeGroup.css"
+	media="all">
 <!--	JS読み込み	-->
+<script src="./js/login.js"></script>
 </head>
 <body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
 	<div id="header">
 		${ session.getUserName() }さん <br>
 		<form name="logout" action="/chat/logout" method="POST">
-		<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
+			<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
 		</form>
 		<hr>
 	</div>
@@ -28,28 +31,32 @@
 			<font color="#FF0000">${errorMsg}</font>
 		</p>
 		<form action="/chat/makeGroup" method="POST">
-			グループ名(全角10文字まで)<input type="text" name="groupName" value="" size="30">
-			<br>
+			<input type="text" title="グループ名(全角10文字まで)" class="placeholder"
+				name="groupName" value="" size="30"> <br>
 			<table class="centerizedTable">
 				<tr>
 					<c:forEach var="obj" items="${bean}" varStatus="status">
 						<c:if test="${status.index % 3 == 0}">
 				</tr>
 				<tr>
-						</c:if>
-					<td>
-					<input type="checkbox" name="userNo"
-					value="${bean[status.index].userNo}">${bean[status.index].userName}
+					</c:if>
+					<td><input type="checkbox" name="userNo"
+						value="${bean[status.index].userNo}">${bean[status.index].userName}
 					</td>
 					</c:forEach>
 				</tr>
 			</table>
-			<br>
-			<input type="image" src="./img/makeGroupBtn.png" name="button" alt="makeGroup" height="80">
+			<br> <input type="image" src="./img/makeGroupBtn.png"
+				name="button" alt="makeGroup" height="80">
 		</form>
-
+	</div>
+	<div class="backBtn">
+	<br>
+	<br>
+	<br>
 		<form action="/chat/main" method="POST">
-			<input type="submit" value="メインメニューに戻る">
+			<input type="image" src="./img/backMainPage.png" name="button"
+				alt="makeGroup" height="40">
 		</form>
 	</div>
 </body>

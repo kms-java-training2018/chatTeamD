@@ -28,17 +28,13 @@
 	<input type="hidden" name="from" id="from" value="${fromGM}">
 	<table class="rogoTable">
 		<tr>
-			<td><p class="title">Ch@</p></td>
+			<td><img src="./img/title.png" alt="Ch@" width="50%"></td>
 			<td><img src="./img/editProfile.png" usemap="#EditProfile"
 				alt="editProfile" height="100" align="right"> <map
 					name="EditProfile">
 					<area shape="circle" coords="50,50,50" href="/chat/myPage"
 						alt="editProfile">
 				</map></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>kms2018 chat tool</td>
 		</tr>
 	</table>
 	<table class="titleTable">
@@ -61,7 +57,7 @@
 					<td>
 						<form name="DM" method="get" action="/chat/directMessage">
 							<input type=hidden name="userNo"
-								value="${userbean[status.index].userNo}"> ○<a
+								value="${userbean[status.index].userNo}">○ <a
 								href="javascript:DM[${status.index + 1}].submit()">${userbean[status.index].userName}</a>
 						</form>
 					</td>

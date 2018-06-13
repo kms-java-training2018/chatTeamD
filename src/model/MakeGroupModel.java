@@ -36,6 +36,10 @@ public class MakeGroupModel {
 		// ボッチグループ判定用変数
 		int soloGroupFlag = 0;
 		// jspの入力値分析
+		if (groupName.equals("グループ名(全角10文字まで)")) {
+			// 初期入力値はグループ名が空ということにする
+			groupName="";
+		}
 		if (groupName.equals("")) {
 			// グループ名が空
 			bean.setErrorMsg("グループ名が空です");
