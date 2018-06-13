@@ -48,18 +48,18 @@
 			<c:forEach items="${ list }" var="obj" varStatus="status">
 				<c:if test="${obj.userNo.equals(session.getUserNo()) }">
 					<tr>
-						<td width="10%"></td>
-						<td width="38%"></td>
-						<td width="4%"></td>
-						<td width="38%" rowspan="2" id="me${ obj.colorNo }"><c:out
+						<td class="msoutside"></td>
+						<td class="msnone"></td>
+						<td class="msinside"></td>
+						<td rowspan="2" id="me${ obj.colorNo }"><c:out
 								value="${ obj.message }" /></td>
-						<td width="10%" id="myName"><c:out value="${ obj.userName }" /></td>
+						<td id="myName"><c:out value="${ obj.userName }" /></td>
 					</tr>
 					<tr>
+						<td class="msoutside"></td>
 						<td></td>
 						<td></td>
-						<td></td>
-						<td width="10%">
+						<td class="msoutside">
 							<form action="/chat/groupMessage" method="post">
 								<input type="hidden" name="delete"> <input type="hidden"
 									name="groupNo" value="${ bean.groupNo }"><input
@@ -78,13 +78,13 @@
 				<c:if
 					test="${ obj.userName.equals(bean.getOutFlagMessage()) && !obj.userNo.equals(session.getUserNo()) }">
 					<tr>
-						<td width="10%" rowspan="2" id="otherName"><c:out
+						<td class="msoutside" rowspan="2" id="otherName"><c:out
 								value="${ obj.userName }" /></td>
-						<td width="38%" rowspan="2" id="other${ obj.colorNo }"><c:out
+						<td rowspan="2" id="other${ obj.colorNo }"><c:out
 								value="${ obj.message }" /></td>
-						<td width="4%"></td>
-						<td width="38%"></td>
-						<td width="10%"></td>
+						<td class="msinside"></td>
+						<td class="msnone"></td>
+						<td class="msoutside"></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -99,20 +99,20 @@
 				<c:if
 					test="${!obj.userName.equals(bean.getOutFlagMessage()) && !obj.userNo.equals(session.getUserNo())}">
 					<tr>
-						<td width="10%" id="otherName"><a
+						<td id="otherName"><a
 							href="/chat/showProfile?otherUserNo=${ obj.userNo }"
 							target="blank"><c:out value="${ obj.userName}" /></a></td>
 						<td width="38%" rowspan="2" id="other${ obj.colorNo }"><c:out
 								value="${ obj.message }" /></td>
-						<td width="4%"></td>
-						<td width="38%"></td>
-						<td width="10%"></td>
+						<td class="msinside"></td>
+						<td class="menone"></td>
+						<td class="msoutside"></td>
 					</tr>
 					<tr>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td width="10%"></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td colspan="5" height="10px"></td>

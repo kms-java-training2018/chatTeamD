@@ -180,6 +180,17 @@ public class GroupMessageServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				// -------------------------------------------------------------
+
+				// -------------------------------------------------------------
+				// SQL実行
+				// グループ名、グループ作成者表示
+				try {
+					bean = model.groupName(bean);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				// -------------------------------------------------------------
+
 				req.setAttribute("errorMsg", errorMsg);
 				req.setAttribute("groupBean", bean);
 				req.setAttribute("list", list);

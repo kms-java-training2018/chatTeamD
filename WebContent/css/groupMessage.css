@@ -5,21 +5,33 @@ a {
 }
 
 .groupname {
-	width: 96%;
+	width: 864px;
 	text-align: center;
 	font-size: 200%;
 	font-weight: bold;
 }
 
 .author {
-	width: 96%;
+	width: 864px;
 	text-align: center;
 	font-size: 125%;
 	font-weight: bold;
 }
 
 .topoutside {
-	width: 2%;
+	width: 18px;
+}
+
+.msoutside{
+	width: 90px;
+}
+
+.msinside{
+	width: 36px;
+}
+
+.msnone{
+	width: 342px;
 }
 
 #main {
@@ -27,22 +39,24 @@ a {
 }
 
 #myName {
+	width:90px;
 	text-align: left;
 	word-break: break-all;
 	font-size: 100%;
 }
 
 #otherName {
+	width:90px;
 	text-align: right;
 	word-break: break-all;
 	text-decoration: none;
 	font-size: 100%;
 }
 
-#me1 {
+#me1 {width:342px;
+word-break:break-all;
 	background-color: red;
 	color: white;
-	width: 35%;
 	text-align: left;
 	font-weight: bold;
 	border: 1px solid #ccc;
@@ -52,11 +66,11 @@ a {
 	font-size: 100%;
 }
 
-#other1 {
+#other1 {width:342px;
+word-break:break-all;
 	font-size: 100%;
 	background-color: red;
 	color: white;
-	width: 35%;
 	text-align: left;
 	font-weight: bold;
 	border: 1px solid #ccc;
@@ -65,11 +79,11 @@ a {
 	border-spacing: 0;
 }
 
-#me2 {
+#me2 {width:342px;
+word-break:break-all;
 	font-size: 100%;
 	background-color: aquamarine;
 	color: white;
-	width: 35;
 	text-align: left;
 	font-weight: bold;
 	border: 1px solid #ccc;
@@ -78,11 +92,11 @@ a {
 	border-spacing: 0;
 }
 
-#other2 {
+#other2 {width:342px;
+word-break:break-all;
 	font-size: 100%;
 	background-color: aquamarine;
 	color: white;
-	width: 35%;
 	text-align: left;
 	font-weight: bold;
 	border: 1px solid #ccc;
@@ -91,11 +105,11 @@ a {
 	border-spacing: 0;
 }
 
-#me3 {
+#me3 {width:342px;
+word-break:break-all;
 	font-size: 100%;
-	background-color: lightsteelblue;
+	background-color: blue;
 	color: white;
-	width: 35;
 	text-align: left;
 	font-weight: bold;
 	border: 1px solid #ccc;
@@ -104,11 +118,11 @@ a {
 	border-spacing: 0;
 }
 
-#other3 {
+#other3 {width:342px;
+word-break:break-all;
 	font-size: 100%;
-	background-color: lightsteelblue;
+	background-color: blue;
 	color: white;
-	width: 35%;
 	text-align: left;
 	font-weight: bold;
 	border: 1px solid #ccc;
@@ -117,24 +131,11 @@ a {
 	border-spacing: 0;
 }
 
-#me4 {
-	font-size: 100%;
-	background-color: khaki;
-	color: white;
-	width: 35;
-	text-align: left;
-	font-weight: bold;
-	border: 1px solid #ccc;
-	border-collapse: separate;
-	border-radius: 10px;
-	border-spacing: 0;
-}
-
-#other4 {
+#me4 {width:342px;
+word-break:break-all;
 	font-size: 100%;
 	background-color: khaki;
 	color: white;
-	width: 35%;
 	text-align: left;
 	font-weight: bold;
 	border: 1px solid #ccc;
@@ -143,11 +144,24 @@ a {
 	border-spacing: 0;
 }
 
-#me5 {
+#other4 {width:342px;
+word-break:break-all;
+	font-size: 100%;
+	background-color: khaki;
+	color: white;
+	text-align: left;
+	font-weight: bold;
+	border: 1px solid #ccc;
+	border-collapse: separate;
+	border-radius: 10px;
+	border-spacing: 0;
+}
+
+#me5 {width:342px;
+word-break:break-all;
 	font-size: 100%;
 	background-color: springgreen;
 	color: white;
-	width: 35;
 	text-align: left;
 	font-weight: bold;
 	border: 1px solid #ccc;
@@ -156,11 +170,11 @@ a {
 	border-spacing: 0;
 }
 
-#other5 {
+#other5 {width:342px;
+word-break:break-all;
 	font-size: 100%;
 	background-color: springgreen;
 	color: white;
-	width: 35%;
 	text-align: left;
 	font-weight: bold;
 	border: 1px solid #ccc;
@@ -169,11 +183,11 @@ a {
 	border-spacing: 0;
 }
 
-#me6 {
+#me6 {width:342px;
+word-break:break-all;
 	font-size: 100%;
 	background-color: orange;
 	color: white;
-	width: 35;
 	text-align: left;
 	font-weight: bold;
 	border: 1px solid #ccc;
@@ -182,11 +196,11 @@ a {
 	border-spacing: 0;
 }
 
-#other6 {
+#other6 {width:342px;
+word-break:break-all;
 	font-size: 100%;
 	background-color: orange;
 	color: white;
-	width: 35%;
 	text-align: left;
 	font-weight: bold;
 	border: 1px solid #ccc;
@@ -195,11 +209,11 @@ a {
 	border-spacing: 0;
 }
 
-#me7 {
+#me7 {width:342px;
+word-break:break-all;
 	font-size: 100%;
 	background-color: lavender;
 	color: white;
-	width: 35;
 	text-align: left;
 	font-weight: bold;
 	border: 1px solid #ccc;
@@ -208,11 +222,11 @@ a {
 	border-spacing: 0;
 }
 
-#other7 {
+#other7 {width:342px;
+word-break:break-all;
 	font-size: 100%;
 	background-color: lavender;
 	color: white;
-	width: 35%;
 	text-align: left;
 	font-weight: bold;
 	border: 1px solid #ccc;
@@ -221,11 +235,11 @@ a {
 	border-spacing: 0;
 }
 
-#me8 {
+#me8 {width:342px;
+word-break:break-all;
 	font-size: 100%;
 	background-color: burlywood;
 	color: white;
-	width: 35;
 	text-align: left;
 	font-weight: bold;
 	border: 1px solid #ccc;
@@ -234,11 +248,11 @@ a {
 	border-spacing: 0;
 }
 
-#other8 {
+#other8 {width:342px;
+word-break:break-all;
 	font-size: 100%;
 	background-color: burlywood;
 	color: white;
-	width: 35%;
 	text-align: left;
 	font-weight: bold;
 	border: 1px solid #ccc;
@@ -247,11 +261,11 @@ a {
 	border-spacing: 0;
 }
 
-#me9 {
+#me9 {width:342px;
+word-break:break-all;
 	font-size: 100%;
 	background-color: deepskyblue;
 	color: white;
-	width: 35;
 	text-align: left;
 	font-weight: bold;
 	border: 1px solid #ccc;
@@ -260,11 +274,11 @@ a {
 	border-spacing: 0;
 }
 
-#other9 {
+#other9 {width:342px;
+word-break:break-all;
 	font-size: 100%;
 	background-color: deepskyblue;
 	color: white;
-	width: 35%;
 	text-align: left;
 	font-weight: bold;
 	border: 1px solid #ccc;
