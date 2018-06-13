@@ -8,22 +8,22 @@
 <title>個人チャット</title>
 <link rel="stylesheet" type="text/css" href="./css/directMessage.css"
 	media="all">
-<link rel="stylesheet" type="text/css" href="./css/Main.css" media="all">
+<link rel="stylesheet" type="text/css" href="./css/Maincss.css" media="all">
 </head>
 <body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
-	<center>
+	<div id="header">
 		${ session.getUserName() }さん <br>
-		<form name="log_out" action="/chat/logout" method="POST">
-			<input type="button" value="logout"
-				onClick="if(confirm ('本当にログアウトしますか？')){submit();}">
+		<form name="logout" action="/chat/logout" method="POST">
+		<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
 		</form>
 		<hr>
-	</center>
+	</div>
 	<!-- ここまでです -->
 	<font color="red" size="5"><Strong>${bean.getErrorMsg()}</Strong></font>
 	<h1></h1>
 	<br>
+	<center>
 	<form name="topShowProfile" action="/chat/showProfile" method="GET"
 		target="newtab">
 		<!-- 名前を押すとユーザープロフィールに飛ぶ処理 -->
@@ -32,6 +32,7 @@
 			<a href="javascript:topShowProfile.submit()">${bean.getUsername()}</a>
 		</h3>
 	</form>
+	</center>
 	<!-- メッセージを表示し、自分のメッセージであれば削除ボタンを付与する処理 -->
 	<br>
 	<table>
@@ -44,7 +45,7 @@
 						<td width="10%" align="left" rowspan="2"></td>
 						<td width="38%" align="left" rowspan="2"></td>
 						<td width="4%"></td>
-						<td width="38%" align="right" rowspan="2" id="me">${obj}</td>
+						<td width="38%" align="right" rowspan="2" class="me">${obj}</td>
 						<td width="10%" align="right">${bean.getListUserName()[status.index]}</td>
 					</tr>
 					<tr>
@@ -65,14 +66,14 @@
 				</c:when>
 				<c:otherwise>
 					<tr>
-						<td width="10%" align="left" rowspan="2" id="otherName"><form
+						<td width="10%" align="left" rowspan="2"><form
 								name="showProfile" action="/chat/showProfile" method="GET"
 								target="newtab">
 								<input type=hidden name="otherUserNo"
 									value="${bean.getListUserNo()[status.index]}"> <a
 									href="javascript:showProfile[${status.index}].submit()">${bean.getListUserName()[status.index]}</a>
 							</form></td>
-						<td width="38%" align="left" rowspan="2" id="you">${obj}</td>
+						<td width="38%" align="left" rowspan="2" class="you">${obj}</td>
 						<td width="4%"></td>
 						<td width="38%" align="left" rowspan="2"></td>
 						<td width="10%" align="left"></td>
@@ -92,14 +93,16 @@
 	<br>
 	<br>
 	<br>
+	<center>
 	<form action="/chat/directMessage" method="POST">
 		<input type=hidden name="check" value="2"> <input type="text"
 			name="sendMessage" size="50"><input type=hidden name="userNo"
 			value="${bean.getUserNo()}"> <input type="submit"
-			value="メッセージの送信" name="sendMessage">
+			value="送信" name="sendMessage">
 	</form>
 	<form action="/chat/main" method="POST">
-		<input type="submit" value="メインメニューへ戻る">
+		<input type="submit" value="メインメニューに戻る">
 	</form>
+	</center>
 </body>
 </html>

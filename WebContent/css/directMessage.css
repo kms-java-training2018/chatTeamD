@@ -5,8 +5,8 @@
 }
 
 
-#me {
-	background-color: lime;
+.me {
+	background-color: lightcoral;
 	color: black;
 	border: 1px solid #ccc;
   border-collapse: separate;
@@ -14,8 +14,8 @@
   border-spacing: 0;
 }
 
-#you {
-	background-color: white;
+.you {
+	background-color: gold;
 	color: black;
 	border: 1px solid #ccc;
   border-collapse: separate;
@@ -24,9 +24,9 @@
 
 }
 
-#page {
+.directpage {
 
-	background: #3399CC;
+	background-color: #3399CC;
 	width: 900px;
 	padding: 0px;
 	text-align: center;
