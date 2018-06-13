@@ -14,18 +14,24 @@
 <body class="main">
 	<form action="/chat/login" method="POST">
 		<center>
-			<br>
-			<br>
-			<p class="title">Ch@</p>
-			<p class="sub">kms2018 chat tool</p>
-			<br>
-			<br> <input type="text" name="userId" value="${been.userId}"
-				title="USER ID" class="placeholder" class="id"> <input
-				type="password" name="password" value="${been.password}"
-				title="1234567890" class="placeholder" class="password"> <br>
-			<div class="error">${ errorMessage }</div><br>
-			<input type="submit" value="ログイン">
+			<br> <br>
+			<img src="./img/title.png" alt="Ch@" width="35%">
+			<br> <br> <input type="text" name="userId"
+				value="${been.userId}" title="USER ID" class="placeholder"
+				class="id"> <input type="password" name="password"
+				value="${been.password}" title="1234567890" class="placeholder"
+				class="password"> <br>
+			<div class="error">${ errorMessage }</div>
+			<br> <input type="submit" value="ログイン">
+
+
+
 		</center>
 	</form>
+	<center>
+		<form action="/chat/signup" method="get">
+		<input type="submit" value="新規登録">
+		</form>
+	</center>
 </body>
 </html>

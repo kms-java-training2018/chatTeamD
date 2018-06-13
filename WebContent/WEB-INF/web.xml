@@ -85,7 +85,7 @@
 		<servlet-name>MyPageUpdateServlet</servlet-name>
 		<url-pattern>/updateMyPage</url-pattern>
 	</servlet-mapping>
-				<servlet>
+	<servlet>
 		<servlet-name>LogoutServlet</servlet-name>
 		<servlet-class>servlet.LogoutServlet</servlet-class>
 	</servlet>
@@ -93,4 +93,14 @@
 		<servlet-name>LogoutServlet</servlet-name>
 		<url-pattern>/logout</url-pattern>
 	</servlet-mapping>
+
+		<servlet>
+		<servlet-name>SignUpServlet</servlet-name>
+		<servlet-class>servlet.SignUpServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SignUpServlet</servlet-name>
+		<url-pattern>/signup</url-pattern>
+	</servlet-mapping>
+
 </web-app>
