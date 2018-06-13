@@ -12,13 +12,11 @@
 <body class="background">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
 	<div id="header">
-	${ session.getUserName() }さん
-	<br>
-	<form name="log_out" action="/chat/logout" method="POST">
-		<input type="button" value="logout"
-			onClick="if(confirm ('本当にログアウトしますか？')){submit();}">
-	</form>
-	<hr>
+		${ session.getUserName() }さん <br>
+		<form name="logout" action="/chat/logout" method="POST">
+		<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
+		</form>
+		<hr>
 	</div>
 	<!-- ここまでです -->
 	<br>
