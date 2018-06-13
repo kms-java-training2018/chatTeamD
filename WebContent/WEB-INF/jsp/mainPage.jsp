@@ -19,7 +19,7 @@
 	<div id="header">
 		${ session.getUserName() }さん <br>
 		<form name="logout" action="/chat/logout" method="POST">
-		<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
+			<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
 		</form>
 		<hr>
 	</div>
@@ -77,29 +77,35 @@
 			<!-- jstlで作成したform"GM"がひとつだけの場合、インデックスが機能しないのを避ける為に作成 -->
 		</form>
 		<!-- 綺麗じゃないから余裕があれば直す -->
-		<table class="mTable">
-			<c:forEach var="obj" items="${groupbean}" varStatus="status">
-				<tr>
-					<td>
-						<form name="GM" method="get" action="/chat/groupMessage">
-							<input type=hidden name="groupNo"
-								value="${groupbean[status.index].groupNo}">○ <a
-								href="javascript:GM[${status.index + 1}].submit()">${groupbean[status.index].groupName}</a>
-						</form>
-					</td>
-					<td>${groupbean[status.index].groupMessage}</td>
-				</tr>
-			</c:forEach>
-		</table>
-		${groupbean[0].getGroupNullMes()}
+		<c:choose>
+			<c:when test="${!empty groupbean[0].getGroupNullMes()}">
+		<img src="./img/zeroGroup.png" alt="dm" width="200" class="inlineBlock">
+		</c:when>
+			<c:otherwise>
+				<table class="mTable">
+					<c:forEach var="obj" items="${groupbean}" varStatus="status">
+						<tr>
+							<td>
+								<form name="GM" method="get" action="/chat/groupMessage">
+									<input type=hidden name="groupNo"
+										value="${groupbean[status.index].groupNo}">○ <a
+										href="javascript:GM[${status.index + 1}].submit()">${groupbean[status.index].groupName}</a>
+								</form>
+							</td>
+							<td>${groupbean[status.index].groupMessage}</td>
+						</tr>
+					</c:forEach>
+				</table>
+			</c:otherwise>
+		</c:choose>
 		<p class="inlineBlock">
-		<img src="./img/makeGroup.png"
-			usemap="#Map" alt="makeGroup" height="100" class="block">
-		<map name="Map">
-			<area shape="circle" coords="50,50,50" href="/chat/makeGroup"
-				alt="makeGroup">
-		</map>
-		<img src="./img/GM.png" alt="dm" width="200" class="block"> <br>
+			<img src="./img/makeGroup.png" usemap="#Map" alt="makeGroup"
+				height="100" class="block">
+			<map name="Map">
+				<area shape="circle" coords="50,50,50" href="/chat/makeGroup"
+					alt="makeGroup">
+			</map>
+			<img src="./img/GM.png" alt="dm" width="200" class="block"> <br>
 		</p>
 	</div>
 </body>

@@ -89,7 +89,10 @@ a {
 	width:300px;
 }
 .inlineBlock{
+	vertical-align: middle;
 	display:inline-block;
+	padding-left:20px;
+
 }
 .block{
 	display:block;
