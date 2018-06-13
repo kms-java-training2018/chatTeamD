@@ -10,7 +10,6 @@
 }
 
 #page {
-	background: #FF7A00;
 	width: 900px;
 	padding: 0px;
 	text-align: center;
@@ -18,27 +17,16 @@
 	border: 0px;
 	margin-left: auto;
 	margin-right: auto;
-}
-
-.page {
-	background: #FFC085;
-	text-align: center;
-	width: 80%;
-	line-height: 0px auto;
-	padding: 0px;
-	margin-top: 0px;
-	margin-bottom: 0px;
-	margin-left: auto;
-	margin-right: auto;
+	background-color: bisque;
+	font-family: 'Book Antiqua', 'Avenir', 'Corbel', 'Yu Gothic';
 }
 
 .centerizedTable {
-	text-align:left;
+	text-align: left;
 	margin-left: auto;
 	margin-right: auto;
 }
 
 .background {
-	background-color: bisque;
-	font-family: 'Book Antiqua', 'Avenir', 'Corbel', 'Yu Gothic';
+
 }
