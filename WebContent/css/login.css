@@ -1,0 +1,34 @@
+@charset "UTF-8";
+
+.main {
+	font-family: 'Book Antiqua', 'Avenir', 'Corbel', 'Yu Gothic';
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.id {
+	text-align: center;
+}
+
+.password {
+	text-align: center;
+}
+
+.error {
+	color: red;
+	font-weight: bold;
+	text-align: center;
+}
+
+.title {
+	font-size: 200%;
+}
+
+.sub {
+	font-size: 80%;
+}
+
+input {
+	width: 150px;
+	text-align: center;
+}
