@@ -24,6 +24,8 @@
 		<hr>
 	</div>
 	<!-- ここまでです -->
+	<!-- グループメッセージから来たか判別する為のパラメータ -->
+	<input type="hidden" name="from" id="from" value="${fromGM}">
 	<table class="rogoTable">
 		<tr>
 			<td><p class="title">Ch@</p></td>

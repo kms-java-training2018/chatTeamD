@@ -66,6 +66,14 @@ public class MainPageServlet extends HttpServlet {
 				// リクエストに送る
 				req.setAttribute("userbean", userListBeanList);
 				req.setAttribute("groupbean", groupListBeanList);
+				// 初期表示用のパラメータ変更
+				if (session.getAttribute("from") != null) {
+					// セッションに入れたパラメータ削除
+					session.removeAttribute("from");
+					// グループ作成ページから来ていると判断
+					req.setAttribute("fromGM", "GMから来た");
+				}
+
 			}
 		}
 		req.getRequestDispatcher(direction).forward(req, res);
@@ -124,6 +132,13 @@ public class MainPageServlet extends HttpServlet {
 				// リクエストに送る
 				req.setAttribute("userbean", userListBeanList);
 				req.setAttribute("groupbean", groupListBeanList);
+				// 初期表示用のパラメータ変更
+				if (session.getAttribute("from") != null) {
+					// セッションに入れたパラメータ削除
+					session.removeAttribute("from");
+					// グループ作成ページから来ていると判断
+					req.setAttribute("fromGM", "GMから来た");
+				}
 			}
 
 		}
