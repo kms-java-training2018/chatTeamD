@@ -100,7 +100,7 @@
 					test="${!obj.userName.equals(bean.getOutFlagMessage()) && !obj.userNo.equals(session.getUserNo())}">
 					<tr>
 						<td width="10%" id="otherName"><a
-							href="/chat/showProfile?otherUserId=${ obj.userId }"
+							href="/chat/showProfile?otherUserNo=${ obj.userNo }"
 							target="blank"><c:out value="${ obj.userName}" /></a></td>
 						<td width="38%" rowspan="2" id="other${ obj.colorNo }"><c:out
 								value="${ obj.message }" /></td>

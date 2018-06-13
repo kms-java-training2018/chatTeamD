@@ -46,14 +46,14 @@ public class MyPageServlet extends HttpServlet {
 			return;
 		}
 
-		String sesUserId = sesBean.getUserId();
+		String sesUserNo = sesBean.getUserNo();
 
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
 		// 自己紹介文(myPageText), ユーザID(ses)
 		bean.setMyPageText(myPageText);
-		bean.setUserId(sesUserId);
+		bean.setUserNo(sesUserNo);
 
 		// -------------------------------------------------------------
 		// SQL実行

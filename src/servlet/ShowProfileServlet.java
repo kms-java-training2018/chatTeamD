@@ -28,7 +28,7 @@ public class ShowProfileServlet extends HttpServlet {
 		String direction = "/WEB-INF/jsp/showProfile.jsp";
 
 		// userNoを取得し、beanへセット
-		bean.setUserId(req.getParameter("otherUserId"));
+		bean.setUserNo(req.getParameter("otherUserNo"));
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------

@@ -20,7 +20,7 @@ public class MyPageModel {
 		// -------------------------------------------------------------
 		// 初期化
 		StringBuilder sb = new StringBuilder();
-		String userId = bean.getUserId();
+		String userNo = bean.getUserNo();
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
@@ -52,7 +52,7 @@ public class MyPageModel {
 			sb.append("FROM ");
 			sb.append("M_USER ");
 			sb.append("WHERE ");
-			sb.append(" user_id = '" + userId + "' ");
+			sb.append(" USER_NO = '" + userNo + "' ");
 			// -------------------------------------------------------------
 
 			// SQL実行
