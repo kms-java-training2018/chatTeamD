@@ -71,10 +71,9 @@
 						<td colspan="5" height="10px"></td>
 					</tr>
 				</c:when>
-				<!-- 相手ユーザーの名前とメッセージ表示 -->
+
 				<c:otherwise>
 					<tr>
-						<!-- 相手の名前リンク(送信者名) -->
 						<td width="10%" align="left" rowspan="2"><form
 								name="showProfile" action="/chat/showProfile" method="GET"
 								target="newtab">
