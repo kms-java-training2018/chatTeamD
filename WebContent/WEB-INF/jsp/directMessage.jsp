@@ -33,8 +33,11 @@
 		</h3>
 	</form>
 	</center>
-	<!-- メッセージを表示し、自分のメッセージであれば削除ボタンを付与する処理 -->
+
 	<br>
+	<form name="showProfile">
+	<!-- リストに入ったログインユーザー名、相手ユーザー名などの順番(インデックス)調整用の空formタグ -->
+	</form>
 	<table>
 		<c:forEach var="obj" items="${bean.listMessage}" varStatus="status">
 			<c:if test="${bean.getListUserNo()[status.index]==bean.getMyNo()}">
@@ -46,7 +49,10 @@
 						<td width="38%" align="left" rowspan="2"></td>
 						<td width="4%"></td>
 						<td width="38%" align="right" rowspan="2" class="me">${obj}</td>
-						<td width="10%" align="right">${bean.getListUserName()[status.index]}</td>
+						<td width="10%" align="right">
+						<form name="showProfile" action="/chat/showProfile" method="GET">
+						${bean.getListUserName()[status.index]}
+						</form></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -71,7 +77,7 @@
 								target="newtab">
 								<input type=hidden name="otherUserNo"
 									value="${bean.getListUserNo()[status.index]}"> <a
-									href="javascript:showProfile[${status.index}].submit()">${bean.getListUserName()[status.index]}</a>
+									href="javascript:showProfile[${status.index+1}].submit()">${bean.getListUserName()[status.index]}</a>
 							</form></td>
 						<td width="38%" align="left" rowspan="2" class="you">${obj}</td>
 						<td width="4%"></td>
