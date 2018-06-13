@@ -9,7 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="./css/Maincss.css"
 	media="all">
 </head>
-<body class="background">
+<body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
 	<div id="header">
 		${ session.getUserName() }さん <br>

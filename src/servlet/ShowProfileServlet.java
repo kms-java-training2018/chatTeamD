@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.MyPageBean;
-import model.ShowProfileModel;
+import model.MyPageModel;
 
 public class ShowProfileServlet extends HttpServlet {
 
@@ -24,11 +24,11 @@ public class ShowProfileServlet extends HttpServlet {
 		// -------------------------------------------------------------
 		// 初期化
 		MyPageBean bean = new MyPageBean();
-		ShowProfileModel model = new ShowProfileModel();
+		MyPageModel model = new MyPageModel();
 		String direction = "/WEB-INF/jsp/showProfile.jsp";
 
 		// userNoを取得し、beanへセット
-		bean.setUserNo(req.getParameter("otherUserNo"));
+		bean.setUserId(req.getParameter("otherUserId"));
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------

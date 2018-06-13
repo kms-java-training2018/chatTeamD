@@ -10,13 +10,15 @@
 	media="all">
 <link rel="stylesheet" type="text/css" href="./css/Maincss.css"
 	media="all">
+
+
 </head>
 <body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
 	<div id="header">
 		${ session.getUserName() }さん <br>
 		<form name="logout" action="/chat/logout" method="POST">
-		<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
+			<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
 		</form>
 		<hr>
 	</div>
@@ -28,14 +30,17 @@
 	<center>
 		<table>
 			<tr>
-				<td class="topoutside" rowspan="2"></td>
+				<td class="topoutside"></td>
 				<td class="groupname">${ bean.getGroupName() }</td>
-				<td class="topoutside" rowspan="2"></td>
-			</tr>
-			<tr>
-				<td class="author">作成者:${ bean.getAuthorName() }</td>
-			</tr>
+				<td class="topoutside"></td>
+				</tr>
+				<tr>
+				<td class="topoutside"></td>
+				<td class="author">作成者: ${ bean.getAuthorName() }</td>
+				<td class="topoutside"></td>
+				</tr>
 		</table>
+
 	</center>
 	<center>
 		<table cellspacing="0">
@@ -90,11 +95,12 @@
 						<td colspan="5" height="10px"></td>
 					</tr>
 				</c:if>
+				<!-- それ以外の方々 -->
 				<c:if
 					test="${!obj.userName.equals(bean.getOutFlagMessage()) && !obj.userNo.equals(session.getUserNo())}">
 					<tr>
 						<td width="10%" id="otherName"><a
-							href="/chat/showProfile?otherUserNo=${ obj.userNo }"
+							href="/chat/showProfile?otherUserId=${ obj.userId }"
 							target="blank"><c:out value="${ obj.userName}" /></a></td>
 						<td width="38%" rowspan="2" id="other${ obj.colorNo }"><c:out
 								value="${ obj.message }" /></td>
@@ -115,7 +121,7 @@
 				</c:if>
 			</c:forEach>
 		</table>
-		<form action="/chat/groupMessage" method="POST" >
+		<form action="/chat/groupMessage" method="POST">
 			<input type="text" name="message"><input type="hidden"
 				name="groupNo" value="${ bean.getGroupNo()}"> <input
 				type="submit" value="送信">

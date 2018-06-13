@@ -8,6 +8,10 @@
 	font-family: 'Book Antiqua', 'Avenir', 'Corbel', 'Yu Gothic';
 }
 
+.error{
+	color:red;
+}
+
 input {
 	text-align: center;
 }

@@ -60,7 +60,7 @@ public class GroupMessageModel {
 			// SQL文作成
 			// USER_NAME, MY_PAGE_TEXT取得
 			sb.append("SELECT ");
-			sb.append("USER_NAME, USER_NO, MESSAGE, MESSAGE_NO ");
+			sb.append("USER_NAME, USER_ID, USER_NO, MESSAGE, MESSAGE_NO ");
 			sb.append("FROM ");
 			sb.append("T_MESSAGE_INFO INNER JOIN M_USER ON T_MESSAGE_INFO.SEND_USER_NO = M_USER.USER_NO ");
 			sb.append("INNER JOIN M_GROUP ON T_MESSAGE_INFO.TO_SEND_GROUP_NO = M_GROUP.GROUP_NO ");
@@ -88,12 +88,14 @@ public class GroupMessageModel {
 						bean.setMessage(rs.getString("MESSAGE"));
 						bean.setUserNo(rs.getString("USER_NO"));
 						bean.setGroupNo(rs.getInt("MESSAGE_NO"));
+						bean.setUserId(rs.getString("USER_ID"));
 					}
 				} else {
 					bean.setUserName(rs.getString("USER_NAME"));
 					bean.setMessage(rs.getString("MESSAGE"));
 					bean.setUserNo(rs.getString("USER_NO"));
 					bean.setMessageNo(rs.getInt("MESSAGE_NO"));
+					bean.setUserId(rs.getString("USER_ID"));
 				}
 
 				for (int i = 0; i < output.size(); i++) {
@@ -249,73 +251,6 @@ public class GroupMessageModel {
 			sb.append("SET DELETE_FLAG = '1' ");
 			sb.append("WHERE MESSAGE_NO =");
 			sb.append(messageNo);
-
-			// -------------------------------------------------------------
-
-			// SQL実行
-			ResultSet rs = stmt.executeQuery(sb.toString());
-
-			// -------------------------------------------------------------
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			// SQLの接続は絶対に切断
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		}
-		// -------------------------------------------------------------
-		return bean;
-	}
-
-	public GroupMessageBean check(GroupMessageBean bean) {
-
-		// -------------------------------------------------------------
-		// 初期化
-		StringBuilder sb = new StringBuilder();
-		int messageNo = 0;
-		messageNo = bean.getMessageNo();
-		String userNo = bean.getUserNo();
-		int groupNo = bean.getGroupNo();
-		// -------------------------------------------------------------
-
-		// -------------------------------------------------------------
-		Connection conn = null;
-		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
-		String user = "DEV_TEAM_D";
-		String dbPassword = "D_DEV_TEAM";
-		// JDBCドライバーのロード
-		try {
-
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		// 接続作成
-		try {
-
-			conn = DriverManager.getConnection(url, user, dbPassword);
-
-			Statement stmt = conn.createStatement();
-
-			// -------------------------------------------------------------
-			// SQL文作成
-			// USER_NAME, MY_PAGE_TEXT取得
-			sb.append("SELECT ");
-			sb.append("MESSAGE ");
-			sb.append("FROM ");
-			sb.append("T_MESSAGE_INFO ");
-			sb.append("WHERE ");
-			sb.append("SEND_USER_NO = ");
-			sb.append("'" + userNo + "'");
-			sb.append("AND ");
-			sb.append("TO_SEND_GROUP_NO = ");
-			sb.append("'" + groupNo + "'");
 
 			// -------------------------------------------------------------
 

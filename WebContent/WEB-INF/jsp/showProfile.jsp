@@ -9,7 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="./css/Maincss.css"
 	media="all">
 </head>
-<body class="background">
+<body id="page">
 <br><br><br><br>
 	<form action="/chat/showProfile" method="POST">
 		<center>

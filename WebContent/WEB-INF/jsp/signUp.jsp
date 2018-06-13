@@ -17,7 +17,7 @@
 		<p class="p1">Ch@ 新規会員登録ページ</p>
 		<p class="p3">すべて必須入力となっています。</p>
 
-		 <br> <br>
+		<br> <br>
 		<form action="/chat/signup" method="post">
 			<table class="table">
 				<tr>
@@ -29,7 +29,7 @@
 					<td class="td"><input type="text" name="userId"
 						title="半角20字まで" class="placeholder"></td>
 					<td class="td"><input type="password" name="password"
-						title="半角20字まで" class="placeholder"></td>
+						title="半角20字まで" class="placeholder" id="password"></td>
 					<td class="td"><input type="text" name="userName" title="表示名"
 						class="placeholder"></td>
 				</tr>
@@ -50,11 +50,11 @@
 
 	</center>
 
-	${ errormsg }
+	<p class="error">${ errormsg }</p>
 
 	<br>
 
-		<a href="/chat/login"> <input type="submit" value="戻る">
-		</a>
+	<a href="/chat/login"> <input type="submit" value="戻る">
+	</a>
 </body>
 </html>
