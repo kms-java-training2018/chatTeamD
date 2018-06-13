@@ -1,27 +1,26 @@
 @charset "UTF-8";
 
-a{
-	color:black;
+a {
+	color: black;
 }
 
-.groupname{
-	width:80%;
-	text-align:right;
-	font-size:200%;
+.groupname {
+	width: 80%;
+	text-align: right;
+	font-size: 200%;
 	font-weight: bold;
 }
 
-.author{
-	width:80%;
-	text-align:left;
-	font-size:125%;
+.author {
+	width: 80%;
+	text-align: left;
+	font-size: 125%;
 	font-weight: bold;
 }
 
-.topoutside{
-	width:10%;
+.topoutside {
+	width: 10%;
 }
-
 
 #main {
 	text-decoration: none;
@@ -30,12 +29,14 @@ a{
 #myName {
 	text-align: left;
 	word-break: break-all;
+	font-size: 100%;
 }
 
 #otherName {
 	text-align: right;
 	word-break: break-all;
 	text-decoration: none;
+	font-size: 100%;
 }
 
 #me1 {
@@ -48,9 +49,11 @@ a{
 	border-collapse: separate;
 	border-radius: 10px;
 	border-spacing: 0;
+	font-size: 100%;
 }
 
 #other1 {
+	font-size: 100%;
 	background-color: red;
 	color: white;
 	width: 35%;
@@ -63,6 +66,7 @@ a{
 }
 
 #me2 {
+	font-size: 100%;
 	background-color: aquamarine;
 	color: white;
 	width: 35;
@@ -75,6 +79,7 @@ a{
 }
 
 #other2 {
+	font-size: 100%;
 	background-color: aquamarine;
 	color: white;
 	width: 35%;
@@ -87,6 +92,7 @@ a{
 }
 
 #me3 {
+	font-size: 100%;
 	background-color: lightsteelblue;
 	color: white;
 	width: 35;
@@ -99,6 +105,7 @@ a{
 }
 
 #other3 {
+	font-size: 100%;
 	background-color: lightsteelblue;
 	color: white;
 	width: 35%;
@@ -111,6 +118,7 @@ a{
 }
 
 #me4 {
+	font-size: 100%;
 	background-color: khaki;
 	color: white;
 	width: 35;
@@ -123,6 +131,7 @@ a{
 }
 
 #other4 {
+	font-size: 100%;
 	background-color: khaki;
 	color: white;
 	width: 35%;
@@ -135,6 +144,7 @@ a{
 }
 
 #me5 {
+	font-size: 100%;
 	background-color: springgreen;
 	color: white;
 	width: 35;
@@ -147,6 +157,7 @@ a{
 }
 
 #other5 {
+	font-size: 100%;
 	background-color: springgreen;
 	color: white;
 	width: 35%;
@@ -159,6 +170,7 @@ a{
 }
 
 #me6 {
+	font-size: 100%;
 	background-color: orange;
 	color: white;
 	width: 35;
@@ -171,6 +183,7 @@ a{
 }
 
 #other6 {
+	font-size: 100%;
 	background-color: orange;
 	color: white;
 	width: 35%;
@@ -183,6 +196,7 @@ a{
 }
 
 #me7 {
+	font-size: 100%;
 	background-color: lavender;
 	color: white;
 	width: 35;
@@ -195,6 +209,7 @@ a{
 }
 
 #other7 {
+	font-size: 100%;
 	background-color: lavender;
 	color: white;
 	width: 35%;
@@ -207,6 +222,7 @@ a{
 }
 
 #me8 {
+	font-size: 100%;
 	background-color: burlywood;
 	color: white;
 	width: 35;
@@ -219,6 +235,7 @@ a{
 }
 
 #other8 {
+	font-size: 100%;
 	background-color: burlywood;
 	color: white;
 	width: 35%;
@@ -231,6 +248,7 @@ a{
 }
 
 #me9 {
+	font-size: 100%;
 	background-color: deepskyblue;
 	color: white;
 	width: 35;
@@ -243,6 +261,7 @@ a{
 }
 
 #other9 {
+	font-size: 100%;
 	background-color: deepskyblue;
 	color: white;
 	width: 35%;

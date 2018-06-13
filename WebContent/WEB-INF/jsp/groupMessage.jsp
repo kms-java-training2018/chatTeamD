@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="./css/Maincss.css"
 	media="all">
 </head>
-<body class="background">
+<body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
 	<div id="header">
 	${ session.getUserName() }さん
@@ -117,7 +117,7 @@
 				</c:if>
 			</c:forEach>
 		</table>
-		<form action="/chat/groupMessage" method="POST">
+		<form action="/chat/groupMessage" method="POST" >
 			<input type="text" name="message"><input type="hidden"
 				name="groupNo" value="${ bean.getGroupNo()}"> <input
 				type="submit" value="送信">
