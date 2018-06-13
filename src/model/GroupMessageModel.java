@@ -78,7 +78,7 @@ public class GroupMessageModel {
 			while (rs.next()) {
 				int check = 0;
 				GroupMessageBean bean = new GroupMessageBean();
-				if (outflag == null || outflag.equals("")) {
+				if (!outflag.isEmpty()) {
 					for (int i = 0; i < outflag.size(); i++) {
 						if (rs.getString("USER_NO").equals(outflag.get(i))) {
 							bean.setUserName("送信者不明");
