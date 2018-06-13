@@ -33,27 +33,20 @@
 		<form action="/chat/makeGroup" method="POST">
 			<input type="text" title="グループ名(全角10文字まで)" class="placeholder"
 				name="groupName" value="" size="30"> <br>
-			<table class="centerizedTable">
-				<tr>
-					<c:forEach var="obj" items="${bean}" varStatus="status">
-						<c:if test="${status.index % 3 == 0}">
-				</tr>
-				<tr>
-					</c:if>
-					<td><input type="checkbox" name="userNo"
-						value="${bean[status.index].userNo}">${bean[status.index].userName}
-					</td>
-					</c:forEach>
-				</tr>
-			</table>
+				<div class="listDiv">
+		<c:forEach var="obj" items="${bean}" varStatus="status">
+			<a class="listCell"> <input type="checkbox" name="userNo"
+				value="${bean[status.index].userNo}">${bean[status.index].userName}
+			</a>
+		</c:forEach>
+	</div>
 			<br> <input type="image" src="./img/makeGroupBtn.png"
 				name="button" alt="makeGroup" height="80">
 		</form>
 	</div>
+
 	<div class="backBtn">
-	<br>
-	<br>
-	<br>
+		<br> <br> <br>
 		<form action="/chat/main" method="POST">
 			<input type="image" src="./img/backMainPage.png" name="button"
 				alt="makeGroup" height="40">
