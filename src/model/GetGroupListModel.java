@@ -73,6 +73,7 @@ public class GetGroupListModel {
 			if (beanList.isEmpty()) {
 				GroupListBean bean = new GroupListBean();
 				bean.setGroupNullMes("グループに参加していません");
+				beanList.add(bean);
 			}
 		} catch (SQLException e) {
 			// SQLエラーはすべてここにくる

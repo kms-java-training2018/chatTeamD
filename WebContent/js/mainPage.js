@@ -2,8 +2,8 @@
  * MainPage
  */
 window.onload = function() {
-	var fromCheck = document.getElementByID("from").value;
-	if (fromCheck == "GMから来た") {
+	var fromCheck = document.getElementById("from").value;
+	if (fromCheck != "GMから来た") {
 		// 最初GM隠してDM選択状態色にする
 		document.getElementById("groupMessage").style.display = "none";
 		var dmBtn = document.getElementById("directMessageBtn");
