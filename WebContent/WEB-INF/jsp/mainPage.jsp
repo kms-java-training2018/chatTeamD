@@ -14,13 +14,12 @@
 <!-- JS読み込み	-->
 <script src="./js/mainPage.js"></script>
 </head>
-<body id="page">
+<body id="mainPage">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
 	<div id="header">
 		${ session.getUserName() }さん <br>
-		<form name="log_out" action="/chat/logout" method="POST">
-			<input type="button" value="logout"
-				onClick="if(confirm ('本当にログアウトしますか？')){submit();}">
+		<form name="logout" action="/chat/logout" method="POST">
+		<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
 		</form>
 		<hr>
 	</div>
@@ -46,14 +45,15 @@
 			<td id="groupMessageBtn" onclick="GMBtnclick()">GroupMessage</td>
 		</tr>
 	</table>
+
 	<div class="page" id="directMessage">
 		<br>
 		<form name="DM">
 			<!-- jstlで作成したform"DM"がひとつだけの場合、インデックスが機能しないのを避ける為に作成 -->
 		</form>
 		<!-- 綺麗じゃないから余裕があれば直す -->
-		<img src="./img/DM.png" alt="dm" height="150">
-		<table class="dmTable">
+		<img src="./img/DM.png" alt="dm" width="200">
+		<table class="mTable">
 			<c:forEach var="obj" items="${userbean}" varStatus="status">
 				<tr>
 					<td>
@@ -67,7 +67,6 @@
 				</tr>
 			</c:forEach>
 		</table>
-		<br>
 	</div>
 
 	<div class="page" id="groupMessage">
@@ -76,7 +75,7 @@
 			<!-- jstlで作成したform"GM"がひとつだけの場合、インデックスが機能しないのを避ける為に作成 -->
 		</form>
 		<!-- 綺麗じゃないから余裕があれば直す -->
-		<table class="table">
+		<table class="mTable">
 			<c:forEach var="obj" items="${groupbean}" varStatus="status">
 				<tr>
 					<td>
@@ -86,17 +85,20 @@
 								href="javascript:GM[${status.index + 1}].submit()">${groupbean[status.index].groupName}</a>
 						</form>
 					</td>
-					<td>: ${groupbean[status.index].groupMessage}</td>
+					<td>${groupbean[status.index].groupMessage}</td>
 				</tr>
 			</c:forEach>
 		</table>
-		${groupbean[0].getGroupNullMes()} <img src="./img/makeGroup.png"
-			usemap="#Map" alt="makeGroup" height="100">
+		${groupbean[0].getGroupNullMes()}
+		<p class="inlineBlock">
+		<img src="./img/makeGroup.png"
+			usemap="#Map" alt="makeGroup" height="100" class="block">
 		<map name="Map">
 			<area shape="circle" coords="50,50,50" href="/chat/makeGroup"
 				alt="makeGroup">
 		</map>
-		<br>
+		<img src="./img/GM.png" alt="dm" width="200" class="block"> <br>
+		</p>
 	</div>
 </body>
 </html>

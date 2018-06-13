@@ -1,5 +1,16 @@
 @charset "UTF-8";
 
+#mainPage {
+	background: #FF7A00;
+	width: 900px;
+	padding: 0px;
+	text-align: center;
+	margin-top: 0px;
+	border: 0px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .page {
 	background: #FFC085;
 	text-align: center;
@@ -42,29 +53,31 @@ a {
 	padding-left: 100px;
 }
 
-.table td {
+.tabTable td {
+	text-align: left;
+}
+.tabTable td:nth-of-type(1) {
+	text-align: left;
+}
+.tabTable td:nth-of-type(2) {
 	text-align: left;
 }
 
-.table td:nth-of-type(1) {
-	text-align: left;
-	background-color: #B13228;
-	color: #FFFFFF;
-}
 
-.dmTable {
-	display: inline-block;
+.mTable {
 	vertical-align: top;
-	padding-left: 10px;
+	padding: 0px;
+	display:inline-block;
 }
 
-.dmTable td:nth-of-type(1) {
+.mTable td:nth-of-type(1) {
 	text-align: left;
 	background-color: #B13228;
 	color: #FFFFFF;
+	width:150px;
 }
 
-.dmTable td:nth-of-type(2) {
+.mTable td:nth-of-type(2) {
 	text-align: left;
 	background-color: #FF7A00;
 	color: #FFFFFF;
@@ -72,4 +85,11 @@ a {
 	border-collapse: separate;
 	border-radius: 10px;
 	border-spacing: 0;
+	width:300px;
+}
+.inlineBlock{
+	display:inline-block;
+}
+.block{
+	display:block;
 }
