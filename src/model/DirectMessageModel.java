@@ -61,8 +61,8 @@ public class DirectMessageModel {
 			}
 			//(1)-2パラメータチェック
 			try {
-				//DM相手のパラメータチェック、ユーザーネーム取得
-				String sqlGetuserNo = "SELECT USER_NO,USER_NAME FROM M_USER WHERE USER_NO = '" + bean.getUserNo() + "'";
+				//DM相手のパラメータチェック、会員番号、ユーザーネーム、ユーザーID取得
+				String sqlGetuserNo = "SELECT USER_NO, USER_NAME, USER_ID FROM M_USER WHERE USER_NO = '" + bean.getUserNo() + "'";
 				PreparedStatement pStmtGetuserNo = conn.prepareStatement(sqlGetuserNo);
 				//ResultSetインスタンスにSELECT文の結果を格納する
 				ResultSet result = pStmtGetuserNo.executeQuery();
@@ -71,6 +71,7 @@ public class DirectMessageModel {
 					// beanに会話相手のuserNoセット
 					bean.setUserNo(result.getInt("USER_NO"));
 					bean.setUsername(result.getString("USER_NAME"));
+					bean.setUserId(result.getString("USER_ID"));
 				}
 				//(1)-3		チェックでエラーが発生した場合の処理
 			} catch (SQLException e) {

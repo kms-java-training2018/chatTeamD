@@ -12,6 +12,12 @@ public class DirectMessageBean {
 	/** ログインユーザーの会員番号を格納する変数を宣言 */
 	private int myNo;
 
+	/** 相手のユーザーIDを格納する変数を宣言 */
+	private String userId;
+
+	/** ログインユーザーのIDを格納する変数を宣言 */
+	private String myId;
+
 	/**ログインユーザーあての会話情報を格納する変数を宣言 */
 	private String message;
 
@@ -35,6 +41,10 @@ public class DirectMessageBean {
 	private ArrayList<String> listUserNo = new ArrayList<>();
 
 	private ArrayList<String> listMsgNo = new ArrayList<>();
+
+
+
+	private ArrayList<String> listUserId = new ArrayList<>();
 
 
 
@@ -127,6 +137,30 @@ public class DirectMessageBean {
 
 	public void setMyname(String myname) {
 		this.myname = myname;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getMyId() {
+		return myId;
+	}
+
+	public void setMyId(String myId) {
+		this.myId = myId;
+	}
+
+	public ArrayList<String> getListUserId() {
+		return listUserId;
+	}
+
+	public void setListUserId(ArrayList<String> listUserId) {
+		this.listUserId = listUserId;
 	}
 
 }
