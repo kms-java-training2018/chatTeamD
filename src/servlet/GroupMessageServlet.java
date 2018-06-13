@@ -101,6 +101,8 @@ public class GroupMessageServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		// -------------------------------------------------------------
+
+		session.setAttribute("from", "GMからきた");
 		req.setAttribute("bean", bean);
 		req.setAttribute("groupBean", bean);
 		req.setAttribute("list", list);
