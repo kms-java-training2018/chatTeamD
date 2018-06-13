@@ -27,7 +27,7 @@
 	<form name="topShowProfile" action="/chat/showProfile" method="GET"
 		target="newtab">
 		<!-- 相手の名前リンク(ページトップ) -->
-		<input type=hidden name="otherUserId" value="${bean.getUserId()}">
+		<input type=hidden name="otherUserNo" value="${bean.getUserNo()}">
 		<h3>
 			<a href="javascript:topShowProfile.submit()">${bean.getUsername()}</a>
 		</h3>
@@ -40,7 +40,6 @@
 	</form>
 	<table>
 		<c:forEach var="obj" items="${bean.listMessage}" varStatus="status">
-			<!-- ログインユーザーの名前とメッセージと削除ボタン表示 -->
 			<c:if test="${bean.getListUserNo()[status.index]==bean.getMyNo()}">
 			</c:if>
 			<c:choose>
@@ -71,14 +70,13 @@
 						<td colspan="5" height="10px"></td>
 					</tr>
 				</c:when>
-
 				<c:otherwise>
 					<tr>
 						<td width="10%" align="left" rowspan="2"><form
 								name="showProfile" action="/chat/showProfile" method="GET"
 								target="newtab">
-								<input type=hidden name="otherUserId"
-									value="${bean.getListUserId()[status.index]}"> <a
+								<input type=hidden name="otherUserNo"
+									value="${bean.getListUserNo()[status.index]}"> <a
 									href="javascript:showProfile[${status.index+1}].submit()">${bean.getListUserName()[status.index]}</a>
 							</form></td>
 						<td width="38%" align="left" rowspan="2" class="you">${obj}</td>
@@ -101,7 +99,6 @@
 	<br>
 	<br>
 	<br>
-	<!-- メッセージ送信ボタンとメインメニューに戻るボタン -->
 	<center>
 	<form action="/chat/directMessage" method="POST">
 		<input type=hidden name="check" value="2"> <input type="text"
