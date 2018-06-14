@@ -22,15 +22,15 @@ a {
 	width: 18px;
 }
 
-.msoutside{
+.msoutside {
 	width: 90px;
 }
 
-.msinside{
+.msinside {
 	width: 36px;
 }
 
-.msnone{
+.msnone {
 	width: 342px;
 }
 
@@ -39,22 +39,23 @@ a {
 }
 
 #myName {
-	width:90px;
+	width: 90px;
 	text-align: left;
 	word-break: break-all;
 	font-size: 100%;
 }
 
 #otherName {
-	width:90px;
+	width: 90px;
 	text-align: right;
 	word-break: break-all;
 	text-decoration: none;
 	font-size: 100%;
 }
 
-#me1 {width:342px;
-word-break:break-all;
+#me1 {
+	width: 342px;
+	word-break: break-all;
 	background-color: red;
 	color: white;
 	text-align: left;
@@ -66,8 +67,9 @@ word-break:break-all;
 	font-size: 100%;
 }
 
-#other1 {width:342px;
-word-break:break-all;
+#other1 {
+	width: 342px;
+	word-break: break-all;
 	font-size: 100%;
 	background-color: red;
 	color: white;
@@ -79,8 +81,9 @@ word-break:break-all;
 	border-spacing: 0;
 }
 
-#me2 {width:342px;
-word-break:break-all;
+#me2 {
+	width: 342px;
+	word-break: break-all;
 	font-size: 100%;
 	background-color: aquamarine;
 	color: white;
@@ -92,8 +95,9 @@ word-break:break-all;
 	border-spacing: 0;
 }
 
-#other2 {width:342px;
-word-break:break-all;
+#other2 {
+	width: 342px;
+	word-break: break-all;
 	font-size: 100%;
 	background-color: aquamarine;
 	color: white;
@@ -105,8 +109,9 @@ word-break:break-all;
 	border-spacing: 0;
 }
 
-#me3 {width:342px;
-word-break:break-all;
+#me3 {
+	width: 342px;
+	word-break: break-all;
 	font-size: 100%;
 	background-color: blue;
 	color: white;
@@ -118,8 +123,9 @@ word-break:break-all;
 	border-spacing: 0;
 }
 
-#other3 {width:342px;
-word-break:break-all;
+#other3 {
+	width: 342px;
+	word-break: break-all;
 	font-size: 100%;
 	background-color: blue;
 	color: white;
@@ -131,8 +137,9 @@ word-break:break-all;
 	border-spacing: 0;
 }
 
-#me4 {width:342px;
-word-break:break-all;
+#me4 {
+	width: 342px;
+	word-break: break-all;
 	font-size: 100%;
 	background-color: khaki;
 	color: white;
@@ -144,8 +151,9 @@ word-break:break-all;
 	border-spacing: 0;
 }
 
-#other4 {width:342px;
-word-break:break-all;
+#other4 {
+	width: 342px;
+	word-break: break-all;
 	font-size: 100%;
 	background-color: khaki;
 	color: white;
@@ -157,8 +165,9 @@ word-break:break-all;
 	border-spacing: 0;
 }
 
-#me5 {width:342px;
-word-break:break-all;
+#me5 {
+	width: 342px;
+	word-break: break-all;
 	font-size: 100%;
 	background-color: springgreen;
 	color: white;
@@ -170,8 +179,9 @@ word-break:break-all;
 	border-spacing: 0;
 }
 
-#other5 {width:342px;
-word-break:break-all;
+#other5 {
+	width: 342px;
+	word-break: break-all;
 	font-size: 100%;
 	background-color: springgreen;
 	color: white;
@@ -183,8 +193,9 @@ word-break:break-all;
 	border-spacing: 0;
 }
 
-#me6 {width:342px;
-word-break:break-all;
+#me6 {
+	width: 342px;
+	word-break: break-all;
 	font-size: 100%;
 	background-color: orange;
 	color: white;
@@ -196,8 +207,9 @@ word-break:break-all;
 	border-spacing: 0;
 }
 
-#other6 {width:342px;
-word-break:break-all;
+#other6 {
+	width: 342px;
+	word-break: break-all;
 	font-size: 100%;
 	background-color: orange;
 	color: white;
@@ -209,8 +221,9 @@ word-break:break-all;
 	border-spacing: 0;
 }
 
-#me7 {width:342px;
-word-break:break-all;
+#me7 {
+	width: 342px;
+	word-break: break-all;
 	font-size: 100%;
 	background-color: lavender;
 	color: white;
@@ -222,8 +235,9 @@ word-break:break-all;
 	border-spacing: 0;
 }
 
-#other7 {width:342px;
-word-break:break-all;
+#other7 {
+	width: 342px;
+	word-break: break-all;
 	font-size: 100%;
 	background-color: lavender;
 	color: white;
@@ -235,8 +249,9 @@ word-break:break-all;
 	border-spacing: 0;
 }
 
-#me8 {width:342px;
-word-break:break-all;
+#me8 {
+	width: 342px;
+	word-break: break-all;
 	font-size: 100%;
 	background-color: burlywood;
 	color: white;
@@ -248,8 +263,9 @@ word-break:break-all;
 	border-spacing: 0;
 }
 
-#other8 {width:342px;
-word-break:break-all;
+#other8 {
+	width: 342px;
+	word-break: break-all;
 	font-size: 100%;
 	background-color: burlywood;
 	color: white;
@@ -261,8 +277,9 @@ word-break:break-all;
 	border-spacing: 0;
 }
 
-#me9 {width:342px;
-word-break:break-all;
+#me9 {
+	width: 342px;
+	word-break: break-all;
 	font-size: 100%;
 	background-color: deepskyblue;
 	color: white;
@@ -274,8 +291,9 @@ word-break:break-all;
 	border-spacing: 0;
 }
 
-#other9 {width:342px;
-word-break:break-all;
+#other9 {
+	width: 342px;
+	word-break: break-all;
 	font-size: 100%;
 	background-color: deepskyblue;
 	color: white;

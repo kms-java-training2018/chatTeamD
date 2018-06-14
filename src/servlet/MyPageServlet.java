@@ -25,6 +25,7 @@ public class MyPageServlet extends HttpServlet {
 		MyPageBean bean = new MyPageBean();
 		MyPageModel model = new MyPageModel();
 		String direction = "/WEB-INF/jsp/myPage.jsp";
+		String myPageText = "";
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
@@ -32,7 +33,7 @@ public class MyPageServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		SessionBean sesBean = (SessionBean) session.getAttribute("session");
 
-		String myPageText = (String) req.getAttribute("myPageText");
+//		String myPageText = (String) req.getAttribute("myPageText");
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
@@ -107,7 +108,9 @@ public class MyPageServlet extends HttpServlet {
 		// -------------------------------------------------------------
 
 		String sesUserId = sesBean.getUserId();
+		String sesUserNo = sesBean.getUserNo();
 		bean.setUserId(sesUserId);
+		bean.setUserNo(sesUserNo);
 
 		req.setCharacterEncoding("UTF-8");
 
@@ -214,14 +217,6 @@ public class MyPageServlet extends HttpServlet {
 		sessionBean = (SessionBean) session.getAttribute("session");
 		sessionBean.setUserName(bean.getUserName());
 		session.setAttribute("session", sessionBean);
-		// -------------------------------------------------------------
-		// -------------------------------------------------------------
-		// SQL実行
-		try {
-			bean = model.output(bean);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		// -------------------------------------------------------------
 
 		req.setAttribute("myName", bean.getUserName());
