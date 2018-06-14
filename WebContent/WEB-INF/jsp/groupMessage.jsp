@@ -105,7 +105,7 @@
 						<td width="38%" rowspan="2" id="other${ obj.colorNo }"><c:out
 								value="${ obj.message }" /></td>
 						<td class="msinside"></td>
-						<td class="menone"></td>
+						<td class="msnone"></td>
 						<td class="msoutside"></td>
 					</tr>
 					<tr>

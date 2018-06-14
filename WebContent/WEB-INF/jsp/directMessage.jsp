@@ -8,14 +8,15 @@
 <title>個人チャット</title>
 <link rel="stylesheet" type="text/css" href="./css/directMessage.css"
 	media="all">
-<link rel="stylesheet" type="text/css" href="./css/Maincss.css" media="all">
+<link rel="stylesheet" type="text/css" href="./css/Maincss.css"
+	media="all">
 </head>
 <body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
 	<div id="header">
 		${ session.getUserName() }さん <br>
 		<form name="logout" action="/chat/logout" method="POST">
-		<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
+			<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
 		</form>
 		<hr>
 	</div>
@@ -24,19 +25,19 @@
 	<h1></h1>
 	<br>
 	<center>
-	<form name="topShowProfile" action="/chat/showProfile" method="GET"
-		target="newtab">
-		<!-- 相手の名前リンク(ページトップ) -->
-		<input type=hidden name="otherUserNo" value="${bean.getUserNo()}">
-		<h3>
-			<a href="javascript:topShowProfile.submit()">${bean.getUsername()}</a>
-		</h3>
-	</form>
+		<form name="topShowProfile" action="/chat/showProfile" method="GET"
+			target="newtab">
+			<!-- 相手の名前リンク(ページトップ) -->
+			<input type=hidden name="otherUserNo" value="${bean.getUserNo()}">
+			<h3>
+				<a href="javascript:topShowProfile.submit()">${bean.getUsername()}</a>
+			</h3>
+		</form>
 	</center>
 
 	<br>
 	<form name="showProfile">
-	<!-- リストに入ったログインユーザー名、相手ユーザー名などの順番(インデックス)調整用の空formタグ -->
+		<!-- リストに入ったログインユーザー名、相手ユーザー名などの順番(インデックス)調整用の空formタグ -->
 	</form>
 	<table>
 		<c:forEach var="obj" items="${bean.listMessage}" varStatus="status">
@@ -45,14 +46,14 @@
 			<c:choose>
 				<c:when test="${bean.getListUserNo()[status.index]==bean.getMyNo()}">
 					<tr>
-						<td width="10%" align="left" rowspan="2"></td>
-						<td width="38%" align="left" rowspan="2"></td>
-						<td width="4%"></td>
-						<td width="38%" align="right" rowspan="2" class="me">${obj}</td>
-						<td width="10%" align="right">
-						<form name="showProfile" action="/chat/showProfile" method="GET">
-						${bean.getListUserName()[status.index]}
-						</form></td>
+						<td class="msoutside" rowspan="2"></td>
+						<td class="msnone" rowspan="2"></td>
+						<td class="msinside"></td>
+						<td class="me" rowspan="2">${obj}</td>
+						<td class="myname">
+							<form name="showProfile" action="/chat/showProfile" method="GET">
+								${bean.getListUserName()[status.index]}</form>
+						</td>
 					</tr>
 					<tr>
 						<td></td>
@@ -72,17 +73,17 @@
 				</c:when>
 				<c:otherwise>
 					<tr>
-						<td width="10%" align="left" rowspan="2"><form
+						<td class="yourname" rowspan="2"><form
 								name="showProfile" action="/chat/showProfile" method="GET"
 								target="newtab">
 								<input type=hidden name="otherUserNo"
 									value="${bean.getListUserNo()[status.index]}"> <a
 									href="javascript:showProfile[${status.index+1}].submit()">${bean.getListUserName()[status.index]}</a>
 							</form></td>
-						<td width="38%" align="left" rowspan="2" class="you">${obj}</td>
-						<td width="4%"></td>
-						<td width="38%" align="left" rowspan="2"></td>
-						<td width="10%" align="left"></td>
+						<td rowspan="2" class="you">${obj}</td>
+						<td class="msinside"></td>
+						<td class="msnone" rowspan="2"></td>
+						<td class="msoutside"></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -100,15 +101,15 @@
 	<br>
 	<br>
 	<center>
-	<form action="/chat/directMessage" method="POST">
-		<input type=hidden name="check" value="2"> <input type="text"
-			name="sendMessage" size="50"><input type=hidden name="userNo"
-			value="${bean.getUserNo()}"> <input type="submit"
-			value="送信" name="sendMessage">
-	</form>
-	<form action="/chat/main" method="POST">
-		<input type="submit" value="メインメニューに戻る">
-	</form>
+		<form action="/chat/directMessage" method="POST">
+			<input type=hidden name="check" value="2"> <input type="text"
+				name="sendMessage" size="50"><input type=hidden
+				name="userNo" value="${bean.getUserNo()}"> <input
+				type="submit" value="送信" name="sendMessage">
+		</form>
+		<form action="/chat/main" method="POST">
+			<input type="submit" value="メインメニューに戻る">
+		</form>
 	</center>
 </body>
 </html>
