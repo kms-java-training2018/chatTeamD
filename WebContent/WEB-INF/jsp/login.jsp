@@ -15,7 +15,7 @@
 	<form action="/chat/login" method="POST">
 		<center>
 			<br> <br>
-			<img src="./img/title.png" alt="Ch@" width="35%">
+			<img src="./img/title.png" alt="Ch@" width="25%">
 			<br> <br> <input type="text" name="userId"
 				value="${been.userId}" title="USER ID" class="placeholder"
 				class="id"> <input type="password" name="password"
