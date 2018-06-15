@@ -25,6 +25,7 @@ public class MyPageServlet extends HttpServlet {
 		MyPageBean bean = new MyPageBean();
 		MyPageModel model = new MyPageModel();
 		String direction = "/WEB-INF/jsp/myPage.jsp";
+		String myPageText = "";
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
@@ -32,7 +33,7 @@ public class MyPageServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		SessionBean sesBean = (SessionBean) session.getAttribute("session");
 
-		String myPageText = (String) req.getAttribute("myPageText");
+//		String myPageText = (String) req.getAttribute("myPageText");
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
@@ -46,14 +47,14 @@ public class MyPageServlet extends HttpServlet {
 			return;
 		}
 
-		String sesUserId = sesBean.getUserId();
+		String sesUserNo = sesBean.getUserNo();
 
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
 		// 自己紹介文(myPageText), ユーザID(ses)
 		bean.setMyPageText(myPageText);
-		bean.setUserId(sesUserId);
+		bean.setUserNo(sesUserNo);
 
 		// -------------------------------------------------------------
 		// SQL実行
@@ -107,7 +108,9 @@ public class MyPageServlet extends HttpServlet {
 		// -------------------------------------------------------------
 
 		String sesUserId = sesBean.getUserId();
+		String sesUserNo = sesBean.getUserNo();
 		bean.setUserId(sesUserId);
+		bean.setUserNo(sesUserNo);
 
 		req.setCharacterEncoding("UTF-8");
 
@@ -151,8 +154,11 @@ public class MyPageServlet extends HttpServlet {
 			return;
 		}
 
+		int dispNameByteCheck = dispNameBytes.length;
+
 		// 表示名は30桁まで
-		if (dispNameBytes.length > 30) {
+		if (dispNameByteCheck > 30) {
+
 			errormessage = "表示名の文字数エラーです。";
 			req.setAttribute("myName", bean.getUserName());
 			req.setAttribute("myPageText", bean.getMyPageText());
@@ -162,8 +168,10 @@ public class MyPageServlet extends HttpServlet {
 			return;
 		}
 
+		int myPageTextByteCheck = myPageTextBytes.length;
+
 		// 自己紹介文は100桁まで
-		if (myPageTextBytes.length > 100) {
+		if (myPageTextByteCheck > 100) {
 
 			errormessage = "自己紹介文の文字数エラーです";
 			req.setAttribute("myName", bean.getUserName());
@@ -209,14 +217,6 @@ public class MyPageServlet extends HttpServlet {
 		sessionBean = (SessionBean) session.getAttribute("session");
 		sessionBean.setUserName(bean.getUserName());
 		session.setAttribute("session", sessionBean);
-		// -------------------------------------------------------------
-		// -------------------------------------------------------------
-		// SQL実行
-		try {
-			bean = model.output(bean);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		// -------------------------------------------------------------
 
 		req.setAttribute("myName", bean.getUserName());

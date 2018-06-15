@@ -8,25 +8,39 @@
 <title>グループチャット</title>
 <link rel="stylesheet" type="text/css" href="./css/groupMessage.css"
 	media="all">
-	<link rel="stylesheet" type="text/css" href="./css/Main.css"
+<link rel="stylesheet" type="text/css" href="./css/Maincss.css"
 	media="all">
+
+
 </head>
-<body class="bgcolor">
+<body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
-	${ session.getUserName() }さん
-	<br>
-	<form name="log_out" action="/chat/logout" method="POST">
-		<input type="button" value="logout"
-			onClick="if(confirm ('本当にログアウトしますか？')){submit();}">
-	</form>
-	<hr>
+	<div id="header">
+		${ session.getUserName() }さん <br>
+		<form name="logout" action="/chat/logout" method="POST">
+			<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
+		</form>
+		<hr>
+	</div>
 	<!-- ここまでです -->
 
 	<center>
 		<font color="red" size="5"><Strong>${ errorMsg }</Strong></font>
 	</center>
 	<center>
-		<h1>${ bean.getGroupName() }|作成者:${ bean.getAuthorName() }</h1>
+		<table>
+			<tr>
+				<td class="topoutside"></td>
+				<td class="groupname">${ bean.getGroupName() }</td>
+				<td class="topoutside"></td>
+				</tr>
+				<tr>
+				<td class="topoutside"></td>
+				<td class="author">作成者: ${ bean.getAuthorName() }</td>
+				<td class="topoutside"></td>
+				</tr>
+		</table>
+
 	</center>
 	<center>
 		<table cellspacing="0">
@@ -34,18 +48,18 @@
 			<c:forEach items="${ list }" var="obj" varStatus="status">
 				<c:if test="${obj.userNo.equals(session.getUserNo()) }">
 					<tr>
-						<td width="10%"></td>
-						<td width="38%"></td>
-						<td width="4%"></td>
-						<td width="38%" rowspan="2" id="me${ obj.colorNo }"><c:out
+						<td class="msoutside"></td>
+						<td class="msnone"></td>
+						<td class="msinside"></td>
+						<td rowspan="2" id="me${ obj.colorNo }"><c:out
 								value="${ obj.message }" /></td>
-						<td width="10%" id="myName"><c:out value="${ obj.userName }" /></td>
+						<td id="myName"><c:out value="${ obj.userName }" /></td>
 					</tr>
 					<tr>
+						<td class="msoutside"></td>
 						<td></td>
 						<td></td>
-						<td></td>
-						<td width="10%">
+						<td class="msoutside">
 							<form action="/chat/groupMessage" method="post">
 								<input type="hidden" name="delete"> <input type="hidden"
 									name="groupNo" value="${ bean.groupNo }"><input
@@ -64,12 +78,13 @@
 				<c:if
 					test="${ obj.userName.equals(bean.getOutFlagMessage()) && !obj.userNo.equals(session.getUserNo()) }">
 					<tr>
-						<td width="10%" rowspan="2" id="otherName"><c:out value="${ obj.userName }" /></td>
-						<td width="38%" rowspan="2" id="other${ obj.colorNo }"><c:out value="${ obj.message }" /></td>
-						<td width="4%"></td>
-						<td width="38%">
-						</td>
-						<td width="10%"></td>
+						<td class="msoutside" rowspan="2" id="otherName"><c:out
+								value="${ obj.userName }" /></td>
+						<td rowspan="2" id="other${ obj.colorNo }"><c:out
+								value="${ obj.message }" /></td>
+						<td class="msinside"></td>
+						<td class="msnone"></td>
+						<td class="msoutside"></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -80,22 +95,24 @@
 						<td colspan="5" height="10px"></td>
 					</tr>
 				</c:if>
+				<!-- それ以外の方々 -->
 				<c:if
 					test="${!obj.userName.equals(bean.getOutFlagMessage()) && !obj.userNo.equals(session.getUserNo())}">
 					<tr>
-						<td width="10%" id="otherName"><a href="/chat/showProfile?otherUserNo=${ obj.userNo }"
+						<td id="otherName"><a
+							href="/chat/showProfile?otherUserNo=${ obj.userNo }"
 							target="blank"><c:out value="${ obj.userName}" /></a></td>
-						<td width="38%" rowspan="2" id="other${ obj.colorNo }"><c:out value="${ obj.message }" /></td>
-						<td width="4%"></td>
-						<td width="38%">
-						</td>
-						<td width="10%"></td>
+						<td width="38%" rowspan="2" id="other${ obj.colorNo }"><c:out
+								value="${ obj.message }" /></td>
+						<td class="msinside"></td>
+						<td class="msnone"></td>
+						<td class="msoutside"></td>
 					</tr>
 					<tr>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td width="10%"></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td colspan="5" height="10px"></td>
@@ -105,17 +122,15 @@
 			</c:forEach>
 		</table>
 		<form action="/chat/groupMessage" method="POST">
-			<input type="text" name="message"><input type="hidden" name="myColorNum" value="${ bean.getMyColor() }"> <input type="hidden"
-				name="groupNo" value="${ bean.getGroupNo()}">
-				<input type="hidden" name="otherColorNum" value="${ bean.getOtherColor() }">
-				<input
+			<input type="text" name="message"><input type="hidden"
+				name="groupNo" value="${ bean.getGroupNo()}"> <input
 				type="submit" value="送信">
 		</form>
-			<form action="/chat/groupMessage" method="POST">
-		<input type="hidden" name="exit" value="${ groupBean.getGroupNo()}">
-		<input type="button" value="グループ脱退"
-			onClick="if(confirm ('本当に脱退しますか')){submit();}">
-	</form>
+		<form action="/chat/groupMessage" method="POST">
+			<input type="hidden" name="exit" value="${ groupBean.getGroupNo()}">
+			<input type="button" value="グループ脱退"
+				onClick="if(confirm ('本当に脱退しますか')){submit();}">
+		</form>
 
 		<form action="/chat/main" method="POST">
 			<input type="submit" value="メインメニューに戻る">

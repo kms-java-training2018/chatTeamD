@@ -61,6 +61,8 @@ public class MakeGroupServlet extends HttpServlet {
 				// 正常に一覧取得できた場合
 				// リクエストに送る
 				req.setAttribute("bean", userListBeanList);
+				// GMタブから遷移したという情報をsessionに加える
+				session.setAttribute("from", "GMからきた");
 			}
 		}
 		// 出力

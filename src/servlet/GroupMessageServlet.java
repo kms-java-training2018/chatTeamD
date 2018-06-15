@@ -101,6 +101,8 @@ public class GroupMessageServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		// -------------------------------------------------------------
+
+		session.setAttribute("from", "GMからきた");
 		req.setAttribute("bean", bean);
 		req.setAttribute("groupBean", bean);
 		req.setAttribute("list", list);
@@ -178,6 +180,17 @@ public class GroupMessageServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				// -------------------------------------------------------------
+
+				// -------------------------------------------------------------
+				// SQL実行
+				// グループ名、グループ作成者表示
+				try {
+					bean = model.groupName(bean);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				// -------------------------------------------------------------
+
 				req.setAttribute("errorMsg", errorMsg);
 				req.setAttribute("groupBean", bean);
 				req.setAttribute("list", list);
@@ -208,8 +221,9 @@ public class GroupMessageServlet extends HttpServlet {
 		// 入力エラーチェック
 		// 入力できる文字は100桁まで
 		if (message != null) {
-			int messageLen = message.length();
-			if (messageLen > 100) {
+			byte[] byteCheck  = message.getBytes();
+			int messageBytes = byteCheck.length;
+			if (messageBytes > 100) {
 				errorMsg = "文字数が多すぎます";
 
 				// SQL実行
@@ -220,7 +234,7 @@ public class GroupMessageServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 
-				direction = "/erroPage";
+				direction = "/WEB-INF/jsp/groupMessage.jsp";
 				req.setAttribute("errorMsg", errorMsg);
 				req.setAttribute("groupBean", bean);
 				req.setAttribute("list", list);
@@ -255,7 +269,7 @@ public class GroupMessageServlet extends HttpServlet {
             // セッション情報なし
             // 行き先をエラーページに
             direction = "/errorPage";
-            req.setAttribute("errorMsg", "ここのえらー？");
+            req.setAttribute("errorMsg", "グループに所属していません");
             req.getRequestDispatcher(direction).forward(req, res);
             return;
 		}
@@ -279,92 +293,12 @@ public class GroupMessageServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		// -------------------------------------------------------------
-
-		// -------------------------------------------------------------
-		// 背景色指定
-		int num = Integer.parseInt(req.getParameter("myColorNum"));
-		bean.setMyColor(num);
-		String cssMe = "";
-		String cssOther = "";
-
-		switch(num) {
-		case 1:
-			cssMe = "red";
-			break;
-
-		case 2:
-			cssMe = "aquamarine";
-			break;
-
-		case 3:
-			cssMe = "lightsteelblue";
-			break;
-
-		case 4:
-			cssMe = "khaki";
-			break;
-
-		case 5:
-			cssMe = "springgreen";
-			break;
-
-		case 6:
-			cssMe = "orange";
-			break;
-
-		default:
-			cssMe = "white";
-			break;
-		}
-
-		num = Integer.parseInt(req.getParameter("otherColorNum"));
-		bean.setOtherColor(num);
-
-		switch(num) {
-		case 1:
-			cssOther = "red";
-			break;
-
-		case 2:
-			cssOther = "aquamarine";
-			break;
-
-		case 3:
-			cssOther = "lightsteelblue";
-			break;
-
-		case 4:
-			cssOther = "khaki";
-			break;
-
-		case 5:
-			cssOther = "springgreen";
-			break;
-
-		case 6:
-			cssOther = "orange";
-			break;
-
-		default:
-			cssOther = "white";
-			break;
-		}
-		// -------------------------------------------------------------
-
-		// -------------------------------------------------------------
+		req.getAttribute("list");
 
 
-		req.setAttribute("cssMe", cssMe);
-		req.setAttribute("cssOther", cssOther);
 		req.setAttribute("groupBean", bean);
 		req.setAttribute("list", list);
 		req.setAttribute("bean", bean);
 		req.getRequestDispatcher(direction).forward(req, res);
 	}
-
-	// TODO 送信ボタン/削除ボタン押した後データ引継ぎ
-
-
-
-
 }

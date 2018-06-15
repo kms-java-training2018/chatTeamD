@@ -121,4 +121,12 @@ public class DirectMessageBean {
 		this.listMsgNo = listMsgNo;
 	}
 
+	public String getMyname() {
+		return myname;
+	}
+
+	public void setMyname(String myname) {
+		this.myname = myname;
+	}
+
 }

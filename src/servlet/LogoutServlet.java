@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 
 public class LogoutServlet extends HttpServlet {
 		public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
 			req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, res);
 		}
 

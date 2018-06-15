@@ -2,10 +2,18 @@
  * MainPage
  */
 window.onload = function() {
-	// 最初GM隠してDM選択状態色にする
-	document.getElementById("groupMessage").style.display = "none";
-	var dmBtn = document.getElementById("directMessageBtn");
-	dmBtn.style.backgroundColor = '#FFC085';
+	var fromCheck = document.getElementById("from").value;
+	if (fromCheck != "GMから来た") {
+		// 最初GM隠してDM選択状態色にする
+		document.getElementById("groupMessage").style.display = "none";
+		var dmBtn = document.getElementById("directMessageBtn");
+		dmBtn.style.backgroundColor = '#FFC085';
+	} else {
+		// 最初DM隠してGM選択状態色にする
+		document.getElementById("directMessage").style.display = "none";
+		var gmBtn = document.getElementById("groupMessageBtn");
+		gmBtn.style.backgroundColor = '#FFC085';
+	}
 	document.getElementById("directMessageBtn").onclick = function DMBtnclick() {
 		// GM隠す
 		var gm = document.getElementById("groupMessage");

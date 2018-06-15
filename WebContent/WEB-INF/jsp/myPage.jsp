@@ -6,16 +6,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>マイページ</title>
+	<link rel="stylesheet" type="text/css" href="./css/Maincss.css"
+	media="all">
 </head>
-<body>
+<body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
-	${ session.getUserName() }さん
-	<br>
-	<form name="log_out" action="/chat/logout" method="POST">
-		<input type="button" value="logout"
-			onClick="if(confirm ('本当にログアウトしますか？')){submit();}">
-	</form>
-	<hr>
+	<div id="header">
+		${ session.getUserName() }さん <br>
+		<form name="logout" action="/chat/logout" method="POST">
+		<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
+		</form>
+		<hr>
+	</div>
 	<!-- ここまでです -->
 	<br>
 	<center>

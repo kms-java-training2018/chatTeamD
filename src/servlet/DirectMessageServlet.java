@@ -84,7 +84,7 @@ public class DirectMessageServlet extends HttpServlet {
 			int deleteMessageNo = (Integer.parseInt(req.getParameter("deleteMessageNo")));
 			bean = model.deleteDirectMessage(bean, userId, deleteMessageNo);
 
-		} else {
+		} else if (check.equals("2")){
 			// メッセージ登録処理
 			//directMessage.jspで指定されたsendMessageというパラメータを受け取り、変数に格納(データの降り口)
 
