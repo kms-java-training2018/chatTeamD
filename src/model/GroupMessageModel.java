@@ -87,7 +87,7 @@ public class GroupMessageModel {
 						}
 						bean.setMessage(rs.getString("MESSAGE"));
 						bean.setUserNo(rs.getString("USER_NO"));
-						bean.setGroupNo(rs.getInt("MESSAGE_NO"));
+						bean.setMessageNo(rs.getInt("MESSAGE_NO"));
 						bean.setUserId(rs.getString("USER_ID"));
 					}
 				} else {

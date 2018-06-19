@@ -26,6 +26,16 @@ public class SignUpServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		// -------------------------------------------------------------
+		// TODO 【同じIDをはじく処理を作る】
+		// Modelでユーザー一覧を取得し、同じIDがないかを検索
+		// 同じIDがなければ問題なし
+		// -------------------------------------------------------------
+		// TODO 【ID/PWの最小文字数の設定】
+		// 単純に、入力文字の文字数を調べて、○○文字以上であれば問題ない
+		// という、処理を加える
+		// -------------------------------------------------------------
+
+		// -------------------------------------------------------------
 		// 初期化
 		SignUpBean bean = new SignUpBean();
 		SignUpModel model = new SignUpModel();
@@ -33,6 +43,7 @@ public class SignUpServlet extends HttpServlet {
 		String errormsg = "";
 		// -------------------------------------------------------------
 
+		// 文字化け
 		req.setCharacterEncoding("UTF-8");
 
 		// -------------------------------------------------------------
@@ -54,18 +65,18 @@ public class SignUpServlet extends HttpServlet {
 		// 入力があるかのチェック
 		if(userId == "" || password == "" || userName == "" || userName.equals("表示名")) {
 			// エラー
-			errormsg = errormsg + "ID/パスワードを入力してください";
+			errormsg = errormsg + "ID/パスワード/ユーザー名を入力してください";
 		}
 
 		// 半角で入力されているかのチェック
 		if (userIdBytes.length != userIdLen || passwordBytes.length != passwordLen) {
 			// エラー
-			errormsg = errormsg + "　半角で入力してください";
+			errormsg = errormsg + "　半角英数字で入力してください";
 		}
 
 		// 文字数が適正かのチェック
 		if (userIdBytes.length > 20 || passwordBytes.length > 20 || userNameBytes.length > 30) {
-			errormsg =  errormsg + "　文字数が多いです(半角20文字まで)";
+			errormsg =  errormsg + "　規定の桁数を超えて入力しています";
 		}
 
 		if (errormsg.equals("エラー:")) {
