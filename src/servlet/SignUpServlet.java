@@ -104,7 +104,11 @@ public class SignUpServlet extends HttpServlet {
 		try {
 			bean = model.signup(bean);
 		} catch (Exception e) {
-			e.printStackTrace();
+			errormsg = "DBに接続できません";
+			direction = "/WEB-INF/jsp/login.jsp";
+			req.setAttribute("errorMessage", errormsg);
+			req.getRequestDispatcher(direction).forward(req, res);
+			return;
 		}
 		// -------------------------------------------------------------
 
