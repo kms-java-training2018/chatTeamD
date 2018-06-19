@@ -26,6 +26,17 @@ public class ShowProfileServlet extends HttpServlet {
 		MyPageBean bean = new MyPageBean();
 		MyPageModel model = new MyPageModel();
 		String direction = "/WEB-INF/jsp/showProfile.jsp";
+		String errorMsg = "";
+
+
+		if(req.getParameter("otherUserNo").equals("")) {
+			errorMsg = "ユーザーを取得できません";
+			direction = "/errorPage";
+			req.setAttribute("errorMsg", errorMsg);
+			req.getRequestDispatcher(direction).forward(req, res);
+			return;
+		}
+
 
 		// userNoを取得し、beanへセット
 		bean.setUserNo(req.getParameter("otherUserNo"));
@@ -53,19 +64,23 @@ public class ShowProfileServlet extends HttpServlet {
 		try {
 			bean = model.output(bean);
 		} catch (Exception e) {
-			e.printStackTrace();
+			errorMsg = "DB接続に失敗しました ";
+			req.setAttribute("errorMsg", errorMsg);
+			direction = "/errorPage";
+			req.getRequestDispatcher(direction).forward(req, res);
+			return;
 		}
 		// --------------------------------------------------------------
 
 		// --------------------------------------------------------------
 		// 他ユーザ情報が取得できなければ、エラーページへ遷移
-		if (bean.getErrorMessage() == null) {
-			req.setAttribute("showMyPageText", bean.getMyPageText());
-			req.setAttribute("showName", bean.getUserName());
-		} else {
+		if (bean.getErrorMessage()!=null) {
 			req.setAttribute("errorMsg", bean.getErrorMessage());
 			req.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(req, res);
 			return;
+		} else {
+			req.setAttribute("showMyPageText", bean.getMyPageText());
+			req.setAttribute("showName", bean.getUserName());
 		}
 		// --------------------------------------------------------------
 

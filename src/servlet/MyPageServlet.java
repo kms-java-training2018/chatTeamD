@@ -26,6 +26,7 @@ public class MyPageServlet extends HttpServlet {
 		MyPageModel model = new MyPageModel();
 		String direction = "/WEB-INF/jsp/myPage.jsp";
 		String myPageText = "";
+		String errormessage = "";
 		// -------------------------------------------------------------
 
 		// -------------------------------------------------------------
@@ -61,7 +62,11 @@ public class MyPageServlet extends HttpServlet {
 		try {
 			bean = model.output(bean);
 		} catch (Exception e) {
-			e.printStackTrace();
+			errormessage = "DBに接続できません";
+			direction = "/errorPage";
+			req.setAttribute("errorMsg", errormessage);
+			req.getRequestDispatcher(direction).forward(req, res);
+			return;
 		}
 		// -------------------------------------------------------------
 
@@ -129,7 +134,11 @@ public class MyPageServlet extends HttpServlet {
 		try {
 			bean = model.output(bean);
 		} catch (Exception e) {
-			e.printStackTrace();
+			errormessage = "DBに接続できません";
+			direction = "/errorPage";
+			req.setAttribute("errorMsg", errormessage);
+			req.getRequestDispatcher(direction).forward(req, res);
+			return;
 		}
 		// -------------------------------------------------------------
 
@@ -194,11 +203,10 @@ public class MyPageServlet extends HttpServlet {
 		try {
 			bean = model.update(bean);
 		} catch (Exception e) {
-			errormessage = "文字数エラーです";
-			req.setAttribute("myName", bean.getUserName());
-			req.setAttribute("myPageText", bean.getMyPageText());
-			req.setAttribute("errormessage", errormessage);
-			req.getRequestDispatcher("/WEB-INF/jsp/myPage.jsp").forward(req, res);
+			errormessage = "DBに接続できません";
+			direction = "/errorPage";
+			req.setAttribute("errorMsg", errormessage);
+			req.getRequestDispatcher(direction).forward(req, res);
 			return;
 		}
 
