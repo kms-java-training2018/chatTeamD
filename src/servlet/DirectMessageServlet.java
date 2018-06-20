@@ -100,8 +100,17 @@ public class DirectMessageServlet extends HttpServlet {
 			if (check.equals("1")) {
 				// メッセージ削除処理
 				// 削除処理用のメッセージ番号取得
-				int deleteMessageNo = (Integer.parseInt(req.getParameter("deleteMessageNo")));
-				bean = model.deleteDirectMessage(bean, userId, deleteMessageNo);
+
+				try {
+					int deleteMessageNo = (Integer.parseInt(req.getParameter("deleteMessageNo")));
+					bean = model.deleteDirectMessage(bean, userId, deleteMessageNo);
+				} catch (Exception e) {
+					direction = "/errorPage";
+		            req.setAttribute("errorMsg", "削除できませんでした");
+		            req.getRequestDispatcher(direction).forward(req, res);
+		            return;
+				}
+
 
 			} else if (check.equals("2")) {
 				// メッセージ登録処理
