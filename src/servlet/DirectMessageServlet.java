@@ -115,10 +115,16 @@ public class DirectMessageServlet extends HttpServlet {
 			} else if (check.equals("2")) {
 				// メッセージ登録処理
 				//directMessage.jspで指定されたsendMessageというパラメータを受け取り、変数に格納(データの降り口)
-
+				try {
 				String sendMessage = req.getParameter("sendMessage");
 				bean = model.setNewDirectMessage(bean, userId, sendMessage);
-			}
+			}catch (Exception e) {
+				direction = "/errorPage";
+	            req.setAttribute("errorMsg", "メッセージ登録できませんでした");
+	            req.getRequestDispatcher(direction).forward(req, res);
+	            return;
+
+
 
 			//(2)会話情報取得処理
 			bean = model.dispDM(bean, userId);
