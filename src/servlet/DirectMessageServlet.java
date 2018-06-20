@@ -124,13 +124,13 @@ public class DirectMessageServlet extends HttpServlet {
 					req.getRequestDispatcher(direction).forward(req, res);
 					return;
 				}
-
-				//(2)会話情報取得処理
-				bean = model.dispDM(bean, userId);
-
-				// 結果をセット
-				req.setAttribute("bean", bean);
 			}
+			// 再表示処理
+			//(2)会話情報取得処理
+			bean = model.dispDM(bean, userId);
+
+			// 結果をセット
+			req.setAttribute("bean", bean);
 		}
 		// フォワードで遷移
 		req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
