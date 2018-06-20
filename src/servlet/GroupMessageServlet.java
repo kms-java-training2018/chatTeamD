@@ -259,6 +259,30 @@ public class GroupMessageServlet extends HttpServlet {
 
 		// -------------------------------------------------------------
 		// 入力エラーチェック
+		if(message.equals("")) {
+			errorMsg = "メッセージを入力してください。";
+			// SQL実行
+			// メッセージ表示
+			try {
+				list = model.output(groupNo);
+			} catch (Exception e) {
+				errorMsg = "DB接続に失敗しました ";
+				req.setAttribute("errorMsg", errorMsg);
+				direction = "/errorPage";
+				req.getRequestDispatcher(direction).forward(req, res);
+				return;
+			}
+
+			direction = "/WEB-INF/jsp/groupMessage.jsp";
+			req.setAttribute("errorMsg", errorMsg);
+			req.setAttribute("groupBean", bean);
+			req.setAttribute("list", list);
+			req.setAttribute("bean", bean);
+			req.getRequestDispatcher(direction).forward(req, res);
+			return;
+		}
+
+
 		// 入力できる文字は100桁まで
 		if (message != null) {
 			byte[] byteCheck  = message.getBytes();
