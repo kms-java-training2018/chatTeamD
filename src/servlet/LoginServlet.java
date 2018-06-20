@@ -60,7 +60,9 @@ public class LoginServlet extends HttpServlet {
 		try {
 			bean = model.authentication(bean);
 		} catch (Exception e) {
-			e.printStackTrace();
+			errormsg = "DBに接続されていません。";
+			req.setAttribute("errorMessage", errormsg);
+			req.getRequestDispatcher(direction).forward(req, res);
 		}
 		// -------------------------------------------------------------
 
