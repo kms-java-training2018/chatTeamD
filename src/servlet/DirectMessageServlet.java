@@ -27,7 +27,6 @@ public class DirectMessageServlet extends HttpServlet {
 		//(1)-1セッション確認
 		//sessionスコープを使う下準備
 		HttpSession session = req.getSession();
-
 		String direction = "/WEB-INF/jsp/directMessage.jsp";
 		//修正箇所　左側の式を消しました。----------------------------------------------
 		if (session.getAttribute("userId") == null) {
@@ -36,19 +35,29 @@ public class DirectMessageServlet extends HttpServlet {
 			direction = "/errorPage";
 			req.setAttribute("errorMsg", "セッション情報が無効です");
 		} else {
-
 			//LoginServletでsessionスコープに入れた値が正しいか(入っているか)判断
 			//まずはsessionスコープに入っている値を取得
 			String userId = (String) session.getAttribute("userId");
-
 			//mainPage.jspで指定されたuserNoというパラメータを受け取り、変数に格納(データの降り口)
-			bean.setUserNo(Integer.parseInt(req.getParameter("userNo")));
+			if (req.getParameter("userNo").equals("")) {
+				direction = "/errorPage";
+				req.setAttribute("errorMsg", "無効なユーザーです");
+			} else {
+				// 正常な場合
+				bean.setUserNo(Integer.parseInt(req.getParameter("userNo")));
+				//(2)会話情報取得処理
+				try {
+					bean = model.dispDM(bean, userId);
+				} catch (Exception e) {
+					// エラー時の処理
+					direction = "/errorPage";
+					req.getRequestDispatcher(direction).forward(req, res);
+					return;
+				}
+				// 結果をセット
+				req.setAttribute("bean", bean);
+			}
 
-			//(2)会話情報取得処理
-			bean = model.dispDM(bean, userId);
-
-			// 結果をセット
-			req.setAttribute("bean", bean);
 		}
 		// フォワードで遷移
 		req.getRequestDispatcher(direction).forward(req, res);
@@ -65,10 +74,14 @@ public class DirectMessageServlet extends HttpServlet {
 		//(1)-1セッション確認
 		//sessionスコープを使う下準備
 		HttpSession session = req.getSession();
+		String direction = "/WEB-INF/jsp/directmessage.jsp";
 		//LoginServletでsessionスコープに入れた値が正しいか(入っているか)判断
 		//まずはsessionスコープに入っている値を取得
 		String userId = (String) session.getAttribute("userId");
-
+		if (!(session.getAttribute("userId").equals(session.getAttribute("userId")))) {
+			direction = "/errorPage";
+			req.setAttribute("errorMsg", "送信できませんでした");
+		}
 		// bean用意
 		DirectMessageBean bean = new DirectMessageBean();
 		// モデル用意
@@ -84,7 +97,7 @@ public class DirectMessageServlet extends HttpServlet {
 			int deleteMessageNo = (Integer.parseInt(req.getParameter("deleteMessageNo")));
 			bean = model.deleteDirectMessage(bean, userId, deleteMessageNo);
 
-		} else if (check.equals("2")){
+		} else if (check.equals("2")) {
 			// メッセージ登録処理
 			//directMessage.jspで指定されたsendMessageというパラメータを受け取り、変数に格納(データの降り口)
 

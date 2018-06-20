@@ -76,6 +76,8 @@ public class DirectMessageModel {
 			} catch (SQLException e) {
 				bean.setErrorMsg("相手の情報が取得できません");
 
+			} catch (NumberFormatException e) {
+				bean.setErrorMsg("相手の情報が取得できません");
 			}
 
 			//(2)会話情報取得処理
