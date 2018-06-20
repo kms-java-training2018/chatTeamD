@@ -52,6 +52,7 @@ public class DirectMessageServlet extends HttpServlet {
 				} catch (Exception e) {
 					// エラー時の処理
 					direction = "/errorPage";
+					req.setAttribute("errorMsg", "DBに接続できません");
 					req.getRequestDispatcher(direction).forward(req, res);
 					return;
 				}
