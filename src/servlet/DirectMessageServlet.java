@@ -80,14 +80,14 @@ public class DirectMessageServlet extends HttpServlet {
 		//LoginServletでsessionスコープに入れた値が正しいか(入っているか)判断
 		//まずはsessionスコープに入っている値を取得
 		String userId = (String) session.getAttribute("userId");
-		 if (sesBean==null || session.getAttribute("userId")==null) {
-	            // セッション情報なし
-	            // 行き先をエラーページに
-	            direction = "/errorPage";
-	            req.setAttribute("errorMsg", "セッション情報が無効です");
-	            req.getRequestDispatcher(direction).forward(req, res);
-	            return;
-	        } else {
+		if (sesBean == null || session.getAttribute("userId") == null) {
+			// セッション情報なし
+			// 行き先をエラーページに
+			direction = "/errorPage";
+			req.setAttribute("errorMsg", "セッション情報が無効です");
+			req.getRequestDispatcher(direction).forward(req, res);
+			return;
+		} else {
 			// bean用意
 			DirectMessageBean bean = new DirectMessageBean();
 			// モデル用意
@@ -106,31 +106,30 @@ public class DirectMessageServlet extends HttpServlet {
 					bean = model.deleteDirectMessage(bean, userId, deleteMessageNo);
 				} catch (Exception e) {
 					direction = "/errorPage";
-		            req.setAttribute("errorMsg", "削除できませんでした");
-		            req.getRequestDispatcher(direction).forward(req, res);
-		            return;
+					req.setAttribute("errorMsg", "削除できませんでした");
+					req.getRequestDispatcher(direction).forward(req, res);
+					return;
 				}
-
 
 			} else if (check.equals("2")) {
 				// メッセージ登録処理
 				//directMessage.jspで指定されたsendMessageというパラメータを受け取り、変数に格納(データの降り口)
 				try {
-				String sendMessage = req.getParameter("sendMessage");
-				bean = model.setNewDirectMessage(bean, userId, sendMessage);
-			}catch (Exception e) {
-				direction = "/errorPage";
-	            req.setAttribute("errorMsg", "メッセージ登録できませんでした");
-	            req.getRequestDispatcher(direction).forward(req, res);
-	            return;
+					String sendMessage = req.getParameter("sendMessage");
+					bean = model.setNewDirectMessage(bean, userId, sendMessage);
+				} catch (Exception e) {
+					direction = "/errorPage";
+					req.setAttribute("errorMsg", "メッセージ登録できませんでした");
+					req.getRequestDispatcher(direction).forward(req, res);
+					return;
+				}
 
+				//(2)会話情報取得処理
+				bean = model.dispDM(bean, userId);
 
-
-			//(2)会話情報取得処理
-			bean = model.dispDM(bean, userId);
-
-			// 結果をセット
-			req.setAttribute("bean", bean);
+				// 結果をセット
+				req.setAttribute("bean", bean);
+			}
 		}
 		// フォワードで遷移
 		req.getRequestDispatcher("/WEB-INF/jsp/directMessage.jsp").forward(req, res);
