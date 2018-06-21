@@ -13,6 +13,7 @@
 	media="all">
 <!--	JS読み込み	-->
 <script src="./js/login.js"></script>
+<script src="./js/doubleSubmit.js"></script>
 </head>
 <body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
@@ -30,7 +31,7 @@
 		<p>
 			<font color="#FF0000">${errorMsg}</font>
 		</p>
-		<form action="/chat/makeGroup" method="POST">
+		<form action="/chat/makeGroup" method="POST" onSubmit="return send()">
 			<input type="text" title="グループ名(全角10文字まで)" class="placeholder"
 				name="groupName" value="" size="30"> <br>
 		<div class="listDiv">
