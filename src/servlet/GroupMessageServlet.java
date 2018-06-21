@@ -259,8 +259,59 @@ public class GroupMessageServlet extends HttpServlet {
 		bean.setUserNo(sesUserNo);
 		bean.setGroupNo(groupNo);
 
+		// -------------------------------------------------------------
+		// SQL実行
+		// グループ名、グループ作成者表示
+		try {
+			bean = model.groupName(bean);
+		} catch (Exception e) {
+			errorMsg = "DB接続に失敗しました ";
+			req.setAttribute("errorMsg", errorMsg);
+			direction = "/errorPage";
+			req.getRequestDispatcher(direction).forward(req, res);
+			return;
+		}
+		// -------------------------------------------------------------
+
 		// 入力できる文字は100桁まで
-		if (message != null) {
+		if (!message.equals("")) {
+			if(message.equals(bean.getGroupName()+"へのメッセージ")) {
+				errorMsg = "メッセージを入力してください。";
+				// -------------------------------------------------------------
+				// SQL実行
+				// メッセージ表示
+				try {
+					list = model.output(groupNo);
+				} catch (Exception e) {
+					errorMsg = "DB接続に失敗しました ";
+					req.setAttribute("errorMsg", errorMsg);
+					direction = "/errorPage";
+					req.getRequestDispatcher(direction).forward(req, res);
+					return;
+				}
+				// -------------------------------------------------------------
+
+				// -------------------------------------------------------------
+				// SQL実行
+				// グループ名、グループ作成者表示
+				try {
+					bean = model.groupName(bean);
+				} catch (Exception e) {
+					errorMsg = "DB接続に失敗しました ";
+					req.setAttribute("errorMsg", errorMsg);
+					direction = "/errorPage";
+					req.getRequestDispatcher(direction).forward(req, res);
+					return;
+				}
+				// -------------------------------------------------------------
+
+				req.setAttribute("errorMsg", errorMsg);
+				req.setAttribute("groupBean", bean);
+				req.setAttribute("list", list);
+				req.setAttribute("bean", bean);
+				req.getRequestDispatcher(direction).forward(req, res);
+				return;
+			}
 			byte[] byteCheck  = message.getBytes();
 			int messageBytes = byteCheck.length;
 			if (messageBytes > 100) {
@@ -322,7 +373,7 @@ public class GroupMessageServlet extends HttpServlet {
 				req.getRequestDispatcher(direction).forward(req, res);
 				return;
 			}
-		}else if(req.getParameter("delete")==null) {
+		}else if(req.getParameter("delete")==null || message == null) {
 			errorMsg = "メッセージを入力してください。";
 			// SQL実行
 			// メッセージ表示
@@ -409,19 +460,7 @@ public class GroupMessageServlet extends HttpServlet {
 		}
 		// -------------------------------------------------------------
 
-		// -------------------------------------------------------------
-		// SQL実行
-		// グループ名、グループ作成者表示
-		try {
-			bean = model.groupName(bean);
-		} catch (Exception e) {
-			errorMsg = "DB接続に失敗しました ";
-			req.setAttribute("errorMsg", errorMsg);
-			direction = "/errorPage";
-			req.getRequestDispatcher(direction).forward(req, res);
-			return;
-		}
-		// -------------------------------------------------------------
+
 		req.getAttribute("list");
 
 
