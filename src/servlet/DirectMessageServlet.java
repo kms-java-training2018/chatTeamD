@@ -39,27 +39,36 @@ public class DirectMessageServlet extends HttpServlet {
 			//LoginServletでsessionスコープに入れた値が正しいか(入っているか)判断
 			//まずはsessionスコープに入っている値を取得
 			String userId = (String) session.getAttribute("userId");
-			//mainPage.jspで指定されたuserNoというパラメータを受け取り、変数に格納(データの降り口)
+
+			//パラメーターがない場合をはじく
 			if (req.getParameter("userNo").equals("")) {
 				direction = "/errorPage";
 				req.setAttribute("errorMsg", "無効なユーザーです");
 			} else {
-				// 正常な場合
-				bean.setUserNo(Integer.parseInt(req.getParameter("userNo")));
-				//(2)会話情報取得処理
-				try {
-					bean = model.dispDM(bean, userId);
-				} catch (Exception e) {
-					// エラー時の処理
+				// パラメーターがログインユーザー自身の場合はじく
+				SessionBean checkNoBean = (SessionBean) session.getAttribute("session");
+				if (req.getParameter("userNo").equals(checkNoBean.getUserNo())) {
+					// エラーページに飛ぶ
 					direction = "/errorPage";
-					req.setAttribute("errorMsg", "DBに接続できません");
-					req.getRequestDispatcher(direction).forward(req, res);
-					return;
+					req.setAttribute("errorMsg", "無効なユーザーです");
+				} else {
+					// 正常な場合
+					//mainPage.jspで指定されたuserNoというパラメータを受け取り、変数に格納(データの降り口)
+					bean.setUserNo(Integer.parseInt(req.getParameter("userNo")));
+					//(2)会話情報取得処理
+					try {
+						bean = model.dispDM(bean, userId);
+					} catch (Exception e) {
+						// エラー時の処理
+						direction = "/errorPage";
+						req.setAttribute("errorMsg", "DBに接続できません");
+						req.getRequestDispatcher(direction).forward(req, res);
+						return;
+					}
+					// 結果をセット
+					req.setAttribute("bean", bean);
 				}
-				// 結果をセット
-				req.setAttribute("bean", bean);
 			}
-
 		}
 		// フォワードで遷移
 		req.getRequestDispatcher(direction).forward(req, res);
