@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="./css/Maincss.css"
 	media="all">
 <script src="./js/doubleSubmit.js"></script>
+<script src="./js/login.js"></script>
 
 </head>
 <body id="page">
@@ -122,7 +123,7 @@
 			</c:forEach>
 		</table>
 		<form action="/chat/groupMessage" method="POST" onSubmit="return send()">
-			<input type="text" name="message" class="textarea"><input type="hidden"
+			<input type="text" name="message" id="textarea" title="${ bean.getGroupName() }へのメッセージ" class="placeholder"><input type="hidden"
 				name="groupNo" value="${ bean.getGroupNo()}"> <input
 				type="submit" value="送信" class="btn">
 		</form>
