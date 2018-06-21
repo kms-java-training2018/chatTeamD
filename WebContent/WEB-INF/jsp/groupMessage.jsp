@@ -10,7 +10,7 @@
 	media="all">
 <link rel="stylesheet" type="text/css" href="./css/Maincss.css"
 	media="all">
-
+<script src="./js/doubleSubmit.js"></script>
 
 </head>
 <body id="page">
@@ -64,7 +64,7 @@
 								<input type="hidden" name="delete"> <input type="hidden"
 									name="groupNo" value="${ bean.groupNo }"><input
 									type="hidden" name="deleteNo" value="${ obj.messageNo }">
-								<input type="button" value="削除"
+								<input class="deletebtn" type="button" value="削除"
 									onClick="if(confirm ('本当に削除しますか？')){submit();}">
 							</form>
 						</td>
@@ -121,20 +121,22 @@
 				</c:if>
 			</c:forEach>
 		</table>
-		<form action="/chat/groupMessage" method="POST">
-			<input type="text" name="message"><input type="hidden"
+		<form action="/chat/groupMessage" method="POST" onSubmit="return send()">
+			<input type="text" name="message" class="textarea"><input type="hidden"
 				name="groupNo" value="${ bean.getGroupNo()}"> <input
-				type="submit" value="送信">
+				type="submit" value="送信" class="btn">
 		</form>
+		<div style="display:inline-flex">
 		<form action="/chat/groupMessage" method="POST">
 			<input type="hidden" name="exit" value="${ groupBean.getGroupNo()}">
-			<input type="button" value="グループ脱退"
+			<input class="btn2" type="button" value="グループ脱退"
 				onClick="if(confirm ('本当に脱退しますか')){submit();}">
 		</form>
 
 		<form action="/chat/main" method="POST">
-			<input type="submit" value="メインメニューに戻る">
+			　<input type="submit" value="メインメニューに戻る" class="btn2">
 		</form>
+		</div>
 	</center>
 </body>
 </html>

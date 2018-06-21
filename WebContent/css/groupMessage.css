@@ -34,6 +34,36 @@ a {
 	width: 342px;
 }
 
+.textarea {
+	width: 500px;
+	height: 40px;
+	font-size: 100%;
+}
+
+.btn {
+	border: 1px solid #ffe4c4;
+	border-collapse: separate;
+	border-radius: 5px;
+	border-spacing: 0;
+	height: 50px;
+	width: 60px
+}
+
+.btn2 {
+	border: 1px solid #ffe4c4;
+	border-collapse: separate;
+	border-radius: 5px;
+	border-spacing: 0;
+	width: 150px;
+}
+
+.deletebtn {
+	border: 1px solid #ffe4c4;
+	border-collapse: separate;
+	border-radius: 5px;
+	border-spacing: 0;
+}
+
 #main {
 	text-decoration: none;
 }
