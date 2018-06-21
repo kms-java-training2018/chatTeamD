@@ -10,6 +10,7 @@
 	media="all">
 <link rel="stylesheet" type="text/css" href="./css/Maincss.css"
 	media="all">
+<script src="./js/doubleSubmit.js"></script>
 </head>
 <body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
@@ -101,7 +102,7 @@
 	<br>
 	<br>
 	<center>
-		<form action="/chat/directMessage" method="POST">
+		<form action="/chat/directMessage" method="POST"onSubmit="return send()">
 			<input type=hidden name="check" value="2"> <input type="text"
 				name="sendMessage" size="50"><input type=hidden
 				name="userNo" value="${bean.getUserNo()}"> <input
