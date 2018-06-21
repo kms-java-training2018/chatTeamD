@@ -23,7 +23,7 @@
 		</form>
 		<hr>
 	</div>
-	<!-- ここまでです -->
+	<!-- ここまでです -->	
 
 	<center>
 		<font color="red" size="5"><Strong>${ errorMsg }</Strong></font>
