@@ -143,7 +143,12 @@ public class MainPageServlet extends HttpServlet {
 
 		}
 		// 出力
-		req.getRequestDispatcher(direction).forward(req, res);
+		if (direction.equals("/WEB-INF/jsp/mainPage.jsp")) {
+			direction="/main";
+		}
+		// リロード防止用にリダイレクトで移動
+		res.sendRedirect("/chat" + direction);
+		//req.getRequestDispatcher(direction).forward(req, res);
 	}
 
 }

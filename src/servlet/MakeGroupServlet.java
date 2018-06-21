@@ -149,11 +149,14 @@ public class MakeGroupServlet extends HttpServlet {
 				direction = "/main";
 				req.setAttribute("bean", bean);
 				req.setAttribute("errorMsg", bean.getErrorMsg());
+				// リロード防止用にリダイレクトで移動
+				res.sendRedirect("/chat"+direction);
+				return;
 			}
 
 		}
+		// エラーなどリロードされても問題ない場合
 		// 出力
 		req.getRequestDispatcher(direction).forward(req, res);
-
 	}
 }
