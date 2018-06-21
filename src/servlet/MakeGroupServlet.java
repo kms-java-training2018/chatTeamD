@@ -29,7 +29,6 @@ public class MakeGroupServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		SessionBean sesBean = (SessionBean) session.getAttribute("session");
 
-
 		if (session == null || session.getAttribute("userId") == null) {
 			// セッション情報なし
 			// 行き先をエラーページに
@@ -149,12 +148,12 @@ public class MakeGroupServlet extends HttpServlet {
 				// 行き先をメインページに
 				direction = "/main";
 				req.setAttribute("bean", bean);
+				req.setAttribute("errorMsg", bean.getErrorMsg());
 			}
-			// 出力
-
-			req.setAttribute("errorMsg", bean.getErrorMsg());
-			req.getRequestDispatcher(direction).forward(req, res);
 
 		}
+		// 出力
+		req.getRequestDispatcher(direction).forward(req, res);
+
 	}
 }

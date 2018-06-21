@@ -13,6 +13,11 @@
 	media="all">
 <!-- JS読み込み	-->
 <script src="./js/mainPage.js"></script>
+<!-- js無効時エラーページに飛ぶ -->
+<noscript>
+	<meta http-equiv="Refresh"
+		content="0;URL=/chat/errorPage?errorMsg=js無効">
+</noscript>
 </head>
 <body id="mainPage">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
@@ -28,13 +33,14 @@
 	<input type="hidden" name="from" id="from" value="${fromGM}">
 	<table class="rogoTable">
 		<tr>
-			<td><img src="./img/title.png" alt="Ch@" width="50%"></td>
-			<td><img src="./img/editProfile.png" usemap="#EditProfile"
-				alt="editProfile" height="100" align="right"> <map
-					name="EditProfile">
-					<area shape="circle" coords="50,50,50" href="/chat/myPage"
-						alt="editProfile">
-				</map></td>
+			<td><img src="./img/title_mainPage.png" alt="Ch@" width="50%"></td>
+			<td>
+			<a class="imgBtn"><img src="./img/editProfile.png" usemap="#EditProfile"
+				alt="editProfile" height="100" align="right" class="imgBtn"> </a>
+				<map name="EditProfile">
+					<area shape="circle" coords="50,50,50" href="/chat/myPage" alt="editProfile">
+				</map>
+			</td>
 		</tr>
 	</table>
 	<table class="titleTable">
@@ -75,8 +81,9 @@
 		<!-- 綺麗じゃないから余裕があれば直す -->
 		<c:choose>
 			<c:when test="${!empty groupbean[0].getGroupNullMes()}">
-		<img src="./img/zeroGroup.png" alt="dm" width="200" class="inlineBlock">
-		</c:when>
+				<img src="./img/zeroGroup.png" alt="dm" width="200"
+					class="inlineBlock">
+			</c:when>
 			<c:otherwise>
 				<table class="mTable">
 					<c:forEach var="obj" items="${groupbean}" varStatus="status">
@@ -95,11 +102,14 @@
 			</c:otherwise>
 		</c:choose>
 		<p class="inlineBlock">
+			<a class="imgBtn">
 			<img src="./img/makeGroup.png" usemap="#Map" alt="makeGroup"
 				height="100" class="block">
+			</a>
 			<map name="Map">
 				<area shape="circle" coords="50,50,50" href="/chat/makeGroup"
-					alt="makeGroup">
+					alt="makeGroup" onmouseover="${makeGroup}=''"
+					onmouseout="this.src='img/banner.jpg'">
 			</map>
 			<img src="./img/GM.png" alt="dm" width="200" class="block"> <br>
 		</p>

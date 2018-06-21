@@ -33,23 +33,27 @@
 		<form action="/chat/makeGroup" method="POST">
 			<input type="text" title="グループ名(全角10文字まで)" class="placeholder"
 				name="groupName" value="" size="30"> <br>
-				<div class="listDiv">
+		<div class="listDiv">
 		<c:forEach var="obj" items="${bean}" varStatus="status">
 			<a class="listCell"> <input type="checkbox" name="userNo"
 				value="${bean[status.index].userNo}">${bean[status.index].userName}
 			</a>
 		</c:forEach>
-	</div>
-			<br> <input type="image" src="./img/makeGroupBtn.png"
-				name="button" alt="makeGroup" height="80">
+		</div>
+			<br>
+			<a class="imgBtn">
+			<input type="image" src="./img/makeGroupBtn.png" name="button" alt="makeGroup" height="80">
+			</a>
 		</form>
 	</div>
 
 	<div class="backBtn">
 		<br> <br> <br>
 		<form action="/chat/main" method="POST">
+			<a class="imgBtn">
 			<input type="image" src="./img/backMainPage.png" name="button"
 				alt="makeGroup" height="40">
+			</a>
 		</form>
 	</div>
 </body>
