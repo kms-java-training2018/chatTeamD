@@ -11,6 +11,15 @@
 <link rel="stylesheet" type="text/css" href="./css/Maincss.css"
 	media="all">
 <script src="./js/doubleSubmit.js"></script>
+<script src="./js/login.js"></script>
+
+
+<!-- js無効時エラーページに飛ぶ -->
+<noscript>
+<meta http-equiv="Refresh" content="0;URL=/chat/errorPage">
+</noscript>
+
+
 </head>
 <body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
@@ -63,7 +72,7 @@
 								<input type=hidden name="check" value="1"> <input
 									type=hidden name="userNo" value="${bean.getUserNo()}">
 								<input type=hidden name="deleteMessageNo"
-									value="${bean.getListMsgNo()[status.index]}"> <input
+									value="${bean.getListMsgNo()[status.index]}"> <input class="deletebtn"
 									type="button" value="削除"
 									onClick="if(confirm ('本当に削除しますか？')){submit();}">
 							</form></td>
@@ -103,13 +112,13 @@
 	<br>
 	<center>
 		<form action="/chat/directMessage" method="POST"onSubmit="return send()">
-			<input type=hidden name="check" value="2"> <input type="text"
-				name="sendMessage" size="50"><input type=hidden
+			<input type=hidden name="check" value="2">
+			<input type="text" name="sendMessage" id="textarea" title="${ bean.getUsername() }へのメッセージ                    " class="placeholder"><input type=hidden
 				name="userNo" value="${bean.getUserNo()}"> <input
-				type="submit" value="送信" name="sendMessage">
+				type="submit" value="送信" name="sendMessage" class="btn">
 		</form>
 		<form action="/chat/main" method="POST">
-			<input type="submit" value="メインメニューに戻る">
+			<input type="submit" value="メインメニューに戻る" class="btn2">
 		</form>
 	</center>
 </body>
