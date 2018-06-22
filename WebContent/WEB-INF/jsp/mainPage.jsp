@@ -15,8 +15,7 @@
 <script src="./js/mainPage.js"></script>
 <!-- js無効時エラーページに飛ぶ -->
 <noscript>
-	<meta http-equiv="Refresh"
-		content="0;URL=/chat/errorPage?errorMsg=js無効">
+<meta http-equiv="Refresh" content="0;URL=/chat/errorPage">
 </noscript>
 </head>
 <body id="mainPage">
