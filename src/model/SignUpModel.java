@@ -60,7 +60,7 @@ public class SignUpModel {
 			sb.append("INSERT INTO ");
 			sb.append("M_USER ");
 			sb.append("( ");
-			sb.append("USER_NO, USER_ID, PASSWORD, USER_NAME, REGIST_DATE ");
+			sb.append("USER_NO, USER_ID, PASSWORD, USER_NAME, MY_PAGE_TEXT, REGIST_DATE ");
 			sb.append(") ");
 			sb.append("VALUES ");
 			sb.append("( ");
@@ -68,6 +68,7 @@ public class SignUpModel {
 			sb.append("'"+ userId +"', ");
 			sb.append("'" + password + "', ");
 			sb.append("'" + userName + "', ");
+			sb.append("'はじめまして！" + userName + "です。', ");
 			sb.append("SYSDATE " );
 			sb.append(") ");
 

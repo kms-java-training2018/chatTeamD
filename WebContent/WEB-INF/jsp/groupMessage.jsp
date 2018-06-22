@@ -42,6 +42,32 @@
 			</tr>
 		</table>
 
+				<div style="display: inline-flex">
+
+			<form action="/chat/addGroupMember" method="GET" target="newtab">
+				<input type="hidden" name="groupNo" value="${ bean.getGroupNo() }">
+				<input type="submit" value="メンバーを追加する" class="btn2">
+			</form>
+			<form action="/chat/exitGroupMember" method="GET" target="newtab">
+				<input type="hidden" name="groupNo" value="${ bean.getGroupNo() }">
+				　<input type="submit" value="メンバーを脱退させる" class="btn2">
+			</form>
+			<c:if test="${ bean.getAuthorName().equals(session.getUserName()) }">
+				<form action="/chat/breakup" method="post">
+					<input type="hidden" name="groupNo" value="${ bean.getGroupNo() }">
+					　<input class="btn2" type="button" value="解散！"
+						onclick="if(confirm ('本当に解散しますか')){submit();}">
+				</form>
+			</c:if>
+						<c:if test="${!bean.getAuthorName().equals(session.getUserName()) }">
+				<form action="/chat/groupMessage" method="POST">
+					<input type="hidden" name="exit" value="${ groupBean.getGroupNo()}">
+					　<input class="btn2" type="button" value="グループ脱退"
+						onClick="if(confirm ('本当に脱退しますか')){submit();}">
+				</form>
+			</c:if>
+		</div>
+
 	</center>
 	<center>
 		<table cellspacing="0">
@@ -129,28 +155,11 @@
 				type="hidden" name="groupNo" value="${ bean.getGroupNo()}">
 			<input type="submit" value="送信" class="btn">
 		</form>
-		<div style="display: inline-flex">
-			<form action="/chat/groupMessage" method="POST">
-				<input type="hidden" name="exit" value="${ groupBean.getGroupNo()}">
-				<input class="btn2" type="button" value="グループ脱退"
-					onClick="if(confirm ('本当に脱退しますか')){submit();}">
-			</form>
 
-			<form action="/chat/main" method="POST">
-				<input type="submit" value="メインメニューに戻る" class="btn2">
-			</form>
-		</div>
-		<form action="/chat/addGroupMember" method="GET" target="newtab">
-			<input type="hidden" name="groupNo" value="${ bean.getGroupNo() }">
-			<input type="submit" value="メンバーを追加する" class="btn2">
+
+		<form action="/chat/main" method="POST">
+			<input type="submit" value="メインメニューに戻る" class="btn2">
 		</form>
-		<c:if test="${ bean.getAuthorName().equals(session.getUserName()) }">
-			<form action="/chat/breakup" method="post">
-				<input type="hidden" name="groupNo" value="${ bean.getGroupNo() }">
-				<input class="btn2" type="button" value="解散！"
-					onclick="if(confirm ('本当に解散しますか')){submit();}">
-			</form>
-		</c:if>
 	</center>
 </body>
 </html>
