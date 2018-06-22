@@ -139,6 +139,7 @@ public class MakeGroupServlet extends HttpServlet {
 					// 正常に一覧取得できた場合
 					// リクエストに送る
 					req.setAttribute("bean", userListBeanList);
+					req.setAttribute("errorMsg", bean.getErrorMsg());
 					// 行き先をグループ作成ページに
 					direction = "/WEB-INF/jsp/makeGroup.jsp";
 				}
@@ -156,7 +157,7 @@ public class MakeGroupServlet extends HttpServlet {
 
 		}
 		// エラーなどリロードされても問題ない場合
-		// 出力
+		// フォワードで出力
 		req.getRequestDispatcher(direction).forward(req, res);
 	}
 }

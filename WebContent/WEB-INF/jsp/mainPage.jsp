@@ -34,10 +34,11 @@
 		<tr>
 			<td><img src="./img/title_mainPage.png" alt="Ch@" width="50%"></td>
 			<td>
-			<a class="imgBtn"><img src="./img/editProfile.png" usemap="#EditProfile"
-				alt="editProfile" height="100" align="right" class="imgBtn"> </a>
-				<map name="EditProfile">
-					<area shape="circle" coords="50,50,50" href="/chat/myPage" alt="editProfile">
+			<img src="./img/editProfile.png" usemap="#editProfile"
+				alt="editProfile" height="100" align="right" id="imgBtn1" >
+				<map name="editProfile">
+					<area shape="circle" coords="50,50,50" href="/chat/myPage" alt="editProfile"
+					 onmouseover="imgBtn1.style.opacity = 0.7;" onmouseout="imgBtn1.style.opacity = 1;">
 				</map>
 			</td>
 		</tr>
@@ -101,14 +102,11 @@
 			</c:otherwise>
 		</c:choose>
 		<p class="inlineBlock">
-			<a class="imgBtn">
-			<img src="./img/makeGroup.png" usemap="#Map" alt="makeGroup"
-				height="100" class="block">
-			</a>
-			<map name="Map">
+			<img src="./img/makeGroup.png" usemap="#makeGroup" alt="makeGroup"
+				height="100" class="block" id="imgBtn2">
+			<map name="makeGroup">
 				<area shape="circle" coords="50,50,50" href="/chat/makeGroup"
-					alt="makeGroup" onmouseover="${makeGroup}=''"
-					onmouseout="this.src='img/banner.jpg'">
+					alt="makeGroup" onmouseover="imgBtn2.style.opacity = 0.7;" onmouseout="imgBtn2.style.opacity = 1;">
 			</map>
 			<img src="./img/GM.png" alt="dm" width="200" class="block"> <br>
 		</p>

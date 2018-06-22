@@ -14,6 +14,9 @@
 <!--	JS読み込み	-->
 <script src="./js/login.js"></script>
 <script src="./js/doubleSubmit.js"></script>
+<noscript>
+<meta http-equiv="Refresh" content="0;URL=/chat/errorPage">
+</noscript>
 </head>
 <body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
