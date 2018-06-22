@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+.listDiv {
+	text-align: left;
+	width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.listCell {
+	display: inline-block;
+	width: 180px;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.btn2 {
+	border: 1px solid #FFFFFF;
+	border-collapse: separate;
+	border-radius: 5px;
+	border-spacing: 0;
+	width: 150px;
+}

@@ -94,7 +94,7 @@
 		<url-pattern>/logout</url-pattern>
 	</servlet-mapping>
 
-		<servlet>
+	<servlet>
 		<servlet-name>SignUpServlet</servlet-name>
 		<servlet-class>servlet.SignUpServlet</servlet-class>
 	</servlet>
@@ -102,5 +102,25 @@
 		<servlet-name>SignUpServlet</servlet-name>
 		<url-pattern>/signup</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AddGroupMemberServlet</servlet-name>
+		<servlet-class>servlet.AddGroupMemberServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddGroupMemberServlet</servlet-name>
+		<url-pattern>/addGroupMember</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>BreakupServlet</servlet-name>
+		<servlet-class>servlet.BreakupServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BreakupServlet</servlet-name>
+		<url-pattern>/breakup</url-pattern>
+	</servlet-mapping>
+
+
 
 </web-app>
