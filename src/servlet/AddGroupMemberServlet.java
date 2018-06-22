@@ -97,6 +97,16 @@ public class AddGroupMemberServlet extends HttpServlet {
 		bean.setGroupNo(Integer.parseInt(req.getParameter("groupNo")));
 
 		String[] groupMemberNo = req.getParameterValues("userNo");
+
+		if(groupMemberNo == null) {
+			errorMsg = "エラーです。グループページに戻ってください";
+			req.setAttribute("errorMsg", errorMsg);
+			direction = "/WEB-INF/jsp/addGroupMember.jsp";
+			req.setAttribute("groupNo", bean.getGroupNo());
+			req.getRequestDispatcher(direction).forward(req, res);
+			return;
+		}
+
 		for (int i = 0; i < groupMemberNo.length; i++) {
 			bean.setUserNo(groupMemberNo[i]);
 			try {

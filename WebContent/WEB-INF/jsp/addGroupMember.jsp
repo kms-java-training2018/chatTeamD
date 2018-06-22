@@ -22,12 +22,14 @@
 <br>
 			<input type="hidden" name="groupNo" value="${ bean.getGroupNo() }">
 			<c:if
-					test="${ !message.equals('メンバーを追加しました') }">
+					test="${ !message.equals('メンバーを追加しました')  && !errorMsg.equals('エラーです。グループページに戻ってください')}">
 
 					<input type="submit" value="追加" class="btn2"></c:if></center>
 		</form>
 	</div>
 	${ message }
+	${ errorMsg }
+
 		<center><input type="submit" value="メインページ" onclick="window.close()" class="btn2"></center>
 </body>
 </html>
