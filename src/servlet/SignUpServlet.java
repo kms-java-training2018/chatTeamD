@@ -53,6 +53,25 @@ public class SignUpServlet extends HttpServlet {
 		String userName = (String) req.getParameter("userName");
 		// -------------------------------------------------------------
 
+		bean.setUserId(userId);
+
+		try {
+			bean = model.userList(bean);
+		}catch (Exception e) {
+			errormsg = "DBに接続できません";
+			direction = "/WEB-INF/jsp/login.jsp";
+			req.setAttribute("errorMessage", errormsg);
+			req.getRequestDispatcher(direction).forward(req, res);
+			return;
+		}
+
+		if(bean.getResult()!=null) {
+			errormsg = errormsg + "すでに登録されているIDです";
+			req.setAttribute("errormsg", errormsg);
+			direction = "/WEB-INF/jsp/signUp.jsp";
+			req.getRequestDispatcher(direction).forward(req, res);
+			return;
+		}
 
 		int userIdLen = userId.length();
 		int passwordLen = password.length();
@@ -62,10 +81,13 @@ public class SignUpServlet extends HttpServlet {
 
 		errormsg = "エラー:";
 
+
+
+
 		// 入力があるかのチェック
 		if(userId == "" || password == "" || userName == "" || userName.equals("表示名")) {
 			// エラー
-			errormsg = errormsg + "ID/パスワード/ユーザー名を入力してください";
+			errormsg = errormsg + "　ID/パスワード/ユーザー名を入力してください";
 		}
 
 		// 半角で入力されているかのチェック

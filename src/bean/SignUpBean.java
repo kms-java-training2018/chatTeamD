@@ -13,6 +13,9 @@ public class SignUpBean {
 	// エラーメッセージ
 	private String errorMessage;
 
+	// ID判定
+	private String result;
+
 	public String getUserId() {
 		return userId;
 	}
@@ -43,5 +46,13 @@ public class SignUpBean {
 
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
 	}
 }

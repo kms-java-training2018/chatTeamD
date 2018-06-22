@@ -274,7 +274,7 @@ public class GroupMessageServlet extends HttpServlet {
 		// -------------------------------------------------------------
 
 		// 入力できる文字は100桁まで
-		if (!message.equals("")) {
+		if (message != null) {
 			if(message.equals(bean.getGroupName()+"へのメッセージ")) {
 				errorMsg = "メッセージを入力してください。";
 				// -------------------------------------------------------------
@@ -373,7 +373,7 @@ public class GroupMessageServlet extends HttpServlet {
 				req.getRequestDispatcher(direction).forward(req, res);
 				return;
 			}
-		}else if(req.getParameter("delete")==null || message == null) {
+		}else if(req.getParameter("delete")==null && message==null) {
 			errorMsg = "メッセージを入力してください。";
 			// SQL実行
 			// メッセージ表示
@@ -462,11 +462,10 @@ public class GroupMessageServlet extends HttpServlet {
 
 
 		req.getAttribute("list");
-
-
 		req.setAttribute("groupBean", bean);
 		req.setAttribute("list", list);
 		req.setAttribute("bean", bean);
+
 		req.getRequestDispatcher(direction).forward(req, res);
 	}
 }

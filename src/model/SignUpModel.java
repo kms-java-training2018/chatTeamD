@@ -90,4 +90,58 @@ public class SignUpModel {
 
 		return bean;
 	}
+	public SignUpBean userList(SignUpBean bean) {
+		// 初期化
+		StringBuilder sb = new StringBuilder();
+		String userId = bean.getUserId();
+		String db = "";
+
+		Connection conn = null;
+		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
+		String user = "DEV_TEAM_D";
+		String dbPassword = "D_DEV_TEAM";
+		// JDBCドライバーのロード
+		try {
+
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		// 接続作成
+		try {
+
+			conn = DriverManager.getConnection(url, user, dbPassword);
+
+			Statement stmt = conn.createStatement();
+
+
+			// 自動采番
+			sb.append("SELECT ");
+			sb.append("USER_NAME ");
+			sb.append("FROM ");
+			sb.append("M_USER ");
+			sb.append("Where ");
+			sb.append("user_id = ");
+			sb.append("'"+userId+ "'");
+
+			ResultSet rs = stmt.executeQuery(sb.toString());
+			while(rs.next()) {
+				bean.setResult(rs.getString("USER_NAME"));
+				db = rs.getString("USER_NAME");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// SQLの接続は絶対に切断
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+		return bean;
+	}
 }
