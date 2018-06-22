@@ -80,75 +80,11 @@ public class MainPageServlet extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-		// loginからはpostで送られてくる
-		// 初期化
-		GetUserListModel userListModel = new GetUserListModel();
-		GetGroupListModel groupListModel = new GetGroupListModel();
-		ArrayList<UserListBean> userListBeanList = new ArrayList<>();
-		ArrayList<GroupListBean> groupListBeanList = new ArrayList<>();
-		String direction = "/WEB-INF/jsp/mainPage.jsp";
-		/**
-		 *  1）パラメータチェック
-		 */
-		HttpSession session = req.getSession();
-		SessionBean sesBean = (SessionBean) session.getAttribute("session");
-		if (session == null || session.getAttribute("userId") == null || sesBean.getUserNo() == null) {
-			// セッション情報なし
-			// 行き先をエラーページに
-			direction = "/errorPage";
-			req.setAttribute("errorMsg", "セッション情報が無効です");
-		} else {
-			// セッションからユーザーNo取得
+		// postからpostにくる
+		// リロード防止用にgetへリダイレクトで移動
+		res.sendRedirect("/chat/main");
 
-			String sesUserNo = sesBean.getUserNo();
-			// 2～3処理
-			try {
-				// 2）他会員一覧取得処理
-				userListBeanList = userListModel.getUserList(sesUserNo);
-				// 3）最新メッセージ取得処理
-				userListBeanList = userListModel.getUserLatestMessage(userListBeanList, sesUserNo);
-				// 4) 参加グループ一覧取得処理
-				// グループ一覧取得
-				groupListBeanList = groupListModel.getGroupList(sesUserNo);
-				// グループメッセージ取得
-				groupListBeanList = groupListModel.getGroupLatestMessage(groupListBeanList, sesUserNo);
-			} catch (Exception e) {
-				// 諸々のエラーはここに来る
-				e.printStackTrace();
-				// エラーはいてるのでuserListBeanList初期化してエラー情報入れる
-				userListBeanList.clear();
-				// エラー情報入れたbeanだけセット
-				UserListBean bean = new UserListBean();
-				bean.setErrorFlag(1);
-				userListBeanList.add(bean);
-			}
-			// 途中でエラーはいている場合
-			if (userListBeanList.isEmpty() || userListBeanList.get(0).getErrorFlag() == 1 || groupListBeanList.isEmpty()
-					|| groupListBeanList.get(0).getErrorFlag() == 1) {
-				// エラーメッセージ送りつつ行き先をエラーページに
-				direction = "/errorPage";
-				req.setAttribute("errorMsg", "DB接続に失敗しました");
-			} else {
-				// リクエストに送る
-				req.setAttribute("userbean", userListBeanList);
-				req.setAttribute("groupbean", groupListBeanList);
-				// 初期表示用のパラメータ変更
-				if (session.getAttribute("from") != null) {
-					// セッションに入れたパラメータ削除
-					session.removeAttribute("from");
-					// グループ作成ページから来ていると判断
-					req.setAttribute("fromGM", "GMから来た");
-				}
-			}
 
-		}
-		// 出力
-		if (direction.equals("/WEB-INF/jsp/mainPage.jsp")) {
-			direction="/main";
-		}
-		// リロード防止用にリダイレクトで移動
-		res.sendRedirect("/chat" + direction);
-		//req.getRequestDispatcher(direction).forward(req, res);
 	}
 
 }
