@@ -12,6 +12,10 @@
 	media="all">
 <script src="./js/doubleSubmit.js"></script>
 <script src="./js/login.js"></script>
+<!-- js無効時エラーページに飛ぶ -->
+<noscript>
+<meta http-equiv="Refresh" content="0;URL=/chat/errorPage">
+</noscript>
 
 </head>
 <body id="page">
@@ -103,7 +107,7 @@
 				</c:if>
 				<!-- グループ脱退者 -->
 				<c:if
-					test="${ obj.userName.equals(bean.getOutFlagMessage()) && !obj.userNo.equals(session.getUserNo()) }">
+					test="${ obj.userName.equals(bean.getOutFlagMessage())}">
 					<tr>
 						<td class="msoutside" rowspan="2" id="otherName"><c:out
 								value="${ obj.userName }" /></td>
@@ -151,7 +155,7 @@
 		<form action="/chat/groupMessage" method="POST"
 			onSubmit="return send()">
 			<input type="text" name="message" id="textarea"
-				title="${ bean.getGroupName() }へのメッセージ" class="placeholder"><input
+				title="${ bean.getGroupName() }へのメッセージ　　" class="placeholder"><input
 				type="hidden" name="groupNo" value="${ bean.getGroupNo()}">
 			<input type="submit" value="送信" class="btn">
 		</form>

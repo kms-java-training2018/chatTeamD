@@ -8,6 +8,10 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="./css/addgroupmember.css"
 	media="all">
+	<!-- js無効時エラーページに飛ぶ -->
+<noscript>
+<meta http-equiv="Refresh" content="0;URL=/chat/errorPage">
+</noscript>
 </head>
 <body>
 	<h1>グループ追加</h1>
