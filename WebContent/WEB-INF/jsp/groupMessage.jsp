@@ -69,6 +69,7 @@
 			<c:if test="${!bean.getAuthorName().equals(session.getUserName()) }">
 				<form action="/chat/groupMessage" method="POST">
 					<input type="hidden" name="exit" value="${ groupBean.getGroupNo()}">
+					<input type="hidden" name="groupNo" value="${ groupBean.getGroupNo()}">
 					<input class="btn2" type="button" value="グループ脱退"
 						onClick="if(confirm ('本当に脱退しますか')){submit();}">
 				</form>
