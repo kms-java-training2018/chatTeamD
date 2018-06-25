@@ -6,8 +6,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<!-- css読み込み -->
+<link rel="stylesheet" type="text/css" href="./css/Maincss.css"
+	media="all">
+<link rel="stylesheet" type="text/css" href="./css/addgroupmember.css"
+	media="all">
+	<!-- js無効時エラーページに飛ぶ -->
+<noscript>
+<meta http-equiv="Refresh" content="0;URL=/chat/errorPage">
+</noscript>
 </head>
-<body>
+<body id="page">
 	<h1>メンバー脱退</h1>
 	<div class="listDiv">
 		<form action="/chat/withdrawal" method="post">

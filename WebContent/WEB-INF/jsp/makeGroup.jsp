@@ -67,7 +67,7 @@
 	<br>
 	<div id="footer">
 		<hr>
-		<a href="#header">＾ページトップへ</a> <br>
+		<a href="#header">∧  ページトップへ</a> <br>
 		<br>
 	</div>
 	<!-- ここまでです -->
