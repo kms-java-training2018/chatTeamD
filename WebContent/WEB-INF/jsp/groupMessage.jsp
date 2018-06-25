@@ -181,9 +181,14 @@
 	</div>
 	<!-- 以下、フッター部分になります。各自実装お願いします -->
 	<br>
+	<div id="toTop">
+	<a href="#header">∧  ページトップへ</a>
+	</div>
 	<div id="footer">
 		<hr>
-		<a href="#header">＾ページトップへ戻る</a> <br> <br>
+		Ch@<br>
+		kms2018 team D chat tool
+		<br>
 	</div>
 	<!-- ここまでです -->
 </body>
