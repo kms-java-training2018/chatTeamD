@@ -15,7 +15,7 @@
 <script src="./js/mainPage.js"></script>
 <!-- js無効時エラーページに飛ぶ -->
 <noscript>
-<meta http-equiv="Refresh" content="0;URL=/chat/errorPage">
+	<meta http-equiv="Refresh" content="0;URL=/chat/errorPage">
 </noscript>
 </head>
 <body id="mainPage">
@@ -33,14 +33,13 @@
 	<table class="rogoTable">
 		<tr>
 			<td><img src="./img/title_mainPage.png" alt="Ch@" width="50%"></td>
-			<td>
-			<img src="./img/editProfile.png" usemap="#editProfile"
-				alt="editProfile" height="100" align="right" id="imgBtn1" >
-				<map name="editProfile">
-					<area shape="circle" coords="50,50,50" href="/chat/myPage" alt="editProfile"
-					 onmouseover="imgBtn1.style.opacity = 0.7;" onmouseout="imgBtn1.style.opacity = 1;">
-				</map>
-			</td>
+			<td><img src="./img/editProfile.png" usemap="#editProfile"
+				alt="editProfile" height="100" align="right" id="imgBtn1"> <map
+					name="editProfile">
+					<area shape="circle" coords="50,50,50" href="/chat/myPage"
+						alt="editProfile" onmouseover="imgBtn1.style.opacity = 0.7;"
+						onmouseout="imgBtn1.style.opacity = 1;">
+				</map></td>
 		</tr>
 	</table>
 	<table class="titleTable">
@@ -106,10 +105,20 @@
 				height="100" class="block" id="imgBtn2">
 			<map name="makeGroup">
 				<area shape="circle" coords="50,50,50" href="/chat/makeGroup"
-					alt="makeGroup" onmouseover="imgBtn2.style.opacity = 0.7;" onmouseout="imgBtn2.style.opacity = 1;">
+					alt="makeGroup" onmouseover="imgBtn2.style.opacity = 0.7;"
+					onmouseout="imgBtn2.style.opacity = 1;">
 			</map>
 			<img src="./img/GM.png" alt="dm" width="200" class="block"> <br>
 		</p>
 	</div>
+	<br>
+
+	<!-- 以下、フッター部分になります。各自実装お願いします -->
+	<div id="footer">
+		<hr>
+		<a href="#header">＾トップへ戻る</a> <br>
+		<br>
+	</div>
+	<!-- ここまでです -->
 </body>
 </html>
