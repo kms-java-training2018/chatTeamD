@@ -48,5 +48,14 @@
 		<br> <font color="red"><Strong>${ errormessage }</Strong></font>
 		<br>
 	</center>
+
+	<!-- 以下、フッター部分になります。各自実装お願いします -->
+	<br>
+	<div id="footer">
+		<hr>
+		<a href="#header">＾ページトップへ戻る</a> <br>
+		<br>
+	</div>
+	<!-- ここまでです -->
 </body>
 </html>

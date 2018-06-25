@@ -111,12 +111,11 @@
 			<img src="./img/GM.png" alt="dm" width="200" class="block"> <br>
 		</p>
 	</div>
-	<br>
-
 	<!-- 以下、フッター部分になります。各自実装お願いします -->
+	<br>
 	<div id="footer">
 		<hr>
-		<a href="#header">＾トップへ戻る</a> <br>
+		<a href="#header">＾ページトップへ戻る</a> <br>
 		<br>
 	</div>
 	<!-- ここまでです -->
