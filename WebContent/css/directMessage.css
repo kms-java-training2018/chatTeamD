@@ -5,7 +5,7 @@
 }
 
 .me {
-	text-align:left;
+	text-align: left;
 	background-color: lightcoral;
 	color: black;
 	border: 1px solid #ffe4c4;
@@ -24,7 +24,7 @@
 }
 
 .you {
-	text-align:left;
+	text-align: left;
 	background-color: gold;
 	color: black;
 	border: 1px solid #ffe4c4;
@@ -65,18 +65,11 @@
 	margin-right: auto;
 }
 
-
-
-
-
-
-
 #textarea {
 	width: 500px;
 	height: 40px;
 	font-size: 100%;
 }
-
 
 .btn {
 	border: 1px solid #ffe4c4;
@@ -95,6 +88,7 @@
 	width: 150px;
 }
 
+}
 .deletebtn {
 	border: 1px solid #ffe4c4;
 	border-collapse: separate;

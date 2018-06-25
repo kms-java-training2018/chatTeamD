@@ -90,3 +90,14 @@
 	padding-left: 5px;
 }
 
+.updbtn {
+	color: #000000;
+	background-color: aquamarine;
+	border: 1px solid  #000000;
+	border-collapse: separate;
+	border-radius: 5px;
+	border-spacing: 0;
+	width: 150px;
+	font-weight: bold;
+}
+

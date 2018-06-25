@@ -75,11 +75,7 @@
 						onClick="if(confirm ('本当に脱退しますか')){submit();}">
 				</form>
 			</c:if>
-			<form action="/chat/groupMessage" method="GET">
-				<input type="hidden" name="groupNo"
-					value="${ groupBean.getGroupNo()}"> <input class="btn2"
-					type="submit" value="更新">
-			</form>
+
 		</div>
 
 	</center>
@@ -168,7 +164,11 @@
 				type="hidden" name="groupNo" value="${ bean.getGroupNo()}">
 			<input type="submit" value="送信" class="btn">
 		</form>
-
+		<form action="/chat/groupMessage" method="GET">
+			<input type="hidden" name="groupNo"
+				value="${ groupBean.getGroupNo()}"> <input class="updbtn"
+				type="submit" value="更新">
+		</form>
 
 		<!-- 画像ボタン追加につきコメントアウト、不要なら削除
 		<form action="/chat/main" method="POST">

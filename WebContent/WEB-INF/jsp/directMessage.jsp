@@ -120,6 +120,11 @@
 				name="userNo" value="${bean.getUserNo()}"> <input
 				type="submit" value="送信" name="sendMessage" class="btn">
 		</form>
+
+		<form action="/chat/directMessage" method="GET">
+		<input type="hidden" name="userNo" value="${bean.getUserNo()}">
+		<input type="submit" value="更新" class="updbtn">
+		</form>
 <!-- 画像ボタン追加につきコメントアウト、不要なら削除
 		<form action="/chat/main" method="POST">
 			<input type="submit" value="メインメニューに戻る" class="btn2">
