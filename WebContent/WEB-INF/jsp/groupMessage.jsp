@@ -69,11 +69,17 @@
 			<c:if test="${!bean.getAuthorName().equals(session.getUserName()) }">
 				<form action="/chat/groupMessage" method="POST">
 					<input type="hidden" name="exit" value="${ groupBean.getGroupNo()}">
-					<input type="hidden" name="groupNo" value="${ groupBean.getGroupNo()}">
-					<input class="btn2" type="button" value="グループ脱退"
+					<input type="hidden" name="groupNo"
+						value="${ groupBean.getGroupNo()}"> <input class="btn2"
+						type="button" value="グループ脱退"
 						onClick="if(confirm ('本当に脱退しますか')){submit();}">
 				</form>
 			</c:if>
+			<form action="/chat/groupMessage" method="GET">
+				<input type="hidden" name="groupNo"
+					value="${ groupBean.getGroupNo()}"> <input class="btn2"
+					type="submit" value="更新">
+			</form>
 		</div>
 
 	</center>
@@ -183,13 +189,11 @@
 	<!-- 以下、フッター部分になります。各自実装お願いします -->
 	<br>
 	<div id="toTop">
-	<a href="#header">∧  ページトップへ</a>
+		<a href="#header">∧ ページトップへ</a>
 	</div>
 	<div id="footer">
 		<hr>
-		Ch@<br>
-		kms2018 team D chat tool
-		<br>
+		Ch@<br> kms2018 team D chat tool <br>
 	</div>
 	<!-- ここまでです -->
 </body>
