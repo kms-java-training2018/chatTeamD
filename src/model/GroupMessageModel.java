@@ -116,6 +116,10 @@ public class GroupMessageModel {
 					bean.setColorNo(num);
 				}
 
+				if(bean.getUserName().equals("送信者不明")) {
+					bean.setColorNo(9);
+				}
+
 				output.add(bean);
 
 			}

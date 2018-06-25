@@ -34,7 +34,7 @@
 					test="${ !message.equals('メンバーを脱退させました') && !errorMsg.equals('エラーです。グループページに戻ってください')}">
 
 
-					<input type="submit" value="強制脱退" class="btn2">
+					<input type="button" value="強制脱退" class="btn2" onClick="if(confirm ('本当に脱退させますか')){submit();}">
 				</c:if>
 			</center>
 		</form>
