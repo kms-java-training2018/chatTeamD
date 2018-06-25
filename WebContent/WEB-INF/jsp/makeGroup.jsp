@@ -9,8 +9,6 @@
 <!-- css読み込み -->
 <link rel="stylesheet" type="text/css" href="./css/Maincss.css"
 	media="all">
-<link rel="stylesheet" type="text/css" href="./css/makeGroup.css"
-	media="all">
 <!--	JS読み込み	-->
 <script src="./js/login.js"></script>
 <script src="./js/doubleSubmit.js"></script>
@@ -65,9 +63,13 @@
 	</div>
 	<!-- 以下、フッター部分になります。各自実装お願いします -->
 	<br>
+	<div id="toTop">
+	<a href="#header">∧  ページトップへ</a>
+	</div>
 	<div id="footer">
 		<hr>
-		<a href="#header">∧  ページトップへ</a> <br>
+		Ch@<br>
+		kms2018 team D chat tool
 		<br>
 	</div>
 	<!-- ここまでです -->
