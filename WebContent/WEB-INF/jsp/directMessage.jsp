@@ -121,5 +121,12 @@
 			<input type="submit" value="メインメニューに戻る" class="btn2">
 		</form>
 	</center>
+	<!-- 以下、フッター部分になります。各自実装お願いします -->
+	<div id="footer">
+		<hr>
+		<a href="#header">＾トップへ戻る</a> <br>
+		<br>
+	</div>
+	<!-- ここまでです -->
 </body>
 </html>
