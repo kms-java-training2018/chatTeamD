@@ -11,6 +11,12 @@
 #header a{
 	color:white;
 }
+#toBottom {
+	text-align:right;
+}
+#toBottom a{
+	color:black;
+}
 
 #page {
 	width: 900px;
@@ -55,3 +61,10 @@
   filter: alpha(opacity=70);
   -ms-filter: "alpha(opacity=70)";
 }
+
+.backBtn {
+	text-align: left;
+	margin-left: 50px;
+	margin-right: auto;
+}
+

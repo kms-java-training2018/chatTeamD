@@ -22,6 +22,9 @@
 		</form>
 		<hr>
 	</div>
+	<div id="toBottom">
+	<a href="#footer">∨ ページ最下部へ</a> <br>
+	</div>
 	<!-- ここまでです -->
 	<br>
 	<center>
@@ -42,9 +45,22 @@
 			<input type="hidden" name="myPageText" value="${ bean.getMyPageText }"> <input
 				type="submit" value="プロフィールを更新">
 		</form>
+<!-- 画像ボタン追加につきコメントアウト、不要なら削除
 		<form action="/chat/main" method="POST">
 			<input type="submit" value="メインメニューに戻る">
 		</form>
+ -->
+
+ 	<div class="backBtn">
+		<br> <br> <br>
+		<form action="/chat/main" method="POST">
+			<a class="imgBtn">
+			<input type="image" src="./img/backMainPage.png" name="button"
+				alt="makeGroup" height="40">
+			</a>
+		</form>
+	</div>
+
 		<br> <font color="red"><Strong>${ errormessage }</Strong></font>
 		<br>
 	</center>
@@ -53,7 +69,7 @@
 	<br>
 	<div id="footer">
 		<hr>
-		<a href="#header">＾ページトップへ戻る</a> <br>
+		<a href="#header">＾ページトップへ</a> <br>
 		<br>
 	</div>
 	<!-- ここまでです -->

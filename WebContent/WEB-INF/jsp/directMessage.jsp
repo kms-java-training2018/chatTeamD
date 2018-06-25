@@ -30,6 +30,9 @@
 		</form>
 		<hr>
 	</div>
+	<div id="toBottom">
+	<a href="#footer">∨ ページ最下部へ</a> <br>
+	</div>
 	<!-- ここまでです -->
 	<font color="red" size="5"><Strong>${bean.getErrorMsg()}</Strong></font>
 	<h1></h1>
@@ -117,11 +120,23 @@
 				name="userNo" value="${bean.getUserNo()}"> <input
 				type="submit" value="送信" name="sendMessage" class="btn">
 		</form>
+<!-- 画像ボタン追加につきコメントアウト、不要なら削除
 		<form action="/chat/main" method="POST">
 			<input type="submit" value="メインメニューに戻る" class="btn2">
 		</form>
+ -->
 	</center>
+	<div class="backBtn">
+		<br> <br> <br>
+		<form action="/chat/main" method="POST">
+			<a class="imgBtn">
+			<input type="image" src="./img/backMainPage.png" name="button"
+				alt="makeGroup" height="40">
+			</a>
+		</form>
+	</div>
 	<!-- 以下、フッター部分になります。各自実装お願いします -->
+	<br>
 	<div id="footer">
 		<hr>
 		<a href="#header">＾ページトップへ戻る</a> <br>

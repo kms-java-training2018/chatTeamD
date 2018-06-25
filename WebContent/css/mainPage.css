@@ -15,6 +15,13 @@
 	background-position: center 0px;
 }
 
+#toBottomMainPage {
+	text-align:right;
+}
+#toBottomMainPage a{
+	color:white;
+}
+
 .page {
 	background: #FFC085;
 	text-align: center;

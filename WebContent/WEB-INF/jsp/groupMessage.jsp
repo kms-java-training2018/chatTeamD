@@ -27,6 +27,9 @@
 		</form>
 		<hr>
 	</div>
+	<div id="toBottom">
+	<a href="#footer">∨ ページ最下部へ</a> <br>
+	</div>
 	<!-- ここまでです -->
 
 	<center>
@@ -52,7 +55,7 @@
 				<input type="hidden" name="groupNo" value="${ bean.getGroupNo() }">
 				<input type="submit" value="メンバーを追加する" class="btn2">
 			</form>
-			<form action="/chat/exitGroupMember" method="GET" target="newtab">
+			<form action="/chat/withdrawal" method="GET" target="newtab">
 				<input type="hidden" name="groupNo" value="${ bean.getGroupNo() }">
 				　<input type="submit" value="メンバーを脱退させる" class="btn2">
 			</form>
@@ -161,11 +164,22 @@
 		</form>
 
 
+<!-- 画像ボタン追加につきコメントアウト、不要なら削除
 		<form action="/chat/main" method="POST">
 			<input type="submit" value="メインメニューに戻る" class="btn2">
 		</form>
-	</center>
+ -->
 
+	</center>
+	<div class="backBtn">
+		<br> <br> <br>
+		<form action="/chat/main" method="POST">
+			<a class="imgBtn">
+			<input type="image" src="./img/backMainPage.png" name="button"
+				alt="makeGroup" height="40">
+			</a>
+		</form>
+	</div>
 	<!-- 以下、フッター部分になります。各自実装お願いします -->
 	<br>
 	<div id="footer">

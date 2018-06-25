@@ -27,6 +27,9 @@
 		</form>
 		<hr>
 	</div>
+	<div id="toBottom">
+	<a href="#footer">∨ ページ最下部へ</a> <br>
+	</div>
 	<!-- ここまでです -->
 	<div class="page">
 		<h2>Make Group</h2>

@@ -27,7 +27,11 @@
 		</form>
 		<hr>
 	</div>
+	<div id="toBottomMainPage">
+	<a href="#footer">∨ ページ最下部へ</a> <br>
+	</div>
 	<!-- ここまでです -->
+
 	<!-- グループメッセージから来たか判別する為のパラメータ -->
 	<input type="hidden" name="from" id="from" value="${fromGM}">
 	<table class="rogoTable">
@@ -115,7 +119,7 @@
 	<br>
 	<div id="footer">
 		<hr>
-		<a href="#header">＾ページトップへ戻る</a> <br>
+		<a href="#header">∧  ページトップへ</a> <br>
 		<br>
 	</div>
 	<!-- ここまでです -->
