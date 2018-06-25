@@ -121,6 +121,13 @@
 		<url-pattern>/breakup</url-pattern>
 	</servlet-mapping>
 
-
+	<servlet>
+		<servlet-name>WithdrawalServlet</servlet-name>
+		<servlet-class>servlet.WithdrawalServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WithdrawalServlet</servlet-name>
+		<url-pattern>/withdrawal</url-pattern>
+	</servlet-mapping>
 
 </web-app>
