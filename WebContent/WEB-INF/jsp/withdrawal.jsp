@@ -10,9 +10,9 @@
 <body>
 	<h1>メンバー脱退</h1>
 	<div class="listDiv">
-		<form action="/chat/addGroupMember" method="post">
+		<form action="/chat/withdrawal" method="post">
 			<c:forEach items="${ list }" var="obj" varStatus="status">
-				<c:if test="${ sesssion.getUserNo().equals(obj.userNo) }">
+				<c:if test="${ !session.getUserName().equals(obj.userName) }">
 					<a class="listCell"><input type="checkbox" name="userNo"
 						value="${ obj.userNo }"> <c:out value="${ obj.userName }">
 						</c:out></a>
