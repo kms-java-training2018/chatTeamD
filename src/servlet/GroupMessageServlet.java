@@ -172,6 +172,12 @@ public class GroupMessageServlet extends HttpServlet {
 
 		String sesUserNo = sesBean.getUserNo();
 		bean.setMyNo(sesUserNo);
+		String message = req.getParameter("message");
+		int groupNo = Integer.parseInt(req.getParameter("groupNo"));
+		bean.setMessage(message);
+		bean.setUserNo(sesUserNo);
+		bean.setGroupNo(groupNo);
+
 
 		int testnum = 0;
 
@@ -189,13 +195,8 @@ public class GroupMessageServlet extends HttpServlet {
 				return;
 			}
 
-		}
+		}else {
 
-		String message = req.getParameter("message");
-		int groupNo = Integer.parseInt(req.getParameter("groupNo"));
-		bean.setMessage(message);
-		bean.setUserNo(sesUserNo);
-		bean.setGroupNo(groupNo);
 
 		// -------------------------------------------------------------
 		// SQL実行
@@ -351,6 +352,7 @@ public class GroupMessageServlet extends HttpServlet {
 			return;
 		}
 
+		}
 		// -------------------------------------------------------------
 		// SQL実行
 		try {
