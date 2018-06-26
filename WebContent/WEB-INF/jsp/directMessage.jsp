@@ -75,7 +75,8 @@
 								<input type=hidden name="check" value="1"> <input
 									type=hidden name="userNo" value="${bean.getUserNo()}">
 								<input type=hidden name="deleteMessageNo"
-									value="${bean.getListMsgNo()[status.index]}"> <input class="deletebtn"
+									value="${bean.getListMsgNo()[status.index]}">
+									<input class="deletebtn"
 									type="button" value="削除"
 									onClick="if(confirm ('本当に削除しますか？')){submit();}">
 							</form></td>
