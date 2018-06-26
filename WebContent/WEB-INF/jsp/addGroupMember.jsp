@@ -17,7 +17,7 @@
 </noscript>
 </head>
 <body id="page">
-	<h1>グループ追加</h1>
+	<h1>メンバー追加</h1>
 	<div class="listDiv">
 		<form action="/chat/addGroupMember" method="post">
 			<c:forEach items="${ list }" var="obj" varStatus="status">
