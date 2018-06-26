@@ -20,7 +20,7 @@
 				class="id"> <input type="password" name="password"
 				value="${been.password}" title="1234567890" class="placeholder"
 				class="password"> <br>
-			<div class="error">${ errorMessage }</div>
+			<div class="error"><c:out value="${ errorMessage }"></c:out></div>
 			<br> <input type="submit" value="ログイン">
 
 

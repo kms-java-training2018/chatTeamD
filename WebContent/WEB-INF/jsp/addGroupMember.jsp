@@ -35,8 +35,8 @@
 					<input type="submit" value="追加" class="btn2"></c:if></center>
 		</form>
 	</div>
-	${ message }
-	${ errorMsg }
+	<c:out value="${ message }"></c:out>
+	<c:out value="${ errorMsg }"></c:out>
 <!--  -->
 		<center><input type="submit" value="戻る" onclick="window.close()" class="btn2"></center>
 </body>

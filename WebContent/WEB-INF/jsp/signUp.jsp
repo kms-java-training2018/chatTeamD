@@ -54,7 +54,7 @@
 
 	</center>
 
-	<p class="error">${ errormsg }</p>
+	<p class="error"><c:out value="${ errormsg }"></c:out></p>
 
 	<br>
 

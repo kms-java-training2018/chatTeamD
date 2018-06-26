@@ -21,7 +21,7 @@
 <body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
 	<div id="header">
-		${ session.getUserName() }さん <br>
+		<c:out value="${ session.getUserName() }さん"></c:out> <br>
 		<form name="logout" action="/chat/logout" method="POST">
 			<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
 		</form>
@@ -33,18 +33,18 @@
 	<!-- ここまでです -->
 
 	<center>
-		<font color="red" size="5"><Strong>${ errorMsg }</Strong></font>
+		<font color="red" size="5"><Strong><c:out value="${ errorMsg }"></c:out></Strong></font>
 	</center>
 	<center>
 		<table>
 			<tr>
 				<td class="topoutside"></td>
-				<td class="groupname">${ bean.getGroupName() }</td>
+				<td class="groupname"><c:out value="${ bean.getGroupName() }"></c:out></td>
 				<td class="topoutside"></td>
 			</tr>
 			<tr>
 				<td class="topoutside"></td>
-				<td class="author">作成者: ${ bean.getAuthorName() }</td>
+				<td class="author">作成者: <c:out value="${ bean.getAuthorName() }"></c:out></td>
 				<td class="topoutside"></td>
 			</tr>
 		</table>

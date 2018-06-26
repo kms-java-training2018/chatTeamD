@@ -39,7 +39,7 @@
 			</center>
 		</form>
 	</div>
-	${ message } ${ errorMsg }
+	<c:out value="${ message }"></c:out><c:out value=" ${ errorMsg }"></c:out>
 	<!--  -->
 	<center>
 		<input type="submit" value="戻る" onclick="window.close()" class="btn2">
