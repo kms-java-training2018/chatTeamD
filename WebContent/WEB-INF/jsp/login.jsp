@@ -9,7 +9,6 @@
 <link rel="stylesheet" type="text/css" href="./css/login.css"
 	media="all">
 <script src="./js/login.js"></script>
-
 </head>
 <body class="main">
 	<form action="/chat/login" method="POST">

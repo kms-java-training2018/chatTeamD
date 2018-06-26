@@ -9,10 +9,12 @@
 <!-- css読み込み -->
 <link rel="stylesheet" type="text/css" href="./css/Maincss.css"
 	media="all">
-<link rel="stylesheet" type="text/css" href="./css/makeGroup.css"
-	media="all">
 <!--	JS読み込み	-->
 <script src="./js/login.js"></script>
+<script src="./js/doubleSubmit.js"></script>
+<noscript>
+<meta http-equiv="Refresh" content="0;URL=/chat/errorPage">
+</noscript>
 </head>
 <body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
@@ -23,6 +25,9 @@
 		</form>
 		<hr>
 	</div>
+	<div id="toBottom">
+	<a href="#footer">∨ ページ最下部へ</a> <br>
+	</div>
 	<!-- ここまでです -->
 	<div class="page">
 		<h2>Make Group</h2>
@@ -30,27 +35,43 @@
 		<p>
 			<font color="#FF0000">${errorMsg}</font>
 		</p>
-		<form action="/chat/makeGroup" method="POST">
+		<form action="/chat/makeGroup" method="POST" onSubmit="return send()">
 			<input type="text" title="グループ名(全角10文字まで)" class="placeholder"
 				name="groupName" value="" size="30"> <br>
-				<div class="listDiv">
+		<div class="listDiv">
 		<c:forEach var="obj" items="${bean}" varStatus="status">
 			<a class="listCell"> <input type="checkbox" name="userNo"
 				value="${bean[status.index].userNo}">${bean[status.index].userName}
 			</a>
 		</c:forEach>
-	</div>
-			<br> <input type="image" src="./img/makeGroupBtn.png"
-				name="button" alt="makeGroup" height="80">
+		</div>
+			<br>
+			<a class="imgBtn">
+			<input type="image" src="./img/makeGroupBtn.png" name="button" alt="makeGroup" height="80">
+			</a>
 		</form>
 	</div>
 
 	<div class="backBtn">
 		<br> <br> <br>
 		<form action="/chat/main" method="POST">
+			<a class="imgBtn">
 			<input type="image" src="./img/backMainPage.png" name="button"
 				alt="makeGroup" height="40">
+			</a>
 		</form>
 	</div>
+	<!-- 以下、フッター部分になります。各自実装お願いします -->
+	<br>
+	<div id="toTop">
+	<a href="#header">∧  ページトップへ</a>
+	</div>
+	<div id="footer">
+		<hr>
+		Ch@<br>
+		kms2018 team D chat tool
+		<br>
+	</div>
+	<!-- ここまでです -->
 </body>
 </html>

@@ -8,6 +8,9 @@
 </head>
 <body>
 <h1>>エラー</h1>
+<noscript>
+<font color="#ff0000">jsが無効です。有効にしてください。</font>
+</noscript>
 <font color="#ff0000">${errorMsg}</font>
 <br>
 お手数ですがログインページからやり直してください

@@ -13,6 +13,10 @@
 	media="all">
 <!-- JS読み込み	-->
 <script src="./js/mainPage.js"></script>
+<!-- js無効時エラーページに飛ぶ -->
+<noscript>
+	<meta http-equiv="Refresh" content="0;URL=/chat/errorPage">
+</noscript>
 </head>
 <body id="mainPage">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
@@ -23,17 +27,22 @@
 		</form>
 		<hr>
 	</div>
+	<div id="toBottomMainPage">
+	<a href="#footer">∨ ページ最下部へ</a> <br>
+	</div>
 	<!-- ここまでです -->
+
 	<!-- グループメッセージから来たか判別する為のパラメータ -->
 	<input type="hidden" name="from" id="from" value="${fromGM}">
 	<table class="rogoTable">
 		<tr>
-			<td><img src="./img/title.png" alt="Ch@" width="50%"></td>
-			<td><img src="./img/editProfile.png" usemap="#EditProfile"
-				alt="editProfile" height="100" align="right"> <map
-					name="EditProfile">
+			<td><img src="./img/title_mainPage.png" alt="Ch@" width="50%"></td>
+			<td><img src="./img/editProfile.png" usemap="#editProfile"
+				alt="editProfile" height="100" align="right" id="imgBtn1"> <map
+					name="editProfile">
 					<area shape="circle" coords="50,50,50" href="/chat/myPage"
-						alt="editProfile">
+						alt="editProfile" onmouseover="imgBtn1.style.opacity = 0.7;"
+						onmouseout="imgBtn1.style.opacity = 1;">
 				</map></td>
 		</tr>
 	</table>
@@ -75,8 +84,9 @@
 		<!-- 綺麗じゃないから余裕があれば直す -->
 		<c:choose>
 			<c:when test="${!empty groupbean[0].getGroupNullMes()}">
-		<img src="./img/zeroGroup.png" alt="dm" width="200" class="inlineBlock">
-		</c:when>
+				<img src="./img/zeroGroup.png" alt="dm" width="200"
+					class="inlineBlock">
+			</c:when>
 			<c:otherwise>
 				<table class="mTable">
 					<c:forEach var="obj" items="${groupbean}" varStatus="status">
@@ -95,14 +105,27 @@
 			</c:otherwise>
 		</c:choose>
 		<p class="inlineBlock">
-			<img src="./img/makeGroup.png" usemap="#Map" alt="makeGroup"
-				height="100" class="block">
-			<map name="Map">
+			<img src="./img/makeGroup.png" usemap="#makeGroup" alt="makeGroup"
+				height="100" class="block" id="imgBtn2">
+			<map name="makeGroup">
 				<area shape="circle" coords="50,50,50" href="/chat/makeGroup"
-					alt="makeGroup">
+					alt="makeGroup" onmouseover="imgBtn2.style.opacity = 0.7;"
+					onmouseout="imgBtn2.style.opacity = 1;">
 			</map>
 			<img src="./img/GM.png" alt="dm" width="200" class="block"> <br>
 		</p>
 	</div>
+	<!-- 以下、フッター部分になります。各自実装お願いします -->
+	<br>
+	<div id="toTopMainPage">
+	<a href="#header">∧  ページトップへ</a>
+	</div>
+	<div id="footer">
+		<hr>
+		Ch@<br>
+		kms2018 team D chat tool
+		<br>
+	</div>
+	<!-- ここまでです -->
 </body>
 </html>

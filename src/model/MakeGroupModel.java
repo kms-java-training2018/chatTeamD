@@ -108,13 +108,15 @@ public class MakeGroupModel {
 				sb.append(", group_name ");
 				sb.append(", regist_user_no ");
 				sb.append(", regist_date ");
+				sb.append(", delete_flag ");
 				sb.append(" ) ");
 				sb.append("VALUES ");
 				sb.append(" ( ");
 				sb.append(" '" + maxGroupNo + "' , ");
 				sb.append(" '" + groupName + "' , ");
 				sb.append(" '" + sesUserNo + "' , ");
-				sb.append(" sysdate ");
+				sb.append(" sysdate , ");
+				sb.append(" '0' ");
 				sb.append(" ) ");
 				// SQL実行
 				ResultSet rs2 = stmt.executeQuery(sb.toString());

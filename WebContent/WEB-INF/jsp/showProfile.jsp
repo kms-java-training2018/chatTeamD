@@ -8,6 +8,10 @@
 <title>プロフィール</title>
 	<link rel="stylesheet" type="text/css" href="./css/Maincss.css"
 	media="all">
+	<!-- js無効時エラーページに飛ぶ -->
+<noscript>
+<meta http-equiv="Refresh" content="0;URL=/chat/errorPage">
+</noscript>
 </head>
 <body id="page">
 <br><br><br><br>

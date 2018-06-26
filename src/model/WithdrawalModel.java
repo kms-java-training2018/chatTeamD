@@ -5,21 +5,15 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
-import bean.SignUpBean;
+import bean.WithdrawalBean;
 
-/**
- * ログイン画面ビジネスロジック
- */
-public class SignUpModel {
-
-	public SignUpBean signup(SignUpBean bean) {
+public class WithdrawalModel {
+	public ArrayList<WithdrawalBean> userList(int groupNo) {
 		// 初期化
 		StringBuilder sb = new StringBuilder();
-		String userId = bean.getUserId();
-		String password = bean.getUserPw();
-		String userName = bean.getUserName();
-		int maxNum = 0;
+		ArrayList<WithdrawalBean> userList = new ArrayList<>();
 
 		Connection conn = null;
 		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
@@ -43,39 +37,41 @@ public class SignUpModel {
 
 			// 自動采番
 			sb.append("SELECT ");
-			sb.append("MAX(");
-			sb.append("USER_NO) ");
+			sb.append("USER_ID, ");
+			sb.append("USER_NAME, ");
+			sb.append("USER_NO ");
 			sb.append("FROM ");
 			sb.append("M_USER ");
-
-			ResultSet max = stmt.executeQuery(sb.toString());
-			while(max.next()) {
-				maxNum = max.getInt("MAX(USER_NO)") + 1;
-			}
-
-			sb.delete(0, sb.length());
-
-
-			// SQL作成
-			sb.append("INSERT INTO ");
-			sb.append("M_USER ");
+			sb.append("WHERE ");
+			sb.append("USER_NO ");
+			sb.append("IN ");
 			sb.append("( ");
-			sb.append("USER_NO, USER_ID, PASSWORD, USER_NAME, MY_PAGE_TEXT, REGIST_DATE ");
-			sb.append(") ");
-			sb.append("VALUES ");
-			sb.append("( ");
-			sb.append("'" + maxNum + "', ");
-			sb.append("'"+ userId +"', ");
-			sb.append("'" + password + "', ");
-			sb.append("'" + userName + "', ");
-			sb.append("'はじめまして！" + userName + "です。', ");
-			sb.append("SYSDATE " );
-			sb.append(") ");
+			sb.append("SELECT ");
+			sb.append("USER_NO ");
+			sb.append("FROM ");
+			sb.append("T_GROUP_INFO ");
+			sb.append("WHERE ");
+			sb.append("GROUP_NO = ");
+			sb.append("'" + groupNo + "' ");
+			sb.append("AND ");
+			sb.append("OUT_FLAG = '0' ");
+			sb.append(")");
+			sb.append("ORDER BY ");
+			sb.append("USER_NO");
 
 
 			// SQL実行
 
 			ResultSet rs = stmt.executeQuery(sb.toString());
+			while(rs.next()) {
+				WithdrawalBean bean = new WithdrawalBean();
+				bean.setUserName(rs.getString("USER_NAME"));
+				bean.setUserNo(Integer.parseInt(rs.getString("USER_NO")));
+				userList.add(bean);
+			}
+
+
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -89,13 +85,14 @@ public class SignUpModel {
 
 		}
 
-		return bean;
+		return userList;
 	}
-	public SignUpBean userList(SignUpBean bean) {
+
+	public WithdrawalBean withdrawal(WithdrawalBean bean) {
 		// 初期化
 		StringBuilder sb = new StringBuilder();
-		String userId = bean.getUserId();
-		String db = "";
+		int userNo = bean.getUserNo();
+		int groupNo = bean.getGroupNo();
 
 		Connection conn = null;
 		String url = "jdbc:oracle:thin:@192.168.51.67:1521:XE";
@@ -116,21 +113,22 @@ public class SignUpModel {
 
 			Statement stmt = conn.createStatement();
 
+			sb.append("UPDATE ");
+			sb.append("T_GROUP_INFO ");
+			sb.append("SET ");
+			sb.append("OUT_FLAG = '1' ");
+			sb.append("WHERE ");
+			sb.append("USER_NO =" + userNo + " ");
+			sb.append("AND ");
+			sb.append("GROUP_NO ="+ groupNo);
 
-			// 自動采番
-			sb.append("SELECT ");
-			sb.append("USER_NAME ");
-			sb.append("FROM ");
-			sb.append("M_USER ");
-			sb.append("Where ");
-			sb.append("user_id = ");
-			sb.append("'"+userId+ "'");
+
+			// SQL実行
 
 			ResultSet rs = stmt.executeQuery(sb.toString());
-			while(rs.next()) {
-				bean.setResult(rs.getString("USER_NAME"));
-				db = rs.getString("USER_NAME");
-			}
+
+
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			// SQLの接続は絶対に切断

@@ -9,6 +9,10 @@
 <link rel="stylesheet" type="text/css" href="./css/signup.css"
 	media="all">
 <script src="./js/login.js"></script>
+<!-- js無効時エラーページに飛ぶ -->
+<noscript>
+<meta http-equiv="Refresh" content="0;URL=/chat/errorPage">
+</noscript>
 </head>
 <body class="main">
 	<center>

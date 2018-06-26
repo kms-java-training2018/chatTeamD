@@ -65,9 +65,8 @@ public class MyPageModel {
 				bean.setUserName(rs.getString("USER_NAME"));
 			}
 			// レコードが取得できなければ、エラーメッセージをセット
-			if (bean.getMyPageText() == "") {
-				bean.setErrorMessage("レコードが取得できませんでした");
-				return bean;
+			if (bean.getMyPageText()==null) {
+				bean.setErrorMessage("ユーザーを取得できません");
 			}
 			// -------------------------------------------------------------
 

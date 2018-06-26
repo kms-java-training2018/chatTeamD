@@ -10,7 +10,12 @@
 	media="all">
 <link rel="stylesheet" type="text/css" href="./css/Maincss.css"
 	media="all">
-
+<script src="./js/doubleSubmit.js"></script>
+<script src="./js/login.js"></script>
+<!-- js無効時エラーページに飛ぶ -->
+<noscript>
+	<meta http-equiv="Refresh" content="0;URL=/chat/errorPage">
+</noscript>
 
 </head>
 <body id="page">
@@ -21,6 +26,9 @@
 			<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
 		</form>
 		<hr>
+	</div>
+	<div id="toBottom">
+		<a href="#footer">∨ ページ最下部へ</a> <br>
 	</div>
 	<!-- ここまでです -->
 
@@ -33,13 +41,42 @@
 				<td class="topoutside"></td>
 				<td class="groupname">${ bean.getGroupName() }</td>
 				<td class="topoutside"></td>
-				</tr>
-				<tr>
+			</tr>
+			<tr>
 				<td class="topoutside"></td>
 				<td class="author">作成者: ${ bean.getAuthorName() }</td>
 				<td class="topoutside"></td>
-				</tr>
+			</tr>
 		</table>
+
+		<div style="display: inline-flex">
+
+			<form action="/chat/addGroupMember" method="GET" target="newtab">
+				<input type="hidden" name="groupNo" value="${ bean.getGroupNo() }">
+				<input type="submit" value="メンバーを追加する" class="btn2">
+			</form>
+			<c:if test="${ bean.getAuthorName().equals(session.getUserName()) }">
+				<form action="/chat/withdrawal" method="GET" target="newtab">
+					<input type="hidden" name="groupNo" value="${ bean.getGroupNo() }">
+					<input type="submit" value="メンバーを脱退させる" class="btn2">
+				</form>
+				<form action="/chat/breakup" method="post">
+					<input type="hidden" name="groupNo" value="${ bean.getGroupNo() }">
+					<input class="btn2" type="button" value="解散！"
+						onclick="if(confirm ('本当に解散しますか')){submit();}">
+				</form>
+			</c:if>
+			<c:if test="${!bean.getAuthorName().equals(session.getUserName()) }">
+				<form action="/chat/groupMessage" method="POST">
+					<input type="hidden" name="exit" value="${ groupBean.getGroupNo()}">
+					<input type="hidden" name="groupNo"
+						value="${ groupBean.getGroupNo()}"> <input class="btn2"
+						type="button" value="グループ脱退"
+						onClick="if(confirm ('本当に脱退しますか')){submit();}">
+				</form>
+			</c:if>
+
+		</div>
 
 	</center>
 	<center>
@@ -64,7 +101,7 @@
 								<input type="hidden" name="delete"> <input type="hidden"
 									name="groupNo" value="${ bean.groupNo }"><input
 									type="hidden" name="deleteNo" value="${ obj.messageNo }">
-								<input type="button" value="削除"
+								<input class="deletebtn" type="button" value="削除"
 									onClick="if(confirm ('本当に削除しますか？')){submit();}">
 							</form>
 						</td>
@@ -75,8 +112,7 @@
 					</tr>
 				</c:if>
 				<!-- グループ脱退者 -->
-				<c:if
-					test="${ obj.userName.equals(bean.getOutFlagMessage()) && !obj.userNo.equals(session.getUserNo()) }">
+				<c:if test="${ obj.userName.equals(bean.getOutFlagMessage())}">
 					<tr>
 						<td class="msoutside" rowspan="2" id="otherName"><c:out
 								value="${ obj.userName }" /></td>
@@ -121,20 +157,44 @@
 				</c:if>
 			</c:forEach>
 		</table>
-		<form action="/chat/groupMessage" method="POST">
-			<input type="text" name="message"><input type="hidden"
-				name="groupNo" value="${ bean.getGroupNo()}"> <input
-				type="submit" value="送信">
+		<form action="/chat/groupMessage" method="POST"
+			onSubmit="return send()">
+			<input type="text" name="message" id="textarea"
+				title="${ bean.getGroupName() }へのメッセージ　　" class="placeholder"><input
+				type="hidden" name="groupNo" value="${ bean.getGroupNo()}">
+			<input type="submit" value="送信" class="btn">
 		</form>
-		<form action="/chat/groupMessage" method="POST">
-			<input type="hidden" name="exit" value="${ groupBean.getGroupNo()}">
-			<input type="button" value="グループ脱退"
-				onClick="if(confirm ('本当に脱退しますか')){submit();}">
+		<form action="/chat/groupMessage" method="GET">
+			<input type="hidden" name="groupNo"
+				value="${ groupBean.getGroupNo()}"> <input class="updbtn"
+				type="submit" value="更新">
 		</form>
 
+		<!-- 画像ボタン追加につきコメントアウト、不要なら削除
 		<form action="/chat/main" method="POST">
-			<input type="submit" value="メインメニューに戻る">
+			<input type="submit" value="メインメニューに戻る" class="btn2">
 		</form>
+ -->
+
 	</center>
+	<div class="backBtn">
+		<br> <br> <br>
+		<form action="/chat/main" method="POST">
+			<a class="imgBtn"> <input type="image"
+				src="./img/backMainPage.png" name="button" alt="makeGroup"
+				height="40">
+			</a>
+		</form>
+	</div>
+	<!-- 以下、フッター部分になります。各自実装お願いします -->
+	<br>
+	<div id="toTop">
+		<a href="#header">∧ ページトップへ</a>
+	</div>
+	<div id="footer">
+		<hr>
+		Ch@<br> kms2018 team D chat tool <br>
+	</div>
+	<!-- ここまでです -->
 </body>
 </html>

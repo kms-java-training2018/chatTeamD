@@ -1,57 +1,47 @@
 package bean;
 
-public class SignUpBean {
-	// ユーザID
+public class AddGroupMemberBean {
+	// ユーザーNO
+	private String userNo;
+
+	// ユーザーID
 	private String userId;
 
-	// ユーザPW
-	private String userPw;
-
-	// 表示名
+	// ユーザーネーム
 	private String userName;
 
-	// エラーメッセージ
-	private String errorMessage;
+	private int groupNo;
 
-	// ID判定
 	private String result;
 
+
+	public String getUserNo() {
+		return userNo;
+	}
+	public void setUserNo(String userNo) {
+		this.userNo = userNo;
+	}
 	public String getUserId() {
 		return userId;
 	}
-
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-
-	public String getUserPw() {
-		return userPw;
-	}
-
-	public void setUserPw(String userPw) {
-		this.userPw = userPw;
-	}
-
 	public String getUserName() {
 		return userName;
 	}
-
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
-	public String getErrorMessage() {
-		return errorMessage;
+	public int getGroupNo() {
+		return groupNo;
 	}
-
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
+	public void setGroupNo(int groupNo) {
+		this.groupNo = groupNo;
 	}
-
 	public String getResult() {
 		return result;
 	}
-
 	public void setResult(String result) {
 		this.result = result;
 	}

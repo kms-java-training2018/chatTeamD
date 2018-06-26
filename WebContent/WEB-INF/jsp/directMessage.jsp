@@ -10,6 +10,16 @@
 	media="all">
 <link rel="stylesheet" type="text/css" href="./css/Maincss.css"
 	media="all">
+<script src="./js/doubleSubmit.js"></script>
+<script src="./js/login.js"></script>
+
+
+<!-- js無効時エラーページに飛ぶ -->
+<noscript>
+<meta http-equiv="Refresh" content="0;URL=/chat/errorPage">
+</noscript>
+
+
 </head>
 <body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
@@ -19,6 +29,9 @@
 			<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
 		</form>
 		<hr>
+	</div>
+	<div id="toBottom">
+	<a href="#footer">∨ ページ最下部へ</a> <br>
 	</div>
 	<!-- ここまでです -->
 	<font color="red" size="5"><Strong>${bean.getErrorMsg()}</Strong></font>
@@ -62,7 +75,8 @@
 								<input type=hidden name="check" value="1"> <input
 									type=hidden name="userNo" value="${bean.getUserNo()}">
 								<input type=hidden name="deleteMessageNo"
-									value="${bean.getListMsgNo()[status.index]}"> <input
+									value="${bean.getListMsgNo()[status.index]}">
+									<input class="deletebtn"
 									type="button" value="削除"
 									onClick="if(confirm ('本当に削除しますか？')){submit();}">
 							</form></td>
@@ -101,15 +115,43 @@
 	<br>
 	<br>
 	<center>
-		<form action="/chat/directMessage" method="POST">
-			<input type=hidden name="check" value="2"> <input type="text"
-				name="sendMessage" size="50"><input type=hidden
+		<form action="/chat/directMessage" method="POST"onSubmit="return send()">
+			<input type=hidden name="check" value="2">
+			<input type="text" name="sendMessage" id="textarea" title="${ bean.getUsername() }へのメッセージ                    " class="placeholder"><input type=hidden
 				name="userNo" value="${bean.getUserNo()}"> <input
-				type="submit" value="送信" name="sendMessage">
+				type="submit" value="送信" name="sendMessage" class="btn">
 		</form>
+
+		<form action="/chat/directMessage" method="GET">
+		<input type="hidden" name="userNo" value="${bean.getUserNo()}">
+		<input type="submit" value="更新" class="updbtn">
+		</form>
+<!-- 画像ボタン追加につきコメントアウト、不要なら削除
 		<form action="/chat/main" method="POST">
-			<input type="submit" value="メインメニューに戻る">
+			<input type="submit" value="メインメニューに戻る" class="btn2">
 		</form>
+ -->
 	</center>
+	<div class="backBtn">
+		<br> <br> <br>
+		<form action="/chat/main" method="POST">
+			<a class="imgBtn">
+			<input type="image" src="./img/backMainPage.png" name="button"
+				alt="makeGroup" height="40">
+			</a>
+		</form>
+	</div>
+	<!-- 以下、フッター部分になります。各自実装お願いします -->
+	<br>
+	<div id="toTop">
+	<a href="#header">∧  ページトップへ</a>
+	</div>
+	<div id="footer">
+		<hr>
+		Ch@<br>
+		kms2018 team D chat tool
+		<br>
+	</div>
+	<!-- ここまでです -->
 </body>
 </html>

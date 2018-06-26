@@ -76,6 +76,8 @@ public class DirectMessageModel {
 			} catch (SQLException e) {
 				bean.setErrorMsg("相手の情報が取得できません");
 
+			} catch (NumberFormatException e) {
+				bean.setErrorMsg("相手の情報が取得できません");
 			}
 
 			//(2)会話情報取得処理
@@ -172,13 +174,14 @@ public class DirectMessageModel {
 			try {
 				//まずはbeanに入っているuserNoというパラメータを受け取り、変数に格納(データの降り口)
 				int user_No = (int) bean.getUserNo();
-				String sqlGetuserNo = "SELECT USER_NO FROM M_USER WHERE USER_NO = '" + user_No + "'";
+				String sqlGetuserNo = "SELECT USER_NO, USER_NAME FROM M_USER WHERE USER_NO = '" + user_No + "'";
 				PreparedStatement pStmtGetuserNo = conn.prepareStatement(sqlGetuserNo);
 				//ResultSetインスタンスにSELECT文の結果を格納する
 				ResultSet result = pStmtGetuserNo.executeQuery();
 
 				while (result.next()) {
 					bean.setUserNo(result.getInt("USER_NO"));
+					bean.setUsername(result.getString("USER_NAME"));
 				}
 				//エラーが発生した場合の処理
 			} catch (SQLException e) {
@@ -188,7 +191,7 @@ public class DirectMessageModel {
 			//sendMessageというパラメータをチェック
 			//(1)-1入力値のチェック
 			int messageLen = sendMessage.length();
-			if (sendMessage.equals("")) {
+			if (sendMessage.equals("")||sendMessage.equals(bean.getUsername()+"へのメッセージ                    ")) {
 				bean.setErrorMsg("会話内容が空です。");
 			}else {
 				if ( messageLen > 100) {

@@ -59,6 +59,8 @@ public class GetGroupListModel {
 			sb.append(" A.user_no = '" + sesUserNo + "' ");
 			sb.append("AND ");
 			sb.append(" out_flag = '0' ");
+			sb.append("AND ");
+			sb.append(" delete_flag = '0' ");
 			sb.append(" ORDER BY A.REGIST_DATE ");
 			// SQL実行
 			ResultSet rs3 = stmt.executeQuery(sb.toString());

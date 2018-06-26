@@ -60,7 +60,9 @@ public class LoginServlet extends HttpServlet {
 		try {
 			bean = model.authentication(bean);
 		} catch (Exception e) {
-			e.printStackTrace();
+			errormsg = "DBに接続されていません。";
+			req.setAttribute("errorMessage", errormsg);
+			req.getRequestDispatcher(direction).forward(req, res);
 		}
 		// -------------------------------------------------------------
 
@@ -73,7 +75,7 @@ public class LoginServlet extends HttpServlet {
 
 		if(bean.getUserId() == "" || bean.getPassword() == "") {
 			// エラー
-			errormsg = errormsg + "　ID/パスワードを入力してください";
+			errormsg = errormsg + "　ID/パスワードを入力してください。";
 //			req.setAttribute("errorMessage", errormsg);
 //			direction = "WEB-INF/jsp/login.jsp";
 //			req.getRequestDispatcher(direction).forward(req, res);
@@ -82,7 +84,7 @@ public class LoginServlet extends HttpServlet {
 
 		if (userIdBytes.length != userIdLen || passwordBytes.length != passwordLen) {
 			// エラー
-			errormsg = errormsg + "　半角で入力してください";
+			errormsg = errormsg + "　半角で入力してください。";
 //			req.setAttribute("errorMessage", errormsg);
 //			direction = "WEB-INF/jsp/login.jsp";
 //			req.getRequestDispatcher(direction).forward(req, res);
@@ -90,7 +92,7 @@ public class LoginServlet extends HttpServlet {
 		}
 
 		if (userIdBytes.length > 20 || passwordBytes.length > 20) {
-			errormsg =  errormsg + "　文字数が多いです(半角20文字まで)";
+			errormsg =  errormsg + "　半角20文字までで入力してください。";
 //			req.setAttribute("errorMessage", errormsg);
 //			direction = "WEB-INF/jsp/login.jsp";
 //			req.getRequestDispatcher(direction).forward(req, res);

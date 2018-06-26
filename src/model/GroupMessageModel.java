@@ -82,13 +82,18 @@ public class GroupMessageModel {
 					for (int i = 0; i < outflag.size(); i++) {
 						if (rs.getString("USER_NO").equals(outflag.get(i))) {
 							bean.setUserName("送信者不明");
+							bean.setMessage(rs.getString("MESSAGE"));
+							bean.setUserNo(rs.getString("USER_NO"));
+							bean.setMessageNo(rs.getInt("MESSAGE_NO"));
+							bean.setUserId(rs.getString("USER_ID"));
+							break;
 						} else {
 							bean.setUserName(rs.getString("USER_NAME"));
+							bean.setMessage(rs.getString("MESSAGE"));
+							bean.setUserNo(rs.getString("USER_NO"));
+							bean.setMessageNo(rs.getInt("MESSAGE_NO"));
+							bean.setUserId(rs.getString("USER_ID"));
 						}
-						bean.setMessage(rs.getString("MESSAGE"));
-						bean.setUserNo(rs.getString("USER_NO"));
-						bean.setGroupNo(rs.getInt("MESSAGE_NO"));
-						bean.setUserId(rs.getString("USER_ID"));
 					}
 				} else {
 					bean.setUserName(rs.getString("USER_NAME"));
@@ -109,6 +114,10 @@ public class GroupMessageModel {
 				if(check == 0) {
 					num = (int) (Math.random() * css +1);
 					bean.setColorNo(num);
+				}
+
+				if(bean.getUserName().equals("送信者不明")) {
+					bean.setColorNo(9);
 				}
 
 				output.add(bean);

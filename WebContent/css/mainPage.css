@@ -1,14 +1,33 @@
 @charset "UTF-8";
 
 #mainPage {
-	background: #FF7A00;
+	background: #181010;
 	width: 900px;
 	padding: 0px;
 	text-align: center;
 	margin-top: 0px;
+	margin-bottom: 0px;
 	border: 0px;
 	margin-left: auto;
 	margin-right: auto;
+	background-image: url("../img/img6.jpg");
+	background-repeat: repeat-y;
+	background-position: center 0px;
+}
+
+#toBottomMainPage {
+	text-align:right;
+}
+#toBottomMainPage a{
+	color:white;
+}
+
+#toTopMainPage {
+	text-align:right;
+	padding-right:50px;
+}
+#toTopMainPage a{
+	color:white;
 }
 
 .page {
@@ -21,10 +40,6 @@
 	margin-bottom: 0px;
 	margin-left: auto;
 	margin-right: auto;
-}
-
-.title {
-	font-size: 200%
 }
 
 .rogoTable {
@@ -42,8 +57,7 @@
 	background-color: #FF7A00;
 	border: none;
 }
-
-a {
+.titleTable td:hover {
 	color: #FFFFFF;
 }
 
@@ -53,16 +67,18 @@ a {
 	padding-left: 100px;
 }
 
-.tabTable td {
+.tabTable {
 	text-align: left;
+	border-spacing: 0px;
+	border-collapse: collapse;
 }
 .tabTable td:nth-of-type(1) {
 	text-align: left;
 }
+
 .tabTable td:nth-of-type(2) {
 	text-align: left;
 }
-
 
 .mTable {
 	vertical-align: top;
@@ -70,14 +86,17 @@ a {
 	display:inline-block;
 	word-break:break-all;
 }
-
 .mTable td:nth-of-type(1) {
 	text-align: left;
 	background-color: #B13228;
 	color: #FFFFFF;
 	width:150px;
 }
-
+.mTable td:hover{
+	text-align: left;
+	background-color: #CF3228;
+	color: #FFFFFF;
+}
 .mTable td:nth-of-type(2) {
 	text-align: left;
 	background-color: #FF7A00;
@@ -88,12 +107,18 @@ a {
 	border-spacing: 0;
 	width:300px;
 }
+
 .inlineBlock{
 	vertical-align: middle;
 	display:inline-block;
 	padding-left:20px;
 
 }
+
 .block{
 	display:block;
+}
+
+a {
+	color: #FFFFFF;
 }

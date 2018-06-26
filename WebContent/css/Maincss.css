@@ -8,17 +8,49 @@
 	margin-left: auto;
 	margin-right: auto;
 }
+#header a{
+	color:white;
+}
+#toBottom {
+	text-align:right;
+}
+#toBottom a{
+	color:black;
+}
 
 #page {
 	width: 900px;
 	padding: 0px;
 	text-align: center;
 	margin-top: 0px;
+	margin-bottom: 0px;
 	border: 0px;
 	margin-left: auto;
 	margin-right: auto;
 	background-color: bisque;
 	font-family: 'Book Antiqua', 'Avenir', 'Corbel', 'Yu Gothic';
+}
+
+#toTop {
+	text-align:right;
+	padding-right:50px;
+}
+#toTop a{
+	color:black;
+}
+
+#footer {
+	width: 800px;
+	text-align: center;
+	background-color: #B13228;
+	color: #FFFFFF;
+	margin-bottom: 0px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0px;
+}
+#footer a{
+	color:white;
 }
 
 .centerizedTable {
@@ -27,6 +59,45 @@
 	margin-right: auto;
 }
 
-#header a{
-	color:white;
+.imgBtn img:hover{
+  opacity: 0.7;
+  filter: alpha(opacity=70);
+  -ms-filter: "alpha(opacity=70)";
 }
+.imgBtn input:hover{
+  opacity: 0.7;
+  filter: alpha(opacity=70);
+  -ms-filter: "alpha(opacity=70)";
+}
+
+.backBtn {
+	text-align: left;
+	margin-left: 50px;
+	margin-right: auto;
+}
+
+.listDiv {
+	text-align: left;
+	width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.listCell {
+	display: inline-block;
+	vertical-align:top;
+	width: 180px;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.updbtn {
+	color: #000000;
+	background-color: aquamarine;
+	border: 1px solid  #000000;
+	border-collapse: separate;
+	border-radius: 5px;
+	border-spacing: 0;
+	width: 150px;
+	font-weight: bold;
+}
+

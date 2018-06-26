@@ -6,17 +6,24 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>マイページ</title>
-	<link rel="stylesheet" type="text/css" href="./css/Maincss.css"
+<link rel="stylesheet" type="text/css" href="./css/Maincss.css"
 	media="all">
+<!-- js無効時エラーページに飛ぶ -->
+<noscript>
+	<meta http-equiv="Refresh" content="0;URL=/chat/errorPage">
+</noscript>
 </head>
 <body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
 	<div id="header">
 		${ session.getUserName() }さん <br>
 		<form name="logout" action="/chat/logout" method="POST">
-		<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
+			<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
 		</form>
 		<hr>
+	</div>
+	<div id="toBottom">
+		<a href="#footer">∨ ページ最下部へ</a> <br>
 	</div>
 	<!-- ここまでです -->
 	<br>
@@ -35,14 +42,37 @@
 			</table>
 
 			<input type="hidden" name="dispName" value="${ bean.getUserName() }">
-			<input type="hidden" name="myPageText" value="${ bean.getMyPageText }"> <input
-				type="submit" value="プロフィールを更新">
+			<input type="hidden" name="myPageText"
+				value="${ bean.getMyPageText }"> <input type="submit"
+				value="プロフィールを更新">
 		</form>
+		<!-- 画像ボタン追加につきコメントアウト、不要なら削除
 		<form action="/chat/main" method="POST">
 			<input type="submit" value="メインメニューに戻る">
 		</form>
+ -->
 		<br> <font color="red"><Strong>${ errormessage }</Strong></font>
 		<br>
+		<div class="backBtn">
+			<br> <br> <br>
+			<form action="/chat/main" method="POST">
+				<a class="imgBtn"> <input type="image"
+					src="./img/backMainPage.png" name="button" alt="makeGroup"
+					height="40">
+				</a>
+			</form>
+		</div>
 	</center>
+
+	<!-- 以下、フッター部分になります。各自実装お願いします -->
+	<br>
+	<div id="toTop">
+		<a href="#header">∧ ページトップへ</a>
+	</div>
+	<div id="footer">
+		<hr>
+		Ch@<br> kms2018 team D chat tool <br>
+	</div>
+	<!-- ここまでです -->
 </body>
 </html>
