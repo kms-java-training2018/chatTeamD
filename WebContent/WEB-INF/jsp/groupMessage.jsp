@@ -34,6 +34,7 @@
 
 	<center>
 		<font color="red" size="5"><Strong><c:out value="${ errorMsg }"></c:out></Strong></font>
+		<font color="red" size="5"><Strong><c:out value="${ bean.getErrorMsg() }"></c:out></Strong></font>
 	</center>
 	<center>
 		<table>

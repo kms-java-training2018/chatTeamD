@@ -16,7 +16,8 @@
 <body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
 	<div id="header">
-		<c:out value="${ session.getUserName() }さん"></c:out> <br>
+		<c:out value="${ session.getUserName() }さん"></c:out>
+		<br>
 		<form name="logout" action="/chat/logout" method="POST">
 			<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
 		</form>
@@ -33,11 +34,13 @@
 			<table>
 				<tr>
 					<td width="100">名前</td>
-					<td><textarea cols="30" name="dispName"><c:out value="${ myName }"></c:out></textarea>
+					<td><textarea cols="30" name="dispName"><c:out
+								value="${ myName }"></c:out></textarea>
 				</tr>
 				<tr>
 					<td width="100">自己紹介</td>
-					<td><textarea cols="30" rows="20" name="myPageText"><c:out value="${ myPageText }"></c:out></textarea>
+					<td><textarea cols="30" rows="20" name="myPageText"><c:out
+								value="${ myPageText }"></c:out></textarea>
 				</tr>
 			</table>
 
@@ -51,8 +54,8 @@
 			<input type="submit" value="メインメニューに戻る">
 		</form>
  -->
-		<br> <font color="red"><Strong><c:out value="${ errormessage }"></c:out></Strong></font>
-		<br>
+		<br> <font color="red"><Strong><c:out
+					value="${ errormessage }"></c:out></Strong></font> <br>
 		<div class="backBtn">
 			<br> <br> <br>
 			<form action="/chat/main" method="POST">

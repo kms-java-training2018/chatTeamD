@@ -211,7 +211,7 @@ public class MyPageServlet extends HttpServlet {
 		}
 
 		if (!bean.getErrorMessage().equals("notError")){
-			errormessage = "文字数エラーです";
+			errormessage = bean.getErrorMessage();
 			req.setAttribute("myName", bean.getUserName());
 			req.setAttribute("myPageText", bean.getMyPageText());
 			req.setAttribute("errormessage", errormessage);

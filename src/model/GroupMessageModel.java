@@ -210,8 +210,8 @@ public class GroupMessageModel {
 			// -------------------------------------------------------------
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// SQLの接続は絶対に切断
+			String errorMsg = "会話内容が登録できません。";
+			bean.setErrorMsg(errorMsg);
 		} finally {
 			try {
 				conn.close();
