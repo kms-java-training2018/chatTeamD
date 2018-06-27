@@ -158,8 +158,7 @@ public class MyPageModel {
 
 			}
 		} catch (SQLException e) {
-			bean.setErrorMessage("文字数が多すぎます");
-
+			bean.setErrorMessage("プロフィールが登録できません");
 			// SQLの接続は絶対に切断
 		} finally {
 			try {

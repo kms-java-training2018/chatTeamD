@@ -21,7 +21,7 @@
 <body id="mainPage">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
 	<div id="header">
-		${ session.getUserName() }さん <br>
+		<c:out value="${ session.getUserName() }さん"></c:out> <br>
 		<form name="logout" action="/chat/logout" method="POST">
 			<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
 		</form>
@@ -67,10 +67,10 @@
 						<form name="DM" method="get" action="/chat/directMessage">
 							<input type=hidden name="userNo"
 								value="${userbean[status.index].userNo}">○ <a
-								href="javascript:DM[${status.index + 1}].submit()">${userbean[status.index].userName}</a>
+								href="javascript:DM[${status.index + 1}].submit()"><c:out value="${userbean[status.index].userName}"></c:out></a>
 						</form>
 					</td>
-					<td>${userbean[status.index].directMessage}</td>
+					<td><c:out value="${userbean[status.index].directMessage}"></c:out></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -95,10 +95,10 @@
 								<form name="GM" method="get" action="/chat/groupMessage">
 									<input type=hidden name="groupNo"
 										value="${groupbean[status.index].groupNo}">○ <a
-										href="javascript:GM[${status.index + 1}].submit()">${groupbean[status.index].groupName}</a>
+										href="javascript:GM[${status.index + 1}].submit()"><c:out value="${groupbean[status.index].groupName}"></c:out></a>
 								</form>
 							</td>
-							<td>${groupbean[status.index].groupMessage}</td>
+							<td><c:out value="${groupbean[status.index].groupMessage}"></c:out></td>
 						</tr>
 					</c:forEach>
 				</table>

@@ -20,11 +20,11 @@
 			<table>
 				<tr>
 					<td>名前</td>
-					<td>${ showName }</td>
+					<td><c:out value="${ showName }"></c:out></td>
 				</tr>
 				<tr>
 					<td>自己紹介</td>
-					<td>${ showMyPageText }</td>
+					<td><c:out value="${ showMyPageText }"></c:out></td>
 				</tr>
 			</table>
 			<input type="button" value="戻る" onClick="window.close();">

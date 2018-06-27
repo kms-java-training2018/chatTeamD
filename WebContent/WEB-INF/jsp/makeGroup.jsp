@@ -19,7 +19,7 @@
 <body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
 	<div id="header">
-		${ session.getUserName() }さん <br>
+		<c:out value="${ session.getUserName() }さん"></c:out> <br>
 		<form name="logout" action="/chat/logout" method="POST">
 			<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
 		</form>
@@ -33,7 +33,7 @@
 		<h2>Make Group</h2>
 		<p>誰にもチェックを入れなかった場合、あなたひとりのグループができます</p>
 		<p>
-			<font color="#FF0000">${errorMsg}</font>
+			<font color="#FF0000"><c:out value="${errorMsg}"></c:out></font>
 		</p>
 		<form action="/chat/makeGroup" method="POST" onSubmit="return send()">
 			<input type="text" title="グループ名(全角10文字まで)" class="placeholder"
@@ -41,7 +41,7 @@
 		<div class="listDiv">
 		<c:forEach var="obj" items="${bean}" varStatus="status">
 			<a class="listCell"> <input type="checkbox" name="userNo"
-				value="${bean[status.index].userNo}">${bean[status.index].userName}
+				value="${bean[status.index].userNo}"><c:out value="${bean[status.index].userName}"></c:out>
 			</a>
 		</c:forEach>
 		</div>

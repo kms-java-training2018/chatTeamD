@@ -24,7 +24,7 @@
 <body id="page">
 	<!-- 以下、ヘッダー部分になります。各自実装お願いします -->
 	<div id="header">
-		${ session.getUserName() }さん <br>
+		<c:out value="${ session.getUserName() }さん"></c:out> <br>
 		<form name="logout" action="/chat/logout" method="POST">
 			<a href="javascript:if(confirm ('本当にログアウトしますか？')){logout.submit();}">logout</a>
 		</form>
@@ -34,7 +34,7 @@
 	<a href="#footer">∨ ページ最下部へ</a> <br>
 	</div>
 	<!-- ここまでです -->
-	<font color="red" size="5"><Strong>${bean.getErrorMsg()}</Strong></font>
+	<font color="red" size="5"><Strong><c:out value="${bean.getErrorMsg()}"></c:out></Strong></font>
 	<h1></h1>
 	<br>
 	<center>
@@ -43,7 +43,7 @@
 			<!-- 相手の名前リンク(ページトップ) -->
 			<input type=hidden name="otherUserNo" value="${bean.getUserNo()}">
 			<h3>
-				<a href="javascript:topShowProfile.submit()">${bean.getUsername()}</a>
+				<a href="javascript:topShowProfile.submit()"><c:out value="${bean.getUsername()}"></c:out></a>
 			</h3>
 		</form>
 	</center>
@@ -62,10 +62,10 @@
 						<td class="msoutside" rowspan="2"></td>
 						<td class="msnone" rowspan="2"></td>
 						<td class="msinside"></td>
-						<td class="me" rowspan="2">${obj}</td>
+						<td class="me" rowspan="2"><c:out value="${obj}"></c:out></td>
 						<td class="myname">
 							<form name="showProfile" action="/chat/showProfile" method="GET">
-								${bean.getListUserName()[status.index]}</form>
+								<c:out value="${bean.getListUserName()[status.index]}"></c:out></form>
 						</td>
 					</tr>
 					<tr>
@@ -92,7 +92,7 @@
 								target="newtab">
 								<input type=hidden name="otherUserNo"
 									value="${bean.getListUserNo()[status.index]}"> <a
-									href="javascript:showProfile[${status.index+1}].submit()">${bean.getListUserName()[status.index]}</a>
+									href="javascript:showProfile[${status.index+1}].submit()"><c:out value="${bean.getListUserName()[status.index]}"></c:out></a>
 							</form></td>
 						<td rowspan="2" class="you">${obj}</td>
 						<td class="msinside"></td>
